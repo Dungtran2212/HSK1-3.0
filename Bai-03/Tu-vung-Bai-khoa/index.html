@@ -4118,142 +4118,395 @@ navButtons.forEach(button => {
   });
 });
 
-/* =========================================================
-   8. GAME - 8 MẢNH GHÉP
-========================================================= */
-
 const gameChallenges = [
 
+  /* =====================================================
+     A. 30 MẢNH GHÉP CƠ BẢN
+  ===================================================== */
+
   {
     type: "choice",
-    icon: "🧠",
-    name: "Nhận diện từ",
-    question: "Từ nào có nghĩa là “bạn gái”?",
-    options: [
-      "姐姐",
-      "女朋友",
-      "老师",
-      "我们"
-    ],
-    answer: "女朋友",
-    explanation: "女朋友 (nǚpéngyou) = bạn gái."
+    icon: "🧩",
+    name: "Mảnh 1",
+    question: "Chữ nào có nghĩa là “người”?",
+    options: ["人 rén", "国 guó", "她 tā", "忙 máng"],
+    answer: "人 rén",
+    explanation: "人 (rén) = người, con người."
   },
 
   {
     type: "choice",
-    icon: "🌏",
-    name: "Quốc gia",
-    question: "Câu nào có nghĩa là “Cô ấy cũng là người Thái Lan”?",
-    options: [
-      "她也是泰国人。",
-      "她是法国人。",
-      "我是中国人。",
-      "你是哪国人？"
-    ],
-    answer: "她也是泰国人。",
-    explanation: "她 = cô ấy, 也 = cũng, 泰国人 = người Thái Lan."
+    icon: "🧩",
+    name: "Mảnh 2",
+    question: "Từ nào dùng để biểu thị sở hữu, tương đương “của” trong tiếng Việt?",
+    options: ["的 de", "吗 ma", "哪 nǎ", "对 duì"],
+    answer: "的 de",
+    explanation: "的 (de) có thể dùng để biểu thị quan hệ sở hữu."
   },
 
   {
     type: "choice",
-    icon: "❓",
-    name: "Từ để hỏi",
-    question: "Điền từ đúng: 这是___？ — Đây là ai?",
-    options: [
-      "吗",
-      "哪",
-      "谁",
-      "的"
-    ],
-    answer: "谁",
-    explanation: "这是谁？ = Đây là ai?"
+    icon: "🧩",
+    name: "Mảnh 3",
+    question: "“Trung Quốc” trong tiếng Trung nói thế nào?",
+    options: ["法国 Fǎguó", "中国 Zhōngguó", "泰国 Tàiguó", "中文 Zhōngwén"],
+    answer: "中国 Zhōngguó",
+    explanation: "中国 (Zhōngguó) = Trung Quốc."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 4",
+    question: "“Nước Pháp” trong tiếng Trung là gì?",
+    options: ["法国 Fǎguó", "中国 Zhōngguó", "泰国 Tàiguó", "国 guó"],
+    answer: "法国 Fǎguó",
+    explanation: "法国 (Fǎguó) = nước Pháp."
   },
 
   {
     type: "sentence",
     icon: "🧩",
-    name: "Ráp câu",
-    question: "Sắp xếp các mảnh thành câu: “Tôi là người Trung Quốc.”",
-    pieces: [
-      "中国人",
-      "我",
-      "是"
-    ],
-    answer: [
-      "我",
-      "是",
-      "中国人"
-    ]
-  },
-
-  {
-    type: "choice",
-    icon: "🔗",
-    name: "Ngữ pháp 的",
-    question: "Cụm nào có nghĩa là “giáo viên tiếng Trung của tôi”?",
-    options: [
-      "我中文老师",
-      "我的中文老师",
-      "中文我的老师",
-      "老师我的中文"
-    ],
-    answer: "我的中文老师",
-    explanation: "我的中文老师 = giáo viên tiếng Trung của tôi."
-  },
-
-  {
-    type: "choice",
-    icon: "☎️",
-    name: "Hội thoại",
-    question: "Khi bắt máy điện thoại bằng tiếng Trung, từ nào phù hợp nhất?",
-    options: [
-      "喂",
-      "想",
-      "哪",
-      "忙"
-    ],
-    answer: "喂",
-    explanation: "喂 (wèi) thường dùng khi nói “alô”."
+    name: "Mảnh 5",
+    question: "Muốn nói “người Việt Nam”, hãy ghép 2 từ sau.",
+    pieces: ["人", "越南"],
+    answer: ["越南", "人"]
   },
 
   {
     type: "sentence",
-    icon: "💼",
-    name: "Ráp câu hỏi",
-    question: "Sắp xếp thành câu: “Công việc của bạn vẫn bận à?”",
-    pieces: [
-      "吗",
-      "还",
-      "你",
-      "忙",
-      "工作"
-    ],
-    answer: [
-      "你",
-      "工作",
-      "还",
-      "忙",
-      "吗"
-    ]
+    icon: "🧩",
+    name: "Mảnh 6",
+    question: "Muốn nói “người Trung Quốc”, hãy ghép 2 từ sau.",
+    pieces: ["人", "中国"],
+    answer: ["中国", "人"]
   },
 
   {
     type: "choice",
-    icon: "💭",
-    name: "Suy luận",
-    question: "Trong câu “我们很想你。”, 想 mang nghĩa nào?",
+    icon: "🧩",
+    name: "Mảnh 7",
+    question: "中文 có nghĩa là gì?",
+    options: ["Tiếng Trung", "Trung Quốc", "Người Trung Quốc", "Giáo viên"],
+    answer: "Tiếng Trung",
+    explanation: "中文 (Zhōngwén) = tiếng Trung."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 8",
+    question: "Điền từ còn thiếu: 我___名字 → “Tên của tôi”",
+    options: ["的", "是", "吗", "哪"],
+    answer: "的",
+    explanation: "我的名字 = tên của tôi."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 9",
+    question: "Điền từ còn thiếu: 我___老师 → “Giáo viên của tôi”",
+    options: ["的", "吗", "谁", "太"],
+    answer: "的",
+    explanation: "我的老师 = giáo viên của tôi."
+  },
+
+  {
+    type: "sentence",
+    icon: "🧩",
+    name: "Mảnh 10",
+    question: "Sắp xếp thành cụm từ đúng.",
+    pieces: ["老师", "中文"],
+    answer: ["中文", "老师"]
+  },
+
+  {
+    type: "sentence",
+    icon: "🧩",
+    name: "Mảnh 11",
+    question: "Sắp xếp thành câu: “Giáo viên tiếng Trung của bạn rất tốt.”",
+    pieces: ["很好", "你的", "中文老师"],
+    answer: ["你的", "中文老师", "很好"]
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 12",
+    question: "Điền từ thích hợp: 我不是中国人，我是_____。",
+    options: ["越南人", "中文", "法国", "工作"],
+    answer: "越南人",
+    explanation: "我是越南人。= Tôi là người Việt Nam."
+  },
+
+  {
+    type: "sentence",
+    icon: "🧩",
+    name: "Mảnh 13",
+    question: "Sắp xếp thành câu “Đây là cái gì?”",
+    pieces: ["什么", "是", "这"],
+    answer: ["这", "是", "什么"]
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 14",
+    question: "Trả lời câu 这是什么？ nếu vật đó là một quyển sách.",
+    options: ["这是书。", "她是书。", "我是书。", "书是什么？"],
+    answer: "这是书。",
+    explanation: "这是书。= Đây là sách."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 15",
+    question: "Muốn hỏi “Cô ấy là ai?”, dùng từ để hỏi nào?",
+    options: ["谁", "哪", "吗", "的"],
+    answer: "谁",
+    explanation: "她是谁？= Cô ấy là ai?"
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 16",
+    question: "Trả lời: 她是谁？ → “Cô ấy là giáo viên.”",
+    options: ["她是老师。", "这是老师。", "我是老师。", "她是谁？"],
+    answer: "她是老师。",
+    explanation: "她是老师。= Cô ấy là giáo viên."
+  },
+
+  {
+    type: "sentence",
+    icon: "🧩",
+    name: "Mảnh 17",
+    question: "Sắp xếp thành câu đúng.",
+    pieces: ["是", "她", "女朋友", "我的"],
+    answer: ["她", "是", "我的", "女朋友"]
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 18",
+    question: "Trong câu 你是哪国人？, từ nào mang nghĩa “nào”?",
+    options: ["哪 nǎ", "谁 shéi", "吗 ma", "国 guó"],
+    answer: "哪 nǎ",
+    explanation: "哪 (nǎ) = nào."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 19",
+    question: "Nếu là người Việt Nam, trả lời 你是哪国人？ thế nào?",
+    options: ["我是越南人。", "我是中文。", "我是工作。", "我是越南。"],
+    answer: "我是越南人。",
+    explanation: "我是越南人。= Tôi là người Việt Nam."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 20",
+    question: "“Công việc” trong tiếng Trung là từ nào?",
+    options: ["工作 gōngzuò", "忙 máng", "想 xiǎng", "姐姐 jiějie"],
+    answer: "工作 gōngzuò",
+    explanation: "工作 (gōngzuò) = công việc / làm việc."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 21",
+    question: "Hoàn thành câu hỏi: 他的_____是什么？",
+    options: ["工作", "姐姐", "中文", "女朋友"],
+    answer: "工作",
+    explanation: "他的工作是什么？= Công việc của anh ấy là gì?"
+  },
+
+  {
+    type: "sentence",
+    icon: "🧩",
+    name: "Mảnh 22",
+    question: "Ghép thành câu hoàn chỉnh: 他 / 不 / 工作 / 他 / 是 / 学生",
+    pieces: ["他不工作，", "他是学生。"],
+    answer: ["他不工作，", "他是学生。"]
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 23",
+    question: "Khi bắt đầu một cuộc gọi điện thoại, người Trung Quốc thường nói từ nào trong danh sách đã học?",
+    options: ["喂 wèi", "对 duì", "想 xiǎng", "还 hái"],
+    answer: "喂 wèi",
+    explanation: "喂 (wèi) thường dùng khi bắt đầu cuộc gọi điện thoại."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 24",
+    question: "“Chị gái” trong tiếng Trung là gì?",
+    options: ["姐姐 jiějie", "女朋友 nǚpéngyou", "她 tā", "我们 wǒmen"],
+    answer: "姐姐 jiějie",
+    explanation: "姐姐 (jiějie) = chị gái."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 25",
+    question: "Điền từ để biến câu thành câu hỏi Yes/No: 你忙___？",
+    options: ["吗", "的", "哪", "谁"],
+    answer: "吗",
+    explanation: "你忙吗？= Bạn có bận không?"
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 26",
+    question: "Từ nào có nghĩa là “bận”?",
+    options: ["忙 máng", "想 xiǎng", "对 duì", "还 hái"],
+    answer: "忙 máng",
+    explanation: "忙 (máng) = bận."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 27",
+    question: "Từ nào có nghĩa “đúng / phải”?",
+    options: ["对 duì", "太 tài", "吗 ma", "哪 nǎ"],
+    answer: "对 duì",
+    explanation: "对 (duì) = đúng, phải."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 28",
+    question: "Trong cấu trúc 太忙了, 太 mang ý nghĩa gì?",
+    options: ["quá / rất", "không", "vẫn", "cũng"],
+    answer: "quá / rất",
+    explanation: "太 (tài) trong 太忙了 mang nghĩa “quá / rất”."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 29",
+    question: "“Chúng tôi / chúng mình” nói thế nào?",
+    options: ["我们 wǒmen", "你们 nǐmen", "她 tā", "我 wǒ"],
+    answer: "我们 wǒmen",
+    explanation: "我们 (wǒmen) = chúng tôi / chúng ta."
+  },
+
+  {
+    type: "choice",
+    icon: "🧩",
+    name: "Mảnh 30",
+    question: "Từ nào trong bài có thể mang nghĩa “nhớ”?",
+    options: ["想 xiǎng", "忙 máng", "工作 gōngzuò", "对 duì"],
+    answer: "想 xiǎng",
+    explanation: "Trong 我们很想你, 想 mang nghĩa “nhớ”."
+  },
+
+
+  /* =====================================================
+     B. MẢNH GHÉP NÂNG CAO
+  ===================================================== */
+
+  {
+    type: "choice",
+    icon: "🔥",
+    name: "Nâng cao 1",
+    question: "我不是中国人，_____。",
     options: [
-      "làm việc",
-      "nhớ",
-      "bận",
-      "đúng"
+      "我是越南人。",
+      "我是中文。",
+      "我是越南。"
     ],
-    answer: "nhớ",
-    explanation: "Trong ngữ cảnh này 想 = nhớ."
+    answer: "我是越南人。",
+    explanation: "Đáp án A: 我是越南人。"
+  },
+
+  {
+    type: "choice",
+    icon: "🔥",
+    name: "Nâng cao 2",
+    question: "她是谁？",
+    options: [
+      "她是老师。",
+      "她是哪国？",
+      "这是老师。"
+    ],
+    answer: "她是老师。",
+    explanation: "Đáp án A: 她是老师。"
+  },
+
+  {
+    type: "choice",
+    icon: "🔥",
+    name: "Nâng cao 3",
+    question: "你是哪国人？",
+    options: [
+      "我是中文。",
+      "我是越南人。",
+      "我是工作。"
+    ],
+    answer: "我是越南人。",
+    explanation: "Đáp án B: 我是越南人。"
+  },
+
+  {
+    type: "choice",
+    icon: "🔥",
+    name: "Nâng cao 4",
+    question: "这是什么？",
+    options: [
+      "她是书。",
+      "这是书。",
+      "我是书。"
+    ],
+    answer: "这是书。",
+    explanation: "Đáp án B: 这是书。"
+  },
+
+  {
+    type: "choice",
+    icon: "🔥",
+    name: "Nâng cao 5",
+    question: "她是_____女朋友。",
+    options: [
+      "我",
+      "我的",
+      "我们是"
+    ],
+    answer: "我的",
+    explanation: "Đáp án B: 我的 → 她是我的女朋友。"
+  },
+
+  {
+    type: "choice",
+    icon: "🔥",
+    name: "Nâng cao 6",
+    question: "_____工作是什么？",
+    options: [
+      "他的",
+      "他是",
+      "他"
+    ],
+    answer: "他的",
+    explanation: "Đáp án A: 他的 → 他的工作是什么？"
   }
 
 ];
-
 
 let gameScore = 0;
 
@@ -4985,7 +5238,7 @@ function solveCurrentPiece() {
       () => {
 
         alert(
-          "🎉 Xuất sắc! Bạn đã hoàn thành đủ 8 mảnh ghép!"
+          "🎉 Xuất sắc! Bạn đã hoàn thành đủ 36 mảnh ghép!"
         );
 
       },
