@@ -2,944 +2,1720 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="
+    width=device-width,
+    initial-scale=1,
+    maximum-scale=1,
+    user-scalable=no
+  "
+>
+
 <title>Panda Voice Runner</title>
 
 <style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-:root{
-  --ink:#17212b;
-  --cream:#fff8df;
-  --yellow:#ffd84d;
-  --green:#67cf73;
-  --red:#ff6b6b;
-  --blue:#8edcff;
-  --purple:#8f7cff;
+html,
+body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
 }
 
 body{
-  min-height:100vh;
-  overflow-x:hidden;
   font-family:
-    Inter,
+    "Inter",
     "Noto Sans SC",
     "Microsoft YaHei",
     Arial,
     sans-serif;
-  background:#102a46;
-  color:var(--ink);
+
+  background:#071421;
+  color:#16212b;
 }
 
-.hidden{
-  display:none!important;
-}
 
-/* ======================================================
-   WORLD / BACKGROUND
-====================================================== */
+/* =========================================================
+   VIEWPORT
 
-.world{
-  min-height:100vh;
-  position:relative;
+   CẢ GAME LUÔN GIỮ TỈ LỆ 16:9
+   KHÔNG SCROLL
+========================================================= */
+
+.viewport{
+  position:fixed;
+  inset:0;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
   overflow:hidden;
-  padding:14px;
+
   background:
-    linear-gradient(
-      to bottom,
-      #122d50 0%,
-      #1c4f7d 27%,
-      #6fb5c7 50%,
-      #88c776 50%,
-      #438c4f 100%
+    radial-gradient(
+      circle at 50% 20%,
+      #244d73,
+      #081522 75%
     );
 }
 
-/* Moon */
+
+/*
+  Đây là "slide PPT"
+  kích thước logic 1600 x 900
+*/
+
+.game{
+  width:1600px;
+  height:900px;
+
+  position:absolute;
+
+  transform-origin:center center;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #14355f 0%,
+      #27688c 36%,
+      #81bed1 36%,
+      #a9d995 62%,
+      #5ca15e 62%,
+      #397d4c 100%
+    );
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.skyGlow{
+  position:absolute;
+
+  width:900px;
+  height:500px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.12),
+      transparent 70%
+    );
+
+  left:350px;
+  top:-200px;
+}
+
 
 .moon{
-  position:fixed;
-  width:110px;
-  height:110px;
-  top:4%;
-  right:8%;
+  position:absolute;
+
+  width:145px;
+  height:145px;
+
   border-radius:50%;
-  background:#fff1b8;
+
+  right:110px;
+  top:72px;
+
+  background:#fff0b6;
+
   box-shadow:
-    0 0 30px rgba(255,241,184,.8),
-    0 0 90px rgba(255,241,184,.35);
-  z-index:0;
+    0 0 40px rgba(255,240,182,.75),
+    0 0 110px rgba(255,240,182,.3);
 }
 
-/* Stars */
 
 .star{
-  position:fixed;
+  position:absolute;
   color:white;
-  z-index:0;
-  font-size:18px;
-  animation:twinkle 1.5s infinite alternate;
+
+  font-size:22px;
+
+  opacity:.8;
+
+  animation:
+    starBlink 1.5s
+    infinite alternate;
 }
 
-.star.s1{left:8%;top:8%}
-.star.s2{left:18%;top:16%;animation-delay:.3s}
-.star.s3{left:33%;top:7%;animation-delay:.7s}
-.star.s4{right:30%;top:16%;animation-delay:.2s}
-.star.s5{right:16%;top:11%;animation-delay:.9s}
+.s1{left:100px;top:80px}
+.s2{left:290px;top:150px}
+.s3{left:530px;top:70px}
+.s4{right:400px;top:140px}
+.s5{right:230px;top:230px}
 
-@keyframes twinkle{
-  from{opacity:.25;transform:scale(.8)}
-  to{opacity:1;transform:scale(1.25)}
+@keyframes starBlink{
+
+  from{
+    opacity:.2;
+    transform:scale(.8);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1.3);
+  }
+
 }
 
-/* Clouds */
+
+/* clouds */
 
 .cloud{
-  position:fixed;
-  z-index:0;
-  font-size:72px;
-  opacity:.55;
-  animation:cloudMove 28s linear infinite;
+  position:absolute;
+  font-size:90px;
+  opacity:.4;
+
+  animation:
+    cloudMove 24s
+    linear infinite;
 }
 
-.cloud.c1{
-  top:13%;
-  left:-130px;
+.cloud1{
+  top:145px;
+  left:-160px;
 }
 
-.cloud.c2{
-  top:23%;
-  left:-260px;
+.cloud2{
+  top:250px;
+  left:-300px;
+
   animation-duration:38s;
-  animation-delay:-14s;
+  animation-delay:-15s;
 }
 
 @keyframes cloudMove{
-  from{transform:translateX(0)}
-  to{transform:translateX(calc(100vw + 450px))}
+
+  from{
+    transform:translateX(0);
+  }
+
+  to{
+    transform:translateX(2000px);
+  }
+
 }
 
-/* Mountains */
+
+/* mountains */
 
 .mountains{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:32%;
+  position:absolute;
+
+  width:100%;
+
+  top:255px;
+
   text-align:center;
-  font-size:80px;
-  opacity:.5;
-  letter-spacing:24px;
-  z-index:0;
+
+  font-size:115px;
+
+  opacity:.42;
+
+  letter-spacing:45px;
+
   pointer-events:none;
 }
 
-/* Bamboo */
+
+/* bamboo */
 
 .bamboo{
-  position:fixed;
-  bottom:4%;
-  font-size:110px;
-  z-index:0;
-  filter:drop-shadow(4px 6px 0 rgba(0,0,0,.15));
+  position:absolute;
+
+  bottom:0;
+
+  font-size:150px;
+
+  opacity:.88;
+
+  filter:
+    drop-shadow(
+      7px 8px 0
+      rgba(0,0,0,.15)
+    );
 }
 
-.bamboo.left{left:1%}
-.bamboo.right{right:1%}
+.bambooLeft{
+  left:5px;
+}
 
-/* Lanterns */
+.bambooRight{
+  right:5px;
+}
+
+
+/* lantern */
 
 .lantern{
-  position:fixed;
-  font-size:44px;
-  z-index:1;
-  animation:lanternSwing 2.4s ease-in-out infinite alternate;
+  position:absolute;
+
+  font-size:55px;
+
   transform-origin:top center;
+
+  animation:
+    lanternSwing 2s
+    ease-in-out infinite alternate;
 }
 
-.lantern.l1{left:5%;top:25%}
-.lantern.l2{right:5%;top:28%;animation-delay:.5s}
+.lantern1{
+  left:85px;
+  top:245px;
+}
+
+.lantern2{
+  right:85px;
+  top:280px;
+}
 
 @keyframes lanternSwing{
-  from{transform:rotate(-5deg)}
-  to{transform:rotate(6deg)}
+
+  from{
+    transform:rotate(-5deg);
+  }
+
+  to{
+    transform:rotate(6deg);
+  }
+
 }
 
-/* Fireflies */
+
+/* fireflies */
 
 .firefly{
-  position:fixed;
-  width:7px;
-  height:7px;
+  position:absolute;
+
+  width:9px;
+  height:9px;
+
   border-radius:50%;
-  background:#ffe864;
-  box-shadow:0 0 12px #ffe864;
-  z-index:1;
-  animation:fly 5s infinite ease-in-out;
+
+  background:#ffe45d;
+
+  box-shadow:
+    0 0 15px #ffe45d;
+
+  animation:
+    firefly 4s
+    infinite ease-in-out;
 }
 
-.firefly.f1{left:15%;bottom:20%}
-.firefly.f2{left:35%;bottom:12%;animation-delay:1s}
-.firefly.f3{right:24%;bottom:17%;animation-delay:2s}
-.firefly.f4{right:11%;bottom:10%;animation-delay:3s}
-
-@keyframes fly{
-  0%,100%{transform:translate(0,0);opacity:.3}
-  25%{transform:translate(25px,-30px);opacity:1}
-  50%{transform:translate(-15px,-50px)}
-  75%{transform:translate(15px,-20px)}
+.f1{
+  left:260px;
+  bottom:120px;
 }
 
-/* ======================================================
-   APP
-====================================================== */
-
-.app{
-  width:min(1180px,100%);
-  margin:auto;
-  position:relative;
-  z-index:5;
+.f2{
+  left:720px;
+  bottom:180px;
+  animation-delay:1s;
 }
+
+.f3{
+  right:250px;
+  bottom:120px;
+  animation-delay:2s;
+}
+
+@keyframes firefly{
+
+  0%,
+  100%{
+    transform:translate(0,0);
+    opacity:.2;
+  }
+
+  50%{
+    transform:
+      translate(30px,-50px);
+
+    opacity:1;
+  }
+
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
 
 .topbar{
+  position:absolute;
+
+  left:35px;
+  right:35px;
+  top:24px;
+
+  height:70px;
+
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:12px;
-  margin-bottom:12px;
-  flex-wrap:wrap;
+  justify-content:space-between;
+
+  z-index:20;
 }
 
+
 .logo{
-  background:var(--cream);
-  border:3px solid var(--ink);
+  height:58px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 23px;
+
+  border:4px solid #15212b;
   border-radius:18px;
-  padding:10px 15px;
+
+  background:#fff9e8;
+
   font-weight:1000;
-  box-shadow:5px 5px 0 var(--ink);
-  transform:rotate(-1deg);
+  font-size:22px;
+
+  box-shadow:
+    6px 6px 0 #15212b;
 }
+
 
 .stats{
   display:flex;
-  gap:7px;
-  flex-wrap:wrap;
+  gap:12px;
 }
+
 
 .stat{
-  background:#fff;
-  border:2px solid var(--ink);
+  min-width:105px;
+  height:58px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap:8px;
+
+  padding:0 17px;
+
+  border:
+    4px solid #15212b;
+
   border-radius:999px;
-  padding:8px 12px;
+
+  background:white;
+
+  font-size:20px;
   font-weight:1000;
-  box-shadow:3px 3px 0 var(--ink);
+
+  box-shadow:
+    5px 5px 0 #15212b;
 }
 
-.card{
-  border:4px solid var(--ink);
-  border-radius:28px;
-  background:rgba(255,249,227,.97);
-  box-shadow:9px 9px 0 rgba(23,33,43,.95);
-  padding:24px;
+
+.soundButton{
+  cursor:pointer;
 }
 
-.center{
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.mainCard{
+  position:absolute;
+
+  left:34px;
+  right:34px;
+
+  top:115px;
+  bottom:28px;
+
+  z-index:10;
+
+  border:
+    5px solid #15212b;
+
+  border-radius:35px;
+
+  background:
+    rgba(
+      255,
+      250,
+      230,
+      .96
+    );
+
+  box-shadow:
+    11px 11px 0
+    rgba(21,33,43,.9);
+
+  overflow:hidden;
+}
+
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+
+.startScreen{
+  position:absolute;
+  inset:0;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
   text-align:center;
 }
 
-.bigEmoji{
-  font-size:90px;
-  animation:bob 1.6s ease-in-out infinite;
+
+.startContent{
+  width:980px;
 }
 
-@keyframes bob{
-  50%{transform:translateY(-8px)}
+
+.bigPanda{
+  font-size:105px;
+
+  animation:
+    pandaFloat
+    1.6s
+    ease-in-out infinite;
 }
 
-h1{
-  font-size:clamp(36px,6vw,60px);
-  line-height:1.05;
+
+@keyframes pandaFloat{
+
+  50%{
+    transform:
+      translateY(-10px)
+      rotate(3deg);
+  }
+
 }
 
-h2{
-  font-size:clamp(24px,4vw,36px);
-}
 
-.muted{
-  color:#5d676d;
-  line-height:1.65;
-}
+.startTitle{
+  margin-top:8px;
 
-.btn{
-  border:3px solid var(--ink);
-  border-radius:16px;
-  padding:13px 22px;
-  background:var(--yellow);
-  font-size:16px;
+  font-size:67px;
+  line-height:1;
+
   font-weight:1000;
-  cursor:pointer;
-  box-shadow:5px 5px 0 var(--ink);
-  transition:.12s;
 }
 
-.btn:hover{
-  transform:translate(-2px,-2px);
-  box-shadow:7px 7px 0 var(--ink);
-}
 
-.btn.secondary{
-  background:white;
-}
+.chineseTitle{
+  margin-top:14px;
 
-.btn.blue{
-  background:#bdefff;
-}
+  font-size:30px;
 
-/* ======================================================
-   START
-====================================================== */
-
-.startGrid{
-  max-width:760px;
-  margin:22px auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-
-.info{
-  background:white;
-  border:2px solid var(--ink);
-  border-radius:17px;
-  padding:14px 9px;
   font-weight:900;
 }
 
-.info span{
-  display:block;
-  font-size:38px;
-  margin-bottom:5px;
+
+.startText{
+  margin-top:15px;
+
+  font-size:20px;
+  line-height:1.65;
+
+  color:#5c6770;
 }
 
-/* ======================================================
-   GAME LAYOUT
-====================================================== */
 
-.gameLayout{
+.startFeatures{
+  margin:
+    28px auto 30px;
+
+  width:900px;
+
   display:grid;
-  grid-template-columns:1.5fr .78fr;
-  gap:18px;
-  align-items:stretch;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:14px;
 }
 
-/* ======================================================
-   RUNNER STAGE
-====================================================== */
 
-.stage{
-  min-height:680px;
+.feature{
+  padding:18px 10px;
+
+  border:
+    3px solid #15212b;
+
+  border-radius:17px;
+
+  background:white;
+
+  font-size:17px;
+  font-weight:900;
+}
+
+
+.featureEmoji{
+  display:block;
+
+  font-size:43px;
+
+  margin-bottom:6px;
+}
+
+
+/* buttons */
+
+.btn{
+  border:
+    3px solid #15212b;
+
+  border-radius:15px;
+
+  padding:14px 24px;
+
+  background:white;
+
+  color:#15212b;
+
+  font-weight:1000;
+
+  font-size:18px;
+
+  cursor:pointer;
+
+  box-shadow:
+    5px 5px 0 #15212b;
+
+  transition:.13s;
+}
+
+
+.btn:hover{
+  transform:
+    translate(-2px,-2px);
+
+  box-shadow:
+    7px 7px 0 #15212b;
+}
+
+
+.btnPrimary{
+  background:#ffd84d;
+}
+
+
+.btnBlue{
+  background:#bcefff;
+}
+
+
+/* =========================================================
+   GAME SCREEN
+========================================================= */
+
+.gameScreen{
+  position:absolute;
+  inset:0;
+
+  display:grid;
+
+  grid-template-columns:
+    63% 37%;
+}
+
+
+/* =========================================================
+   LEFT RUNNER WORLD
+========================================================= */
+
+.runnerArea{
   position:relative;
+
   overflow:hidden;
-  border:3px solid var(--ink);
-  border-radius:26px;
+
+  border-right:
+    4px solid #15212b;
+
   background:
     linear-gradient(
       to bottom,
-      rgba(102,185,220,.92) 0%,
-      rgba(158,219,210,.92) 35%,
-      rgba(103,174,93,.96) 35%,
-      rgba(66,132,72,.98) 100%
+      #75c2dd 0%,
+      #a7dbe0 45%,
+      #68ad66 45%,
+      #448b50 100%
     );
 }
 
-/* far scenery */
 
-.stage::before{
-  content:"⛰️　🏯　⛰️　🏮　⛰️";
+/* background scenery */
+
+.runnerArea::before{
+  content:
+    "⛰️　　🏯　　⛰️";
+
   position:absolute;
-  top:24px;
+
+  top:20px;
+
   left:0;
+
   width:100%;
+
   text-align:center;
-  font-size:50px;
-  opacity:.55;
-  letter-spacing:20px;
+
+  font-size:75px;
+
+  opacity:.5;
 }
 
-/* perspective road */
+
+/* road */
 
 .road{
   position:absolute;
+
   left:50%;
-  bottom:-15px;
-  width:72%;
-  height:610px;
-  transform:translateX(-50%);
+
+  bottom:-5px;
+
+  width:88%;
+  height:720px;
+
+  transform:
+    translateX(-50%);
+
+  clip-path:
+    polygon(
+      42% 0,
+      58% 0,
+      100% 100%,
+      0 100%
+    );
+
   background:
     linear-gradient(
       90deg,
+
       transparent 0 8%,
-      #f4f4f4 8% 11%,
-      #d54545 11% 15%,
-      #46556b 15% 85%,
-      #d54545 85% 89%,
-      #f4f4f4 89% 92%,
-      transparent 92% 100%
+
+      #fff 8% 11%,
+
+      #e44747 11% 15%,
+
+      #475870 15% 85%,
+
+      #e44747 85% 89%,
+
+      #fff 89% 92%,
+
+      transparent 92%
     );
-  clip-path:polygon(
-    42% 0,
-    58% 0,
-    100% 100%,
-    0 100%
-  );
-  z-index:1;
-  filter:drop-shadow(0 10px 0 rgba(0,0,0,.12));
+
+  filter:
+    drop-shadow(
+      0 12px 0
+      rgba(0,0,0,.13)
+    );
 }
 
-/* center road lines */
+
+/* middle lane */
 
 .road::after{
   content:"";
+
   position:absolute;
-  left:49%;
-  top:0;
-  width:2%;
+
+  left:49.3%;
+
+  width:1.4%;
   height:100%;
+
   background:
     repeating-linear-gradient(
       to bottom,
-      rgba(255,255,255,.9) 0 25px,
-      transparent 25px 48px
+
+      rgba(255,255,255,.72)
+      0 34px,
+
+      transparent
+      34px 67px
     );
-  opacity:.55;
 }
 
-/* ======================================================
-   CHECKPOINTS
-====================================================== */
 
-.gates{
-  position:absolute;
-  inset:0;
-  z-index:3;
-}
+/* =========================================================
+   GATE
+========================================================= */
 
 .gateWrap{
   position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  width:270px;
-  height:175px;
-  transition:
-    transform .65s ease,
-    opacity .65s ease;
-}
 
-.gateWrap.hiddenGate{
-  opacity:0;
+  width:330px;
+  height:235px;
+
+  left:50%;
+
   transform:
     translateX(-50%)
-    translateY(-80px)
-    scale(.8);
-  pointer-events:none;
+    scale(.92);
+
+  bottom:385px;
+
+  z-index:6;
+
+  filter:
+    drop-shadow(
+      0 0 22px
+      rgba(255,220,72,.45)
+    );
 }
+
 
 .gate{
   position:absolute;
   inset:0;
 }
 
-.post{
+
+.gatePost{
   position:absolute;
+
   bottom:0;
-  width:36px;
-  height:125px;
+
+  width:45px;
+  height:170px;
+
+  border:
+    4px solid #15212b;
+
+  border-radius:7px;
+
   background:
     linear-gradient(
       90deg,
-      #9a5b29,
-      #d79a58,
-      #a9652e
+      #925926,
+      #dc9b55,
+      #9f642f
     );
-  border:3px solid var(--ink);
-  border-radius:7px;
 }
 
-.post.left{
-  left:14px;
+
+.gatePost.left{
+  left:16px;
 }
 
-.post.right{
-  right:14px;
+
+.gatePost.right{
+  right:16px;
 }
 
-.sign{
+
+/* sign */
+
+.gateSign{
   position:absolute;
+
   top:0;
   left:50%;
-  transform:translateX(-50%);
-  width:230px;
-  min-height:82px;
-  border:3px solid var(--ink);
-  border-radius:13px;
+
+  width:285px;
+  height:105px;
+
+  transform:
+    translateX(-50%);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  border:
+    4px solid #15212b;
+
+  border-radius:14px;
+
   background:
     linear-gradient(
-      #f3c37f,
-      #d99b55
+      #f5c983,
+      #dd9e59
     );
-  box-shadow:4px 4px 0 rgba(23,33,43,.35);
-  padding:8px;
-  text-align:center;
+
+  box-shadow:
+    5px 5px 0
+    rgba(21,33,43,.35);
 }
 
-.signEmoji{
-  font-size:28px;
-}
 
-.signWord{
+.gateEmoji{
   font-size:30px;
+}
+
+
+.gateWord{
+  font-size:36px;
+  line-height:1;
+
   font-weight:1000;
 }
 
-.signPinyin{
-  font-size:14px;
-  color:#4d5660;
+
+.gatePinyin{
+  margin-top:4px;
+
+  font-size:17px;
+
   font-weight:900;
+
+  color:#4f5960;
 }
+
+
+/* doors */
 
 .gateDoors{
   position:absolute;
+
+  width:205px;
+  height:125px;
+
   left:50%;
   bottom:0;
-  width:165px;
-  height:98px;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   overflow:hidden;
 }
 
+
 .door{
   position:absolute;
-  top:0;
+
   width:50%;
   height:100%;
+
+  top:0;
+
+  border:
+    4px solid #15212b;
+
   background:
     linear-gradient(
-      #d4a15d,
-      #ad7038
+      #d8a05a,
+      #aa6c36
     );
-  border:3px solid var(--ink);
-  transition:transform .55s cubic-bezier(.3,1.2,.5,1);
+
+  transition:
+    transform .45s
+    cubic-bezier(.3,1.2,.5,1);
 }
+
 
 .door.left{
   left:0;
-  border-radius:10px 0 0 10px;
-  transform-origin:left center;
+
+  border-radius:
+    12px 0 0 12px;
+
+  transform-origin:
+    left center;
 }
+
 
 .door.right{
   right:0;
-  border-radius:0 10px 10px 0;
-  transform-origin:right center;
+
+  border-radius:
+    0 12px 12px 0;
+
+  transform-origin:
+    right center;
 }
 
-.gate.open .door.left{
-  transform:rotateY(82deg);
+
+.gate.open
+.door.left{
+  transform:
+    rotateY(83deg);
 }
 
-.gate.open .door.right{
-  transform:rotateY(-82deg);
+
+.gate.open
+.door.right{
+  transform:
+    rotateY(-83deg);
 }
 
-.gate.shake{
-  animation:gateShake .35s;
+
+.gate.fail{
+  animation:
+    gateFail .38s;
 }
 
-@keyframes gateShake{
-  0%,100%{transform:translateX(0)}
-  25%{transform:translateX(-8px)}
-  75%{transform:translateX(8px)}
+
+@keyframes gateFail{
+
+  0%,
+  100%{
+    transform:
+      translateX(0);
+  }
+
+  25%{
+    transform:
+      translateX(-9px);
+  }
+
+  75%{
+    transform:
+      translateX(9px);
+  }
+
 }
 
-/* gate positions */
 
-.gateWrap.g1{bottom:370px;transform:translateX(-50%) scale(.72)}
-.gateWrap.g2{bottom:465px;transform:translateX(-50%) scale(.58)}
-.gateWrap.g3{bottom:535px;transform:translateX(-50%) scale(.47)}
+/* =========================================================
+   FAR GATES
+========================================================= */
 
-.currentGate{
-  filter:
-    drop-shadow(0 0 15px rgba(255,223,72,.9));
-}
-
-/* ======================================================
-   PANDA RUNNER
-====================================================== */
-
-.runner{
+.futureGate{
   position:absolute;
-  z-index:6;
+
   left:50%;
-  bottom:42px;
-  transform:translateX(-50%);
-  font-size:72px;
-  filter:drop-shadow(5px 7px 0 rgba(0,0,0,.18));
+
+  transform:
+    translateX(-50%);
+
+  border:
+    4px solid #15212b;
+
+  background:#dca05d;
+
+  border-radius:9px;
+
+  opacity:.65;
+}
+
+
+.futureGate.one{
+  width:160px;
+  height:100px;
+
+  bottom:545px;
+}
+
+
+.futureGate.two{
+  width:105px;
+  height:65px;
+
+  bottom:620px;
+
+  opacity:.4;
+}
+
+
+/* =========================================================
+   PANDA
+========================================================= */
+
+.panda{
+  position:absolute;
+
+  left:50%;
+
+  bottom:55px;
+
+  z-index:12;
+
+  transform:
+    translateX(-50%);
+
+  font-size:88px;
+
+  filter:
+    drop-shadow(
+      7px 8px 0
+      rgba(0,0,0,.2)
+    );
+
   transition:
-    bottom .75s cubic-bezier(.3,1.25,.5,1),
-    transform .3s;
+    bottom .8s
+    cubic-bezier(.3,1.25,.5,1);
 }
 
-.runner.run{
-  animation:runBounce .28s infinite alternate;
+
+.panda.running{
+  animation:
+    pandaRun
+    .25s
+    infinite alternate;
 }
 
-@keyframes runBounce{
+
+@keyframes pandaRun{
+
   from{
     transform:
       translateX(-50%)
       translateY(0)
-      rotate(-3deg);
+      rotate(-4deg);
   }
+
   to{
     transform:
       translateX(-50%)
-      translateY(-8px)
-      rotate(3deg);
+      translateY(-10px)
+      rotate(4deg);
   }
+
 }
 
-.runner.celebrate{
-  animation:celebrate .65s;
+
+.panda.success{
+  animation:
+    pandaSuccess
+    .7s;
 }
 
-@keyframes celebrate{
+
+@keyframes pandaSuccess{
+
   35%{
     transform:
       translateX(-50%)
-      translateY(-45px)
+      translateY(-38px)
       rotate(-8deg)
-      scale(1.08);
+      scale(1.12);
   }
+
   70%{
     transform:
       translateX(-50%)
-      translateY(-15px)
-      rotate(7deg);
+      rotate(8deg);
   }
+
 }
 
-.runner.fail{
-  animation:fail .4s;
+
+.panda.fail{
+  animation:
+    pandaFail
+    .4s;
 }
 
-@keyframes fail{
+
+@keyframes pandaFail{
+
   25%{
     transform:
       translateX(calc(-50% - 12px))
-      rotate(-8deg);
+      rotate(-7deg);
   }
+
   50%{
     transform:
       translateX(calc(-50% + 12px))
-      rotate(8deg);
+      rotate(7deg);
   }
-  75%{
-    transform:
-      translateX(calc(-50% - 7px))
-      rotate(-4deg);
-  }
+
 }
 
-/* ======================================================
-   CONTROL PANEL
-====================================================== */
 
-.panel{
-  border:3px solid var(--ink);
-  border-radius:25px;
-  background:#fffdf5;
-  padding:18px;
+/* =========================================================
+   RIGHT CONTROL PANEL
+========================================================= */
+
+.controlArea{
+  background:#fffaf0;
+
+  padding:25px;
+
   display:flex;
+
   flex-direction:column;
+
   justify-content:center;
+
+  position:relative;
 }
+
 
 .checkpointTag{
   align-self:center;
-  background:#dff4ff;
-  border:2px solid var(--ink);
+
+  padding:9px 18px;
+
+  border:
+    3px solid #15212b;
+
   border-radius:999px;
-  padding:6px 12px;
+
+  background:#dff4ff;
+
+  font-size:16px;
+
   font-weight:1000;
-  font-size:13px;
-  margin-bottom:10px;
+
+  margin-bottom:14px;
 }
+
+
+/* word card */
 
 .wordCard{
-  border:3px solid var(--ink);
-  border-radius:20px;
-  background:#fff2b9;
-  padding:18px 12px;
+  width:100%;
+
+  padding:22px 15px;
+
+  border:
+    4px solid #15212b;
+
+  border-radius:23px;
+
+  background:
+    linear-gradient(
+      #fff1b7,
+      #ffe99b
+    );
+
   text-align:center;
-  margin-bottom:12px;
 }
 
-.pic{
-  font-size:68px;
+
+.wordPic{
+  font-size:58px;
 }
 
-.hanzi{
-  font-size:50px;
+
+.wordHanzi{
+  margin-top:2px;
+
+  font-size:69px;
+
+  line-height:1;
+
   font-weight:1000;
-  line-height:1.05;
 }
 
-.pinyin{
-  font-size:22px;
-  font-weight:900;
+
+.wordPinyin{
+  margin-top:7px;
+
+  font-size:27px;
+
+  font-weight:1000;
+
   color:#59636d;
-  margin-top:5px;
 }
 
-.meaning{
-  font-size:14px;
-  color:#737c82;
-  margin-top:5px;
+
+.wordMeaning{
+  margin-top:4px;
+
+  font-size:17px;
+
+  color:#6e777e;
 }
 
-.buttonRow{
+
+/* controls */
+
+.controlButtons{
   display:flex;
-  gap:8px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-bottom:12px;
+
+  gap:10px;
+
+  margin-top:13px;
 }
 
-.mic{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  border:4px solid var(--ink);
-  background:#ff6e80;
-  box-shadow:6px 6px 0 var(--ink);
-  font-size:46px;
-  cursor:pointer;
+
+.controlButtons
+.btn{
+  flex:1;
+}
+
+
+/* =========================================================
+   ALWAYS ON MIC
+========================================================= */
+
+.micPanel{
+  margin-top:16px;
+
+  border:
+    3px solid #15212b;
+
+  border-radius:20px;
+
+  padding:16px;
+
+  background:white;
+
+  text-align:center;
+}
+
+
+.micStatusRow{
   display:flex;
+
   justify-content:center;
+
   align-items:center;
-  margin:8px auto;
-  transition:.15s;
+
+  gap:11px;
 }
 
-.mic:hover{
-  transform:scale(1.04);
+
+.micOrb{
+  width:58px;
+  height:58px;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  border:
+    3px solid #15212b;
+
+  border-radius:50%;
+
+  background:#ff7787;
+
+  font-size:28px;
+
+  transition:.2s;
 }
 
-.mic.listening{
-  background:#6cda79;
-  animation:micPulse .55s infinite alternate;
+
+.micOrb.active{
+  background:#69da80;
+
+  animation:
+    micPulse .55s
+    infinite alternate;
 }
+
 
 @keyframes micPulse{
+
   to{
-    transform:scale(1.08);
+    transform:scale(1.1);
+
     box-shadow:
-      6px 6px 0 var(--ink),
-      0 0 0 14px rgba(108,218,121,.18);
+      0 0 0 10px
+      rgba(105,218,128,.17);
   }
+
 }
 
-.micText{
-  text-align:center;
+
+.micTitle{
+  text-align:left;
+
+  font-size:18px;
+
   font-weight:1000;
-  margin-bottom:10px;
 }
 
-.heard{
-  min-height:62px;
-  border:2px dashed var(--ink);
-  border-radius:14px;
-  background:white;
-  padding:11px;
+
+.micSubtitle{
+  margin-top:2px;
+
+  text-align:left;
+
+  color:#6f7980;
+
+  font-size:13px;
+}
+
+
+.voiceWave{
+  height:26px;
+
+  margin:10px 0 3px;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  gap:5px;
+}
+
+
+.waveBar{
+  width:6px;
+  height:8px;
+
+  border-radius:999px;
+
+  background:#6ed981;
+}
+
+
+.micOrb.active
+~ div
+.voiceWave
+.waveBar{
+  animation:
+    wave .65s
+    infinite alternate;
+}
+
+
+.waveBar:nth-child(2){
+  animation-delay:.1s!important;
+}
+
+.waveBar:nth-child(3){
+  animation-delay:.2s!important;
+}
+
+.waveBar:nth-child(4){
+  animation-delay:.3s!important;
+}
+
+.waveBar:nth-child(5){
+  animation-delay:.4s!important;
+}
+
+
+@keyframes wave{
+
+  from{
+    height:7px;
+  }
+
+  to{
+    height:25px;
+  }
+
+}
+
+
+/* heard transcript */
+
+.heardBox{
+  margin-top:8px;
+
+  min-height:68px;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:10px;
+
+  border:
+    2px dashed #526672;
+
+  border-radius:13px;
+
+  background:#f5f7f8;
+
+  font-weight:900;
+
+  line-height:1.35;
+
+  color:#55636d;
+
+  transition:.2s;
+}
+
+
+.heardBox.good{
+  border-color:#3a8f5b;
+
+  background:#dcf8e3;
+
+  color:#08713c;
+}
+
+
+.heardBox.bad{
+  border-color:#be5362;
+
+  background:#ffe0e4;
+
+  color:#b1293c;
+}
+
+
+.progressText{
+  margin-top:12px;
+
   text-align:center;
+
+  font-size:16px;
+
+  font-weight:1000;
+
+  color:#59646c;
+}
+
+
+/* =========================================================
+   BOSS BOX
+========================================================= */
+
+.bossBox{
+  position:absolute;
+
+  inset:
+    12px 12px auto 12px;
+
+  z-index:30;
+
+  border:
+    3px solid #15212b;
+
+  border-radius:16px;
+
+  background:#ffe2eb;
+
+  padding:13px;
+
+  text-align:center;
+
   font-weight:900;
 }
 
-.heard.good{
-  background:#dcf7e2;
-  color:#08733a;
-}
 
-.heard.bad{
-  background:#ffe1e1;
-  color:#b3262e;
-}
+/* =========================================================
+   RESULT SCREEN
+========================================================= */
 
-.progress{
-  text-align:center;
-  margin-top:12px;
-  font-weight:1000;
-}
+.resultScreen{
+  position:absolute;
+  inset:0;
 
-/* ======================================================
-   BOSS
-====================================================== */
+  display:flex;
 
-.bossBox{
-  margin-top:13px;
-  border:3px solid var(--ink);
-  border-radius:18px;
-  background:#ffe0eb;
-  padding:14px;
+  justify-content:center;
+  align-items:center;
+
   text-align:center;
 }
 
-.bossBox .emoji{
-  font-size:46px;
+
+.resultContent{
+  width:950px;
 }
 
-.bossText{
+
+.resultEmoji{
+  font-size:105px;
+}
+
+
+.resultTitle{
+  font-size:62px;
+
   font-weight:1000;
-  line-height:1.5;
-  margin-top:6px;
 }
 
-/* ======================================================
-   RESULT
-====================================================== */
 
 .resultGrid{
-  max-width:650px;
-  margin:20px auto;
+  margin:
+    27px auto;
+
+  width:760px;
+
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:15px;
 }
 
+
 .resultBox{
-  border:2px solid var(--ink);
-  border-radius:16px;
+  padding:20px;
+
+  border:
+    3px solid #15212b;
+
+  border-radius:17px;
+
   background:white;
-  padding:15px 8px;
+
+  font-size:16px;
+
+  font-weight:900;
 }
+
 
 .resultBox strong{
   display:block;
-  font-size:25px;
+
   margin-top:5px;
+
+  font-size:32px;
 }
+
 
 .resultMessage{
-  max-width:650px;
-  margin:18px auto;
-  border:3px dashed var(--ink);
-  border-radius:18px;
-  background:#fff1b5;
+  width:760px;
+
+  margin:
+    0 auto 24px;
+
+  border:
+    3px dashed #15212b;
+
+  border-radius:17px;
+
+  background:#fff0b4;
+
   padding:17px;
-  font-weight:800;
-  line-height:1.6;
+
+  font-size:18px;
+
+  font-weight:850;
 }
 
-/* ======================================================
-   SCREEN FLASH
-====================================================== */
+
+/* =========================================================
+   ORIENTATION MESSAGE
+========================================================= */
+
+.rotateHint{
+  position:fixed;
+
+  z-index:10000;
+
+  left:50%;
+
+  bottom:10px;
+
+  transform:
+    translateX(-50%);
+
+  padding:8px 13px;
+
+  border-radius:999px;
+
+  background:
+    rgba(0,0,0,.75);
+
+  color:white;
+
+  font-size:12px;
+
+  font-weight:850;
+
+  pointer-events:none;
+
+  display:none;
+}
+
+
+@media(
+  orientation:portrait
+){
+
+  .rotateHint{
+    display:block;
+  }
+
+}
+
+
+/* =========================================================
+   FLASH EFFECT
+========================================================= */
 
 .flash{
   position:fixed;
+
   inset:0;
-  z-index:999;
-  pointer-events:none;
+
+  z-index:9000;
+
   opacity:0;
+
+  pointer-events:none;
 }
+
 
 .flash.good{
-  background:rgba(89,255,132,.22);
-  animation:flash .25s;
+  background:
+    rgba(83,255,137,.22);
+
+  animation:
+    flashEffect .3s;
 }
+
 
 .flash.bad{
-  background:rgba(255,71,71,.24);
-  animation:flash .3s;
+  background:
+    rgba(255,58,80,.2);
+
+  animation:
+    flashEffect .3s;
 }
 
-@keyframes flash{
-  50%{opacity:1}
+
+@keyframes flashEffect{
+
+  50%{
+    opacity:1;
+  }
+
 }
 
-/* ======================================================
-   MOBILE
-====================================================== */
 
-@media(max-width:900px){
-  .gameLayout{
-    grid-template-columns:1fr;
-  }
+/* =========================================================
+   UTILITIES
+========================================================= */
 
-  .stage{
-    min-height:620px;
-  }
+.hidden{
+  display:none!important;
 }
 
-@media(max-width:650px){
-  .world{
-    padding:8px;
-  }
-
-  .card{
-    padding:15px 9px;
-    box-shadow:5px 5px 0 var(--ink);
-  }
-
-  .startGrid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .stage{
-    min-height:560px;
-  }
-
-  .road{
-    width:90%;
-    height:520px;
-  }
-
-  .runner{
-    font-size:58px;
-  }
-
-  .gateWrap{
-    width:220px;
-    height:150px;
-  }
-
-  .sign{
-    width:190px;
-  }
-
-  .signWord{
-    font-size:25px;
-  }
-
-  .resultGrid{
-    grid-template-columns:1fr;
-  }
-
-  .bamboo{
-    display:none;
-  }
-}
 </style>
 </head>
 
+
 <body>
 
-<div class="world">
+<div class="viewport">
 
-  <!-- BACKGROUND -->
+<div
+  class="game"
+  id="game"
+>
+
+  <!-- background -->
+
+  <div class="skyGlow"></div>
 
   <div class="moon"></div>
 
@@ -949,129 +1725,192 @@ h2{
   <div class="star s4">✦</div>
   <div class="star s5">✦</div>
 
-  <div class="cloud c1">☁️</div>
-  <div class="cloud c2">☁️</div>
+  <div class="cloud cloud1">☁️</div>
+  <div class="cloud cloud2">☁️</div>
 
   <div class="mountains">
     ⛰️　⛰️　⛰️　⛰️
   </div>
 
-  <div class="bamboo left">🎋</div>
-  <div class="bamboo right">🎋</div>
+  <div class="bamboo bambooLeft">
+    🎋
+  </div>
 
-  <div class="lantern l1">🏮</div>
-  <div class="lantern l2">🏮</div>
+  <div class="bamboo bambooRight">
+    🎋
+  </div>
+
+  <div class="lantern lantern1">
+    🏮
+  </div>
+
+  <div class="lantern lantern2">
+    🏮
+  </div>
 
   <div class="firefly f1"></div>
   <div class="firefly f2"></div>
   <div class="firefly f3"></div>
-  <div class="firefly f4"></div>
 
-  <main class="app">
 
-    <!-- TOPBAR -->
+  <!-- =====================================================
+       TOP BAR
+  ====================================================== -->
 
-    <div class="topbar">
+  <div class="topbar">
 
-      <div class="logo">
-        🐼 PANDA VOICE RUNNER · 发音跑酷
+    <div class="logo">
+      🐼 PANDA VOICE RUNNER · 发音跑酷
+    </div>
+
+
+    <div
+      class="stats hidden"
+      id="stats"
+    >
+
+      <div class="stat">
+        🚪
+        <span id="gateStat">
+          1
+        </span>
+        /8
       </div>
 
+
+      <div class="stat">
+        ⭐
+        <span id="scoreStat">
+          0
+        </span>
+      </div>
+
+
+      <div class="stat">
+        🎙️
+        <span id="attemptStat">
+          0
+        </span>
+      </div>
+
+
       <div
-        class="stats hidden"
-        id="stats">
-
-        <div class="stat">
-          🚪 <span id="gateStat">1</span>/8
-        </div>
-
-        <div class="stat">
-          ⭐ <span id="scoreStat">0</span>
-        </div>
-
-        <div class="stat">
-          🎙️ <span id="attemptStat">0</span>
-        </div>
-
-        <div
-          class="stat"
-          id="soundBtn"
-          onclick="toggleSound()"
-          style="cursor:pointer">
-          🔊
-        </div>
-
+        class="stat soundButton"
+        id="soundButton"
+        onclick="toggleSound()"
+      >
+        🔊
       </div>
 
     </div>
 
+  </div>
 
-    <!-- ==================================================
+
+  <!-- =====================================================
+       MAIN CARD
+  ====================================================== -->
+
+  <div class="mainCard">
+
+
+    <!-- ===================================================
          START SCREEN
-    =================================================== -->
+    ==================================================== -->
 
     <section
-      class="card"
-      id="startScreen">
+      class="startScreen"
+      id="startScreen"
+    >
 
-      <div class="center">
+      <div class="startContent">
 
-        <div class="bigEmoji">
+        <div class="bigPanda">
           🐼🏃‍♂️🎙️
         </div>
 
-        <h1>
+
+        <div class="startTitle">
           PANDA VOICE RUNNER
-        </h1>
+        </div>
 
-        <h2 style="margin-top:8px;">
+
+        <div class="chineseTitle">
           发音跑酷 · Chạy bằng giọng nói
-        </h2>
+        </div>
 
-        <p
-          class="muted"
-          style="margin-top:14px;">
 
-          Panda sẽ chạy tới từng cổng.
+        <div class="startText">
+
+          Panda sẽ chạy qua
+          <strong>8 checkpoint</strong>.
+
           <br>
-          Cổng hiện chữ Hán + hình minh họa.
+
+          Sau khi bắt đầu,
+          microphone sẽ
+          <strong>tự nghe liên tục</strong>.
+
           <br>
-          <strong>
-            Đọc đúng → cổng mở → Panda chạy tiếp!
-          </strong>
 
-        </p>
+          Không cần bấm mic lại ở mỗi cổng.
+
+        </div>
 
 
-        <div class="startGrid">
+        <div class="startFeatures">
 
-          <div class="info">
-            <span>🚪</span>
-            Tới checkpoint
+          <div class="feature">
+
+            <span class="featureEmoji">
+              🎙️
+            </span>
+
+            Mic luôn nghe
+
           </div>
 
-          <div class="info">
-            <span>🔊</span>
-            Nghe mẫu
+
+          <div class="feature">
+
+            <span class="featureEmoji">
+              🚪
+            </span>
+
+            Đọc đúng mở cổng
+
           </div>
 
-          <div class="info">
-            <span>🎙️</span>
-            Đọc thật nhanh
+
+          <div class="feature">
+
+            <span class="featureEmoji">
+              🐼
+            </span>
+
+            Panda tự chạy
+
           </div>
 
-          <div class="info">
-            <span>🐼</span>
-            Qua cổng
+
+          <div class="feature">
+
+            <span class="featureEmoji">
+              👾
+            </span>
+
+            Final Boss
+
           </div>
 
         </div>
 
 
         <button
-          class="btn"
-          onclick="startGame()">
-          🏃‍♂️ BẮT ĐẦU CHẠY!
+          class="btn btnPrimary"
+          onclick="startGame()"
+        >
+          🎙️ CHO PHÉP MIC & BẮT ĐẦU
         </button>
 
       </div>
@@ -1079,259 +1918,254 @@ h2{
     </section>
 
 
-    <!-- ==================================================
+    <!-- ===================================================
          GAME SCREEN
-    =================================================== -->
+    ==================================================== -->
 
     <section
-      class="card hidden"
-      id="gameScreen">
-
-      <div class="gameLayout">
-
-        <!-- RUNNER SIDE -->
-
-        <div class="stage">
-
-          <div class="road"></div>
+      class="gameScreen hidden"
+      id="gameScreen"
+    >
 
 
-          <div class="gates">
+      <!-- ===============================================
+           LEFT SIDE
+      ================================================ -->
 
-            <!-- CURRENT GATE -->
+      <div class="runnerArea">
 
-            <div
-              class="gateWrap g1 currentGate"
-              id="gate1">
-
-              <div
-                class="gate"
-                id="currentGate">
-
-                <div class="post left"></div>
-                <div class="post right"></div>
-
-                <div class="sign">
-
-                  <div
-                    class="signEmoji"
-                    id="gateEmoji">
-                    👋
-                  </div>
-
-                  <div
-                    class="signWord"
-                    id="gateWord">
-                    你好
-                  </div>
-
-                  <div
-                    class="signPinyin"
-                    id="gatePinyin">
-                    nǐ hǎo
-                  </div>
-
-                </div>
+        <div class="road"></div>
 
 
-                <div class="gateDoors">
+        <!-- far checkpoints -->
 
-                  <div class="door left"></div>
-                  <div class="door right"></div>
-
-                </div>
-
-              </div>
-
-            </div>
+        <div class="futureGate two"></div>
+        <div class="futureGate one"></div>
 
 
-            <!-- FUTURE GATE DECOR -->
+        <!-- current gate -->
 
-            <div
-              class="gateWrap g2"
-              id="gate2">
-
-              <div class="gate">
-
-                <div class="post left"></div>
-                <div class="post right"></div>
-
-                <div class="sign">
-
-                  <div class="signEmoji">
-                    🎋
-                  </div>
-
-                  <div class="signWord">
-                    ???
-                  </div>
-
-                </div>
-
-                <div class="gateDoors">
-
-                  <div class="door left"></div>
-                  <div class="door right"></div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div
-              class="gateWrap g3"
-              id="gate3">
-
-              <div class="gate">
-
-                <div class="post left"></div>
-                <div class="post right"></div>
-
-                <div class="sign">
-
-                  <div class="signEmoji">
-                    🏮
-                  </div>
-
-                  <div class="signWord">
-                    ???
-                  </div>
-
-                </div>
-
-                <div class="gateDoors">
-
-                  <div class="door left"></div>
-                  <div class="door right"></div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- PANDA -->
+        <div class="gateWrap">
 
           <div
-            class="runner"
-            id="runner">
-            🐼
+            class="gate"
+            id="gate"
+          >
+
+            <div class="gatePost left"></div>
+
+            <div class="gatePost right"></div>
+
+
+            <div class="gateSign">
+
+              <div
+                class="gateEmoji"
+                id="gateEmoji"
+              >
+                👋
+              </div>
+
+
+              <div
+                class="gateWord"
+                id="gateWord"
+              >
+                你好
+              </div>
+
+
+              <div
+                class="gatePinyin"
+                id="gatePinyin"
+              >
+                nǐ hǎo
+              </div>
+
+            </div>
+
+
+            <div class="gateDoors">
+
+              <div class="door left"></div>
+
+              <div class="door right"></div>
+
+            </div>
+
           </div>
 
         </div>
 
 
-        <!-- CONTROL PANEL -->
+        <!-- Panda -->
 
-        <div class="panel">
+        <div
+          class="panda"
+          id="panda"
+        >
+          🐼
+        </div>
+
+      </div>
+
+
+      <!-- ===============================================
+           RIGHT SIDE
+      ================================================ -->
+
+      <div class="controlArea">
+
+
+        <!-- Boss info -->
+
+        <div
+          class="bossBox hidden"
+          id="bossBox"
+        >
+
+          👾 FINAL BOSS
+
+          <br>
+
+          王老师：同学们，你们好！
+
+          <br>
+
+          🎙️ Hãy đáp:
+          <strong>
+            老师，您好！
+          </strong>
+
+        </div>
+
+
+        <div
+          class="checkpointTag"
+          id="checkpointTag"
+        >
+          🚪 CHECKPOINT 1
+        </div>
+
+
+        <div class="wordCard">
 
           <div
-            class="checkpointTag"
-            id="checkpointTag">
-            🚪 CHECKPOINT 1
+            class="wordPic"
+            id="wordPic"
+          >
+            👋
           </div>
 
 
-          <div class="wordCard">
-
-            <div
-              class="pic"
-              id="wordPic">
-              👋
-            </div>
-
-            <div
-              class="hanzi"
-              id="wordHanzi">
-              你好
-            </div>
-
-            <div
-              class="pinyin"
-              id="wordPinyin">
-              nǐ hǎo
-            </div>
-
-            <div
-              class="meaning"
-              id="wordMeaning">
-              xin chào
-            </div>
-
+          <div
+            class="wordHanzi"
+            id="wordHanzi"
+          >
+            你好
           </div>
 
 
-          <div class="buttonRow">
-
-            <button
-              class="btn secondary"
-              onclick="playSample()">
-              🔊 Nghe mẫu
-            </button>
-
-            <button
-              class="btn blue"
-              onclick="togglePinyin()">
-              👁️ Pinyin
-            </button>
-
+          <div
+            class="wordPinyin"
+            id="wordPinyin"
+          >
+            nǐ hǎo
           </div>
 
+
+          <div
+            class="wordMeaning"
+            id="wordMeaning"
+          >
+            xin chào
+          </div>
+
+        </div>
+
+
+        <div class="controlButtons">
 
           <button
-            class="mic"
-            id="micButton"
-            onclick="startRealtimeMic()">
-            🎙️
+            class="btn"
+            onclick="playSample()"
+          >
+            🔊 Nghe mẫu
           </button>
 
 
-          <div
-            class="micText"
-            id="micText">
-            Nhấn mic rồi đọc ngay!
-          </div>
+          <button
+            class="btn btnBlue"
+            onclick="togglePinyin()"
+          >
+            👁️ Pinyin
+          </button>
+
+        </div>
 
 
-          <div
-            class="heard"
-            id="heardBox">
-            Chưa nghe gì.
-          </div>
+        <!-- ALWAYS LISTENING -->
 
+        <div class="micPanel">
 
-          <div
-            class="bossBox hidden"
-            id="bossBox">
-
-            <div class="emoji">
-              👾🚪
-            </div>
-
-            <strong>
-              FINAL BOSS
-            </strong>
+          <div class="micStatusRow">
 
             <div
-              class="bossText"
-              id="bossText">
+              class="micOrb"
+              id="micOrb"
+            >
+              🎙️
+            </div>
+
+
+            <div>
+
+              <div
+                class="micTitle"
+                id="micTitle"
+              >
+                Đang chuẩn bị microphone...
+              </div>
+
+
+              <div
+                class="micSubtitle"
+                id="micSubtitle"
+              >
+                Mic sẽ tự nghe liên tục
+              </div>
+
             </div>
 
           </div>
 
 
-          <div
-            class="progress"
-            id="progressText">
-            Checkpoint 1 / 8
+          <div class="voiceWave">
+
+            <div class="waveBar"></div>
+            <div class="waveBar"></div>
+            <div class="waveBar"></div>
+            <div class="waveBar"></div>
+            <div class="waveBar"></div>
+
           </div>
 
+
+          <div
+            class="heardBox"
+            id="heardBox"
+          >
+            Đang kết nối...
+          </div>
+
+        </div>
+
+
+        <div
+          class="progressText"
+          id="progressText"
+        >
+          Checkpoint 1 / 8
         </div>
 
       </div>
@@ -1339,42 +2173,59 @@ h2{
     </section>
 
 
-    <!-- ==================================================
+    <!-- ===================================================
          RESULT
-    =================================================== -->
+    ==================================================== -->
 
     <section
-      class="card hidden"
-      id="resultScreen">
+      class="resultScreen hidden"
+      id="resultScreen"
+    >
 
-      <div class="center">
+      <div class="resultContent">
 
-        <div
-          class="bigEmoji"
-          id="resultEmoji">
+        <div class="resultEmoji">
           🐼🏆
         </div>
 
-        <h1 id="resultTitle">
+
+        <div class="resultTitle">
           太棒了！
-        </h1>
+        </div>
 
 
         <div class="resultGrid">
 
           <div class="resultBox">
-            Điểm
-            <strong id="finalScore">0</strong>
+
+            ĐIỂM
+
+            <strong id="finalScore">
+              0
+            </strong>
+
           </div>
 
-          <div class="resultBox">
-            Lần thử
-            <strong id="finalAttempts">0</strong>
-          </div>
 
           <div class="resultBox">
-            Checkpoint
-            <strong>8/8</strong>
+
+            LẦN NHẬN GIỌNG
+
+            <strong id="finalAttempts">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="resultBox">
+
+            CHECKPOINT
+
+            <strong>
+              8 / 8
+            </strong>
+
           </div>
 
         </div>
@@ -1382,13 +2233,15 @@ h2{
 
         <div
           class="resultMessage"
-          id="resultMessage">
+          id="resultMessage"
+        >
         </div>
 
 
         <button
-          class="btn"
-          onclick="restartGame()">
+          class="btn btnPrimary"
+          onclick="restartGame()"
+        >
           🔄 CHƠI LẠI
         </button>
 
@@ -1396,123 +2249,130 @@ h2{
 
     </section>
 
-  </main>
 
+  </div>
+
+</div>
+
+</div>
+
+
+<div class="rotateHint">
+  📱 Xoay ngang điện thoại để game lớn hơn
 </div>
 
 
 <div
   class="flash"
-  id="flash">
-</div>
+  id="flash"
+></div>
+
 
 
 <script>
 
-/* ======================================================
-   WORD DATA
-====================================================== */
+/* =========================================================
+   DATA
+========================================================= */
 
-const allWords = [
+const vocabulary = [
 
   {
-    hanzi:"你好",
-    pinyin:"nǐ hǎo",
-    pic:"👋",
-    meaning:"xin chào",
-    accepted:[
-      "你好",
-      "你 好"
+    hanzi: "你好",
+    pinyin: "nǐ hǎo",
+    pic: "👋",
+    meaning: "xin chào",
+    accepted: [
+      "你好"
     ]
   },
 
   {
-    hanzi:"您好",
-    pinyin:"nín hǎo",
-    pic:"🙇",
-    meaning:"xin chào (lịch sự)",
-    accepted:[
-      "您好",
-      "您 好"
+    hanzi: "您好",
+    pinyin: "nín hǎo",
+    pic: "🙇",
+    meaning: "xin chào lịch sự",
+    accepted: [
+      "您好"
     ]
   },
 
   {
-    hanzi:"老师",
-    pinyin:"lǎoshī",
-    pic:"👩‍🏫",
-    meaning:"giáo viên",
-    accepted:[
+    hanzi: "老师",
+    pinyin: "lǎoshī",
+    pic: "👩‍🏫",
+    meaning: "giáo viên",
+    accepted: [
       "老师"
     ]
   },
 
   {
-    hanzi:"学生",
-    pinyin:"xuésheng",
-    pic:"🧑‍🎓",
-    meaning:"học sinh",
-    accepted:[
+    hanzi: "学生",
+    pinyin: "xuésheng",
+    pic: "🧑‍🎓",
+    meaning: "học sinh",
+    accepted: [
       "学生"
     ]
   },
 
   {
-    hanzi:"同学",
-    pinyin:"tóngxué",
-    pic:"👫",
-    meaning:"bạn học",
-    accepted:[
+    hanzi: "同学",
+    pinyin: "tóngxué",
+    pic: "👫",
+    meaning: "bạn học",
+    accepted: [
       "同学"
     ]
   },
 
   {
-    hanzi:"大家",
-    pinyin:"dàjiā",
-    pic:"👨‍👩‍👧‍👦",
-    meaning:"mọi người",
-    accepted:[
+    hanzi: "大家",
+    pinyin: "dàjiā",
+    pic: "👥",
+    meaning: "mọi người",
+    accepted: [
       "大家"
     ]
   },
 
   {
-    hanzi:"谢谢",
-    pinyin:"xièxie",
-    pic:"🙏",
-    meaning:"cảm ơn",
-    accepted:[
+    hanzi: "谢谢",
+    pinyin: "xièxie",
+    pic: "🙏",
+    meaning: "cảm ơn",
+    accepted: [
       "谢谢"
     ]
   },
 
   {
-    hanzi:"再见",
-    pinyin:"zàijiàn",
-    pic:"👋",
-    meaning:"tạm biệt",
-    accepted:[
+    hanzi: "再见",
+    pinyin: "zàijiàn",
+    pic: "👋",
+    meaning: "tạm biệt",
+    accepted: [
       "再见"
     ]
   },
 
   {
-    hanzi:"不客气",
-    pinyin:"bú kèqi",
-    pic:"😊",
-    meaning:"không có gì",
-    accepted:[
+    hanzi: "不客气",
+    pinyin: "bú kèqi",
+    pic: "😊",
+    meaning: "không có gì",
+    accepted: [
       "不客气"
     ]
   },
 
   {
-    hanzi:"你们",
-    pinyin:"nǐmen",
-    pic:"👥",
-    meaning:"các bạn",
-    accepted:[
+    hanzi: "你们",
+    pinyin: "nǐmen",
+    pic: "👥",
+    meaning: "các bạn",
+    accepted: [
       "你们"
     ]
   }
@@ -1520,9 +2380,9 @@ const allWords = [
 ];
 
 
-/* ======================================================
-   GAME STATE
-====================================================== */
+/* =========================================================
+   STATE
+========================================================= */
 
 let words = [];
 
@@ -1536,190 +2396,299 @@ let showPinyin = true;
 
 let soundOn = true;
 
+
+/*
+  Speech Recognition
+*/
+
 let recognition = null;
 
-let isListening = false;
+let keepListening = false;
+
+let recognitionRunning = false;
+
+let restartingRecognition = false;
+
+
+/*
+  Khi Panda đang chạy,
+  không chấm thêm transcript.
+*/
+
+let locked = false;
+
+
+/*
+  Boss mode
+*/
 
 let bossMode = false;
 
-let solvedCurrent = false;
 
-let realtimeTimeout = null;
+/*
+  Dùng để tránh transcript cũ
+  bị chấm lại liên tục.
+*/
 
+let lastTranscript = "";
 
-/* ======================================================
-   START GAME
-====================================================== */
-
-function startGame(){
-
-  words =
-    shuffleArray(
-      allWords
-    )
-    .slice(0,8);
+let lastTranscriptTime = 0;
 
 
-  currentIndex = 0;
+/* =========================================================
+   SCALE 16:9
 
-  score = 0;
+   Game luôn là 1600 x 900.
+   JS tự scale để vừa viewport.
+========================================================= */
 
-  attempts = 0;
+function scaleGame(){
 
-  bossMode = false;
-
-  solvedCurrent = false;
-
-
-  document
-    .getElementById("startScreen")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("resultScreen")
-    .classList.add("hidden");
+  const game =
+    document.getElementById(
+      "game"
+    );
 
 
-  document
-    .getElementById("gameScreen")
-    .classList.remove("hidden");
+  const baseWidth =
+    1600;
 
 
-  document
-    .getElementById("stats")
-    .classList.remove("hidden");
+  const baseHeight =
+    900;
 
 
-  setupRecognition();
+  const scaleX =
+    window.innerWidth
+    /
+    baseWidth;
 
-  updateCheckpoint();
 
-  updateStats();
+  const scaleY =
+    window.innerHeight
+    /
+    baseHeight;
+
+
+  const scale =
+    Math.min(
+      scaleX,
+      scaleY
+    );
+
+
+  game.style.transform =
+    `scale(${scale})`;
 
 }
 
 
-/* ======================================================
-   UPDATE CHECKPOINT
-====================================================== */
+window.addEventListener(
+  "resize",
+  scaleGame
+);
 
-function updateCheckpoint(){
 
-  if(
-    currentIndex >= words.length
-  ){
+window.addEventListener(
+  "orientationchange",
+  () => {
 
-    startBoss();
+    setTimeout(
+      scaleGame,
+      250
+    );
+
+  }
+);
+
+
+scaleGame();
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+async function startGame(){
+
+  /*
+    Bắt buộc xin quyền microphone
+    từ thao tác click của người dùng.
+  */
+
+  const permission =
+    await requestMicrophonePermission();
+
+
+  if(!permission){
+
+    alert(
+      "Trình duyệt chưa cho phép microphone.\n\nHãy bật quyền Microphone rồi tải lại trang."
+    );
 
     return;
 
   }
 
 
-  bossMode = false;
-
-  solvedCurrent = false;
-
-
-  document
-    .getElementById("bossBox")
-    .classList.add("hidden");
-
-
-  const word =
-    words[currentIndex];
+  words =
+    shuffleArray(
+      vocabulary
+    )
+    .slice(
+      0,
+      8
+    );
 
 
-  document
-    .getElementById("checkpointTag")
-    .textContent =
-      `🚪 CHECKPOINT ${currentIndex + 1}`;
+  currentIndex =
+    0;
 
 
-  document
-    .getElementById("wordPic")
-    .textContent =
-      word.pic;
+  score =
+    0;
 
 
-  document
-    .getElementById("wordHanzi")
-    .textContent =
-      word.hanzi;
+  attempts =
+    0;
 
 
-  document
-    .getElementById("wordPinyin")
-    .textContent =
-      showPinyin
-      ? word.pinyin
-      : "••••••";
+  bossMode =
+    false;
+
+
+  locked =
+    false;
+
+
+  lastTranscript =
+    "";
 
 
   document
-    .getElementById("wordMeaning")
-    .textContent =
-      word.meaning;
+    .getElementById(
+      "startScreen"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 
 
   document
-    .getElementById("gateEmoji")
-    .textContent =
-      word.pic;
+    .getElementById(
+      "resultScreen"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 
 
   document
-    .getElementById("gateWord")
-    .textContent =
-      word.hanzi;
+    .getElementById(
+      "gameScreen"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
 
 
   document
-    .getElementById("gatePinyin")
-    .textContent =
-      showPinyin
-      ? word.pinyin
-      : "";
+    .getElementById(
+      "stats"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
 
 
-  document
-    .getElementById("progressText")
-    .textContent =
-      `Checkpoint ${currentIndex + 1} / ${words.length}`;
+  setupRecognition();
 
 
-  document
-    .getElementById("heardBox")
-    .className =
-      "heard";
-
-
-  document
-    .getElementById("heardBox")
-    .textContent =
-      "Nhấn mic và đọc thật nhanh!";
-
-
-  const gate =
-    document
-      .getElementById("currentGate");
-
-
-  gate.classList.remove(
-    "open",
-    "shake"
-  );
+  updateCheckpoint();
 
 
   updateStats();
 
+
+  /*
+    QUAN TRỌNG:
+    từ đây trở đi mic tự nghe.
+  */
+
+  keepListening =
+    true;
+
+
+  startRecognitionLoop();
+
 }
 
 
-/* ======================================================
-   REALTIME SPEECH RECOGNITION
-====================================================== */
+/* =========================================================
+   MICROPHONE PERMISSION
+========================================================= */
+
+async function requestMicrophonePermission(){
+
+  if(
+    !navigator.mediaDevices
+    ||
+    !navigator.mediaDevices.getUserMedia
+  ){
+
+    return true;
+
+  }
+
+
+  try{
+
+    const stream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+          audio: true
+        });
+
+
+    /*
+      Chỉ dùng stream để xin quyền.
+      SpeechRecognition sẽ tự dùng mic.
+    */
+
+    stream
+      .getTracks()
+      .forEach(
+        track => track.stop()
+      );
+
+
+    return true;
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Microphone permission:",
+      error
+    );
+
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================================================
+   SPEECH RECOGNITION SETUP
+========================================================= */
 
 function setupRecognition(){
 
@@ -1729,36 +2698,62 @@ function setupRecognition(){
     window.webkitSpeechRecognition;
 
 
+  /*
+    Browser không hỗ trợ.
+  */
+
   if(!SpeechRecognition){
 
     document
-      .getElementById("heardBox")
+      .getElementById(
+        "heardBox"
+      )
       .className =
-        "heard bad";
+        "heardBox bad";
 
 
     document
-      .getElementById("heardBox")
+      .getElementById(
+        "heardBox"
+      )
       .innerHTML =
         `
-        Trình duyệt này chưa hỗ trợ mic realtime.
+        ⚠️ Trình duyệt này không hỗ trợ
+        Speech Recognition.
         <br>
-        Dùng Chrome hoặc Edge nhé.
+        Hãy thử Chrome / Edge.
         `;
 
-    return;
+
+    document
+      .getElementById(
+        "micTitle"
+      )
+      .textContent =
+        "Không có Speech Recognition";
+
+
+    return false;
 
   }
 
+
+  /*
+    Tạo mới.
+  */
 
   recognition =
     new SpeechRecognition();
 
 
+  recognition.lang =
+    "zh-CN";
+
+
   /*
-    QUAN TRỌNG:
-    interimResults = true
-    để nhận ngay trong lúc học viên đang nói.
+    Interim Results:
+    không cần chờ người dùng nói xong
+    mới kiểm tra.
   */
 
   recognition.interimResults =
@@ -1766,201 +2761,336 @@ function setupRecognition(){
 
 
   /*
-    Cho phép tiếp tục nghe ngắn hạn
-    thay vì chờ 1 câu hoàn chỉnh.
+    Dùng false cho mỗi phiên ngắn,
+    rồi tự restart.
+
+    Cách này ổn định hơn
+    continuous=true trên nhiều máy.
   */
 
   recognition.continuous =
-    true;
-
-
-  recognition.lang =
-    "zh-CN";
+    false;
 
 
   recognition.maxAlternatives =
     5;
 
 
+  /* =============================================
+     START
+  ============================================== */
+
   recognition.onstart =
     () => {
 
-      isListening = true;
+      recognitionRunning =
+        true;
+
+
+      restartingRecognition =
+        false;
+
+
+      setMicVisual(
+        true,
+        "🎙️ MIC ĐANG NGHE",
+        "Cứ đọc từ phía trên — không cần bấm mic"
+      );
+
+    };
+
+
+  /* =============================================
+     RESULT
+  ============================================== */
+
+  recognition.onresult =
+    event => {
+
+
+      let transcripts =
+        [];
+
+
+      /*
+        Lấy tất cả alternatives
+        browser đoán được.
+      */
+
+      for(
+        let resultIndex =
+          event.resultIndex;
+
+        resultIndex <
+          event.results.length;
+
+        resultIndex++
+      ){
+
+        const result =
+          event.results[
+            resultIndex
+          ];
+
+
+        for(
+          let altIndex = 0;
+
+          altIndex <
+            result.length;
+
+          altIndex++
+        ){
+
+          const text =
+            result[
+              altIndex
+            ]
+            .transcript
+            .trim();
+
+
+          if(text){
+
+            transcripts
+              .push(
+                text
+              );
+
+          }
+
+        }
+
+      }
+
+
+      if(
+        transcripts.length ===
+        0
+      ){
+
+        return;
+
+      }
+
+
+      /*
+        Hiện transcript đầu tiên.
+      */
+
+      const visible =
+        transcripts[0];
 
 
       document
-        .getElementById("micButton")
-        .classList.add("listening");
-
-
-      document
-        .getElementById("micText")
-        .textContent =
-          "🎧 Đang nghe realtime...";
-
-
-      document
-        .getElementById("heardBox")
+        .getElementById(
+          "heardBox"
+        )
         .className =
-          "heard";
+          "heardBox";
 
 
       document
-        .getElementById("heardBox")
-        .textContent =
-          "Nói ngay bây giờ!";
+        .getElementById(
+          "heardBox"
+        )
+        .innerHTML =
+          `
+          🎧 Máy nghe:
+          <strong>
+          ${escapeHtml(visible)}
+          </strong>
+          `;
+
+
+      /*
+        Tránh nhận cùng một transcript
+        liên tục vài mili giây.
+      */
+
+      const now =
+        Date.now();
+
+
+      if(
+        visible ===
+          lastTranscript
+        &&
+        now -
+          lastTranscriptTime
+        <
+        800
+      ){
+
+        return;
+
+      }
+
+
+      lastTranscript =
+        visible;
+
+
+      lastTranscriptTime =
+        now;
+
+
+      attempts++;
+
+
+      updateStats();
+
+
+      checkVoice(
+        transcripts
+      );
 
     };
 
 
-  recognition.onend =
-    () => {
-
-      isListening = false;
-
-
-      document
-        .getElementById("micButton")
-        .classList.remove("listening");
-
-
-      document
-        .getElementById("micText")
-        .textContent =
-          "Nhấn mic rồi đọc ngay!";
-
-    };
-
+  /* =============================================
+     ERROR
+  ============================================== */
 
   recognition.onerror =
     event => {
+
+
+      console.log(
+        "Speech error:",
+        event.error
+      );
+
+
+      /*
+        Các lỗi này không cần
+        tắt game.
+      */
+
+      if(
+        event.error ===
+          "no-speech"
+        ||
+        event.error ===
+          "aborted"
+      ){
+
+        return;
+
+      }
+
 
       if(
         event.error ===
         "not-allowed"
       ){
 
+        keepListening =
+          false;
+
+
+        setMicVisual(
+          false,
+          "❌ MICROPHONE BỊ CHẶN",
+          "Hãy cấp quyền Microphone cho trang này"
+        );
+
+
         document
-          .getElementById("heardBox")
+          .getElementById(
+            "heardBox"
+          )
           .className =
-            "heard bad";
+            "heardBox bad";
 
 
         document
-          .getElementById("heardBox")
+          .getElementById(
+            "heardBox"
+          )
           .textContent =
-            "🎙️ Chưa cho phép dùng micro.";
-
-      }
-
-      else if(
-        event.error !==
-        "aborted"
-      ){
-
-        document
-          .getElementById("heardBox")
-          .className =
-            "heard bad";
-
-
-        document
-          .getElementById("heardBox")
-          .textContent =
-            "Không nghe rõ. Thử lại nha!";
+            "Trình duyệt không cho phép dùng microphone.";
 
       }
 
     };
 
 
-  recognition.onresult =
-    event => {
+  /* =============================================
+     END
 
-      /*
-        Ghép transcript realtime.
-      */
+     Đây chính là phần giúp mic
+     "luôn mở".
 
-      let transcript = "";
+     Browser tự kết thúc session
+     -> game tự start session mới.
+  ============================================== */
+
+  recognition.onend =
+    () => {
+
+      recognitionRunning =
+        false;
 
 
-      for(
-        let i = event.resultIndex;
-        i < event.results.length;
-        i++
+      if(
+        keepListening
       ){
 
-        transcript +=
-          event.results[i][0]
-            .transcript;
+        restartRecognition();
 
       }
 
+      else{
 
-      transcript =
-        transcript.trim();
+        setMicVisual(
+          false,
+          "MIC TẠM DỪNG",
+          ""
+        );
 
-
-      if(!transcript){
-        return;
       }
-
-
-      document
-        .getElementById("heardBox")
-        .innerHTML =
-          `
-          🎧 Máy đang nghe:
-          <strong>${escapeHtml(transcript)}</strong>
-          `;
-
-
-      checkRealtime(
-        transcript,
-        event
-      );
 
     };
+
+
+  return true;
 
 }
 
 
-/* ======================================================
-   START REALTIME MIC
-====================================================== */
+/* =========================================================
+   START RECOGNITION LOOP
+========================================================= */
 
-function startRealtimeMic(){
-
-  if(!recognition){
-
-    setupRecognition();
-
-  }
-
+function startRecognitionLoop(){
 
   if(!recognition){
-    return;
-  }
+
+    const success =
+      setupRecognition();
 
 
-  /*
-    Nếu đang nghe thì click lần nữa = stop.
-  */
+    if(!success){
 
-  if(isListening){
+      return;
 
-    stopRecognition();
-
-    return;
+    }
 
   }
 
 
-  solvedCurrent = false;
+  keepListening =
+    true;
 
-  attempts++;
 
-  updateStats();
+  if(
+    recognitionRunning
+  ){
+
+    return;
+
+  }
 
 
   try{
@@ -1972,164 +3102,484 @@ function startRealtimeMic(){
   catch(error){
 
     /*
-      Chrome đôi khi báo start() quá nhanh.
+      start() đôi khi bị gọi
+      trước khi session cũ đóng hẳn.
     */
 
+    setTimeout(
+      startRecognitionLoop,
+      350
+    );
+
   }
-
-
-  /*
-    Auto stop sau 3 giây.
-    Không để mic treo quá lâu.
-  */
-
-  clearTimeout(
-    realtimeTimeout
-  );
-
-
-  realtimeTimeout =
-    setTimeout(() => {
-
-      if(
-        isListening
-        &&
-        !solvedCurrent
-      ){
-
-        stopRecognition();
-
-
-        document
-          .getElementById("heardBox")
-          .className =
-            "heard bad";
-
-
-        document
-          .getElementById("heardBox")
-          .textContent =
-            "⏱️ Chưa nghe trúng. Bấm mic thử lại!";
-
-      }
-
-    },3000);
 
 }
 
 
-/* ======================================================
-   CHECK REALTIME
-====================================================== */
+/* =========================================================
+   RESTART AUTOMATICALLY
+========================================================= */
 
-function checkRealtime(
-  transcript,
-  event
-){
+function restartRecognition(){
 
-  if(solvedCurrent){
+  if(
+    !keepListening
+  ){
+
     return;
+
   }
 
 
-  const heard =
-    normalizeChinese(
-      transcript
-    );
+  if(
+    restartingRecognition
+  ){
+
+    return;
+
+  }
+
+
+  restartingRecognition =
+    true;
 
 
   /*
-    BOSS
+    delay nhỏ để browser
+    giải phóng recognition session.
   */
+
+  setTimeout(
+    () => {
+
+      restartingRecognition =
+        false;
+
+
+      if(
+        !keepListening
+        ||
+        recognitionRunning
+      ){
+
+        return;
+
+      }
+
+
+      try{
+
+        recognition.start();
+
+      }
+
+      catch(error){
+
+        setTimeout(
+          restartRecognition,
+          400
+        );
+
+      }
+
+    },
+    250
+  );
+
+}
+
+
+/* =========================================================
+   MIC VISUAL
+========================================================= */
+
+function setMicVisual(
+  active,
+  title,
+  subtitle
+){
+
+  const orb =
+    document.getElementById(
+      "micOrb"
+    );
+
+
+  const titleEl =
+    document.getElementById(
+      "micTitle"
+    );
+
+
+  const subEl =
+    document.getElementById(
+      "micSubtitle"
+    );
+
+
+  if(active){
+
+    orb
+      .classList
+      .add(
+        "active"
+      );
+
+  }
+
+  else{
+
+    orb
+      .classList
+      .remove(
+        "active"
+      );
+
+  }
+
+
+  titleEl.textContent =
+    title;
+
+
+  subEl.textContent =
+    subtitle;
+
+}
+
+
+/* =========================================================
+   CHECK VOICE
+========================================================= */
+
+function checkVoice(
+  transcripts
+){
+
+  /*
+    Panda đang chạy
+    thì bỏ qua transcript.
+  */
+
+  if(locked){
+
+    return;
+
+  }
+
+
+  /*
+    Normalize toàn bộ alternatives.
+  */
+
+  const heardList =
+    transcripts.map(
+      text =>
+        normalizeChinese(
+          text
+        )
+    );
+
+
+  /* =====================================================
+     BOSS
+  ====================================================== */
 
   if(bossMode){
 
-    const accepted = [
+    const bossAnswers = [
+
       "老师您好",
-      "老师你好"
+
+      "老师你好",
+
+      "王老师您好",
+
+      "王老师你好"
+
     ];
 
 
-    const matched =
-      accepted.some(
-        target =>
-          heard.includes(
-            normalizeChinese(target)
+    const success =
+      heardList.some(
+        heard =>
+          bossAnswers.some(
+            answer =>
+              heard.includes(
+                normalizeChinese(
+                  answer
+                )
+              )
           )
       );
 
 
-    if(matched){
+    if(success){
 
-      solvedCurrent = true;
+      locked =
+        true;
 
-      stopRecognition();
 
-      score += 500;
+      score +=
+        500;
+
+
+      updateStats();
+
 
       bossSuccess();
 
     }
 
+
     return;
 
   }
 
 
-  /*
-    NORMAL WORD
-  */
+  /* =====================================================
+     NORMAL CHECKPOINT
+  ====================================================== */
 
   const word =
-    words[currentIndex];
+    words[
+      currentIndex
+    ];
 
 
-  const matched =
-    word.accepted.some(
-      target => {
+  if(!word){
 
-        const normalizedTarget =
-          normalizeChinese(
-            target
-          );
+    return;
+
+  }
 
 
-        return (
-          heard === normalizedTarget
-          ||
-          heard.includes(
-            normalizedTarget
-          )
-        );
+  const success =
+    heardList.some(
+      heard =>
 
-      }
-    );
+        word.accepted.some(
+          answer => {
+
+            const target =
+              normalizeChinese(
+                answer
+              );
 
 
-  if(matched){
+            return (
+              heard ===
+                target
 
-    solvedCurrent = true;
+              ||
 
-    stopRecognition();
+              heard.includes(
+                target
+              )
+            );
 
-    score += 100;
+          }
+        )
 
-    openGateAndRun();
+  );
+
+
+  if(success){
+
+    locked =
+      true;
+
+
+    score +=
+      100;
+
+
+    updateStats();
+
+
+    openGate();
 
   }
 
 }
 
 
-/* ======================================================
-   OPEN GATE + RUN
-====================================================== */
+/* =========================================================
+   UPDATE CHECKPOINT
+========================================================= */
 
-function openGateAndRun(){
+function updateCheckpoint(){
+
+  /*
+    Sau 8 từ -> Boss
+  */
+
+  if(
+    currentIndex >=
+    words.length
+  ){
+
+    startBoss();
+
+    return;
+
+  }
+
+
+  bossMode =
+    false;
+
+
+  locked =
+    false;
+
+
+  const word =
+    words[
+      currentIndex
+    ];
+
+
+  document
+    .getElementById(
+      "bossBox"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "checkpointTag"
+    )
+    .textContent =
+      `🚪 CHECKPOINT ${currentIndex + 1}`;
+
+
+  document
+    .getElementById(
+      "wordPic"
+    )
+    .textContent =
+      word.pic;
+
+
+  document
+    .getElementById(
+      "wordHanzi"
+    )
+    .textContent =
+      word.hanzi;
+
+
+  document
+    .getElementById(
+      "wordPinyin"
+    )
+    .textContent =
+      showPinyin
+      ?
+      word.pinyin
+      :
+      "••••••";
+
+
+  document
+    .getElementById(
+      "wordMeaning"
+    )
+    .textContent =
+      word.meaning;
+
+
+  document
+    .getElementById(
+      "gateEmoji"
+    )
+    .textContent =
+      word.pic;
+
+
+  document
+    .getElementById(
+      "gateWord"
+    )
+    .textContent =
+      word.hanzi;
+
+
+  document
+    .getElementById(
+      "gatePinyin"
+    )
+    .textContent =
+      showPinyin
+      ?
+      word.pinyin
+      :
+      "";
+
+
+  document
+    .getElementById(
+      "progressText"
+    )
+    .textContent =
+      `Checkpoint ${currentIndex + 1} / ${words.length}`;
+
 
   const gate =
-    document
-      .getElementById("currentGate");
+    document.getElementById(
+      "gate"
+    );
+
+
+  gate.classList.remove(
+    "open",
+    "fail"
+  );
+
+
+  document
+    .getElementById(
+      "heardBox"
+    )
+    .className =
+      "heardBox";
+
+
+  document
+    .getElementById(
+      "heardBox"
+    )
+    .innerHTML =
+      `
+      🎙️ Mic đang nghe.
+      <br>
+      Hãy đọc:
+      <strong>
+      ${word.hanzi}
+      </strong>
+      `;
+
+
+  updateStats();
+
+}
+
+
+/* =========================================================
+   OPEN GATE
+========================================================= */
+
+function openGate(){
+
+  const gate =
+    document.getElementById(
+      "gate"
+    );
 
 
   gate.classList.add(
@@ -2138,23 +3588,27 @@ function openGateAndRun(){
 
 
   const heard =
-    document
-      .getElementById("heardBox");
+    document.getElementById(
+      "heardBox"
+    );
 
 
   heard.className =
-    "heard good";
+    "heardBox good";
 
 
   heard.innerHTML =
     `
-    ✅ Đúng rồi!
+    ✅ ĐÚNG!
     <br>
-    🚪 Cổng mở — Panda chạy tiếp!
+    🚪 Cổng đang mở...
     `;
 
 
-  flashScreen(true);
+  flashScreen(
+    true
+  );
+
 
   playCorrectSound();
 
@@ -2168,169 +3622,119 @@ function openGateAndRun(){
   );
 
 
-  const runner =
-    document
-      .getElementById("runner");
+  runPanda();
+
+}
 
 
-  runner.classList.add(
-    "run"
+/* =========================================================
+   PANDA RUN
+========================================================= */
+
+function runPanda(){
+
+  const panda =
+    document.getElementById(
+      "panda"
+    );
+
+
+  panda.classList.add(
+    "running"
   );
 
 
+  panda.style.bottom =
+    "380px";
+
+
   /*
-    Panda chạy lên phía cổng.
+    Panda tới cổng
   */
 
-  runner.style.bottom =
-    "365px";
+  setTimeout(
+    () => {
 
 
-  setTimeout(() => {
-
-    runner.classList.remove(
-      "run"
-    );
-
-
-    runner.classList.add(
-      "celebrate"
-    );
-
-
-    currentIndex++;
-
-
-    /*
-      Reset panda về gần camera
-      để tạo cảm giác camera tiến lên checkpoint mới.
-    */
-
-    setTimeout(() => {
-
-      runner.classList.remove(
-        "celebrate"
+      panda.classList.remove(
+        "running"
       );
 
 
-      runner.style.transition =
-        "none";
+      panda.classList.add(
+        "success"
+      );
 
 
-      runner.style.bottom =
-        "42px";
+      currentIndex++;
 
 
       /*
-        ép browser áp dụng reset
+        reset camera / panda
       */
 
-      void runner.offsetHeight;
+      setTimeout(
+        () => {
 
 
-      runner.style.transition =
-        `
-        bottom .75s cubic-bezier(.3,1.25,.5,1),
-        transform .3s
-        `;
+          panda.classList.remove(
+            "success"
+          );
 
 
-      animateRoadForward();
+          panda.style.transition =
+            "none";
 
 
-      updateCheckpoint();
-
-    },500);
-
-  },750);
-
-}
+          panda.style.bottom =
+            "55px";
 
 
-/* ======================================================
-   CAMERA / ROAD EFFECT
-====================================================== */
-
-function animateRoadForward(){
-
-  const gate1 =
-    document
-      .getElementById("gate1");
+          void panda.offsetHeight;
 
 
-  const gate2 =
-    document
-      .getElementById("gate2");
+          panda.style.transition =
+            `
+            bottom .8s
+            cubic-bezier(.3,1.25,.5,1)
+            `;
 
 
-  const gate3 =
-    document
-      .getElementById("gate3");
+          updateCheckpoint();
 
 
-  gate1.style.transition =
-    "transform .4s, opacity .4s";
+        },
+        550
+      );
 
 
-  gate2.style.transition =
-    "transform .4s, opacity .4s";
-
-
-  gate3.style.transition =
-    "transform .4s, opacity .4s";
-
-
-  gate1.style.opacity =
-    ".35";
-
-
-  gate1.style.transform =
-    "translateX(-50%) scale(.95) translateY(120px)";
-
-
-  gate2.style.transform =
-    "translateX(-50%) scale(.75) translateY(80px)";
-
-
-  gate3.style.transform =
-    "translateX(-50%) scale(.58) translateY(55px)";
-
-
-  setTimeout(() => {
-
-    gate1.style.opacity =
-      "1";
-
-
-    gate1.style.transform =
-      "";
-
-
-    gate2.style.transform =
-      "";
-
-
-    gate3.style.transform =
-      "";
-
-  },450);
+    },
+    850
+  );
 
 }
 
 
-/* ======================================================
-   WRONG FEEDBACK
-====================================================== */
+/* =========================================================
+   WRONG EFFECT
 
-function markWrong(){
+   Không tự gọi liên tục vì interim
+   đôi khi nhận nửa từ.
+
+   Game chỉ hiện transcript,
+   học viên cứ đọc lại.
+========================================================= */
+
+function wrongEffect(){
 
   const gate =
-    document
-      .getElementById("currentGate");
+    document.getElementById(
+      "gate"
+    );
 
 
   gate.classList.remove(
-    "shake"
+    "fail"
   );
 
 
@@ -2338,216 +3742,163 @@ function markWrong(){
 
 
   gate.classList.add(
-    "shake"
-  );
-
-
-  const runner =
-    document
-      .getElementById("runner");
-
-
-  runner.classList.remove(
     "fail"
   );
 
 
-  void runner.offsetWidth;
-
-
-  runner.classList.add(
-    "fail"
-  );
-
-
-  flashScreen(false);
-
-  playWrongSound();
-
-  speakChinese(
-    "再试一次！"
-  );
-
-}
-
-
-/* ======================================================
-   SAMPLE
-====================================================== */
-
-function playSample(){
-
-  if(bossMode){
-
-    speakChinese(
-      "老师，您好！"
+  const panda =
+    document.getElementById(
+      "panda"
     );
 
-    return;
 
-  }
+  panda.classList.remove(
+    "fail"
+  );
 
 
-  speakChinese(
-    words[currentIndex].hanzi
+  void panda.offsetWidth;
+
+
+  panda.classList.add(
+    "fail"
+  );
+
+
+  flashScreen(
+    false
   );
 
 }
 
 
-/* ======================================================
-   TOGGLE PINYIN
-====================================================== */
-
-function togglePinyin(){
-
-  showPinyin =
-    !showPinyin;
-
-
-  if(bossMode){
-
-    document
-      .getElementById("wordPinyin")
-      .textContent =
-        showPinyin
-        ? "lǎoshī, nín hǎo"
-        : "••••••";
-
-
-    document
-      .getElementById("gatePinyin")
-      .textContent =
-        showPinyin
-        ? "lǎoshī, nín hǎo"
-        : "";
-
-
-    return;
-
-  }
-
-
-  const word =
-    words[currentIndex];
-
-
-  document
-    .getElementById("wordPinyin")
-    .textContent =
-      showPinyin
-      ? word.pinyin
-      : "••••••";
-
-
-  document
-    .getElementById("gatePinyin")
-    .textContent =
-      showPinyin
-      ? word.pinyin
-      : "";
-
-}
-
-
-/* ======================================================
+/* =========================================================
    BOSS
-====================================================== */
+========================================================= */
 
 function startBoss(){
 
-  bossMode = true;
+  bossMode =
+    true;
 
-  solvedCurrent = false;
 
-
-  document
-    .getElementById("bossBox")
-    .classList.remove("hidden");
+  locked =
+    false;
 
 
   document
-    .getElementById("checkpointTag")
+    .getElementById(
+      "bossBox"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "checkpointTag"
+    )
     .textContent =
       "👾 FINAL BOSS";
 
 
   document
-    .getElementById("wordPic")
+    .getElementById(
+      "wordPic"
+    )
     .textContent =
       "👩‍🏫";
 
 
   document
-    .getElementById("wordHanzi")
+    .getElementById(
+      "wordHanzi"
+    )
     .textContent =
       "老师，您好！";
 
 
   document
-    .getElementById("wordPinyin")
+    .getElementById(
+      "wordPinyin"
+    )
     .textContent =
       showPinyin
-      ? "lǎoshī, nín hǎo"
-      : "••••••";
+      ?
+      "lǎoshī, nín hǎo"
+      :
+      "••••••";
 
 
   document
-    .getElementById("wordMeaning")
+    .getElementById(
+      "wordMeaning"
+    )
     .textContent =
       "Thưa cô/thầy, xin chào!";
 
 
   document
-    .getElementById("gateEmoji")
+    .getElementById(
+      "gateEmoji"
+    )
     .textContent =
       "👾";
 
 
   document
-    .getElementById("gateWord")
+    .getElementById(
+      "gateWord"
+    )
     .textContent =
       "BOSS";
 
 
   document
-    .getElementById("gatePinyin")
+    .getElementById(
+      "gatePinyin"
+    )
     .textContent =
       "老师，您好！";
 
 
   document
-    .getElementById("bossText")
+    .getElementById(
+      "progressText"
+    )
+    .textContent =
+      "FINAL BOSS";
+
+
+  document
+    .getElementById(
+      "heardBox"
+    )
+    .className =
+      "heardBox";
+
+
+  document
+    .getElementById(
+      "heardBox"
+    )
     .innerHTML =
       `
-      王老师：同学们，你们好！
-      <br><br>
-      🎙️ Hãy trả lời:
-      <strong>老师，您好！</strong>
+      🎙️ Mic vẫn đang nghe.
+      <br>
+      Hãy trả lời:
+      <strong>
+      老师，您好！
+      </strong>
       `;
 
 
-  document
-    .getElementById("progressText")
-    .textContent =
-      "👾 Boss Gate";
-
-
-  document
-    .getElementById("heardBox")
-    .className =
-      "heard";
-
-
-  document
-    .getElementById("heardBox")
-    .textContent =
-      "Đọc đúng câu để mở cổng cuối!";
-
-
   const gate =
-    document
-      .getElementById("currentGate");
+    document.getElementById(
+      "gate"
+    );
 
 
   gate.classList.remove(
@@ -2562,15 +3913,16 @@ function startBoss(){
 }
 
 
-/* ======================================================
+/* =========================================================
    BOSS SUCCESS
-====================================================== */
+========================================================= */
 
 function bossSuccess(){
 
   const gate =
-    document
-      .getElementById("currentGate");
+    document.getElementById(
+      "gate"
+    );
 
 
   gate.classList.add(
@@ -2579,84 +3931,120 @@ function bossSuccess(){
 
 
   document
-    .getElementById("heardBox")
+    .getElementById(
+      "heardBox"
+    )
     .className =
-      "heard good";
+      "heardBox good";
 
 
   document
-    .getElementById("heardBox")
+    .getElementById(
+      "heardBox"
+    )
     .innerHTML =
       `
-      🏆 Boss Gate mở rồi!
+      🏆 BOSS GATE OPEN!
       <br>
       太棒了！
       `;
 
 
-  flashScreen(true);
+  flashScreen(
+    true
+  );
+
 
   playWinSound();
+
 
   speakChinese(
     "恭喜你！闯关成功！"
   );
 
 
-  const runner =
-    document
-      .getElementById("runner");
+  const panda =
+    document.getElementById(
+      "panda"
+    );
 
 
-  runner.classList.add(
-    "run"
+  panda.classList.add(
+    "running"
   );
 
 
-  runner.style.bottom =
+  panda.style.bottom =
     "410px";
 
 
   setTimeout(
     finishGame,
-    1200
+    1300
   );
 
 }
 
 
-/* ======================================================
+/* =========================================================
    FINISH
-====================================================== */
+========================================================= */
 
 function finishGame(){
+
+  /*
+    Lúc kết thúc mới ngưng mic.
+  */
+
+  keepListening =
+    false;
+
 
   stopRecognition();
 
 
   document
-    .getElementById("gameScreen")
-    .classList.add("hidden");
+    .getElementById(
+      "gameScreen"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 
 
   document
-    .getElementById("stats")
-    .classList.add("hidden");
+    .getElementById(
+      "stats"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 
 
   document
-    .getElementById("resultScreen")
-    .classList.remove("hidden");
+    .getElementById(
+      "resultScreen"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
 
 
   document
-    .getElementById("finalScore")
+    .getElementById(
+      "finalScore"
+    )
     .textContent =
       score;
 
 
   document
-    .getElementById("finalAttempts")
+    .getElementById(
+      "finalAttempts"
+    )
     .textContent =
       attempts;
 
@@ -2664,86 +4052,103 @@ function finishGame(){
   let message;
 
 
-  if(attempts <= 10){
+  if(
+    attempts <= 12
+  ){
 
     message =
-      "🏆 Quá nhanh! Gần như checkpoint nào cũng qua ngay lần đầu.";
+      "🏆 Phản xạ rất nhanh! Hầu hết checkpoint được nhận diện ngay.";
 
   }
 
-  else if(attempts <= 15){
+  else if(
+    attempts <= 22
+  ){
 
     message =
-      "🌟 Rất ổn! Chơi lại và thử tắt pinyin để tăng độ khó.";
+      "🌟 Làm tốt! Chơi lại và thử ẩn pinyin để tăng độ khó.";
 
   }
 
   else{
 
     message =
-      "💪 Hoàn thành rồi! Lần sau nghe mẫu trước rồi cố qua mỗi cổng trong 1 lần đọc.";
+      "💪 Hoàn thành rồi! Thử nghe mẫu, chú ý thanh điệu và chơi thêm một vòng.";
 
   }
 
 
   document
-    .getElementById("resultMessage")
+    .getElementById(
+      "resultMessage"
+    )
     .textContent =
       message;
 
-
-  speakChinese(
-    "太棒了！"
-  );
-
 }
 
 
-/* ======================================================
+/* =========================================================
    RESTART
-====================================================== */
+========================================================= */
 
 function restartGame(){
 
-  showPinyin = true;
+  keepListening =
+    false;
+
+
+  stopRecognition();
+
+
+  showPinyin =
+    true;
 
 
   document
-    .getElementById("resultScreen")
-    .classList.add("hidden");
+    .getElementById(
+      "resultScreen"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 
 
   document
-    .getElementById("startScreen")
-    .classList.remove("hidden");
+    .getElementById(
+      "startScreen"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
 
 
-  const runner =
-    document
-      .getElementById("runner");
+  const panda =
+    document.getElementById(
+      "panda"
+    );
 
 
-  runner.style.bottom =
-    "42px";
+  panda.style.bottom =
+    "55px";
 
 }
 
 
-/* ======================================================
+/* =========================================================
    STOP RECOGNITION
-====================================================== */
+========================================================= */
 
 function stopRecognition(){
 
-  clearTimeout(
-    realtimeTimeout
-  );
+  keepListening =
+    false;
 
 
   if(
     recognition
-    &&
-    isListening
   ){
 
     try{
@@ -2756,33 +4161,146 @@ function stopRecognition(){
 
   }
 
+
+  recognitionRunning =
+    false;
+
 }
 
 
-/* ======================================================
-   NORMALIZE
-====================================================== */
+/* =========================================================
+   LISTEN SAMPLE
+========================================================= */
 
-function normalizeChinese(text){
+function playSample(){
 
-  return String(text)
-    .replace(
-      /[\s，。！？、,.!?]/g,
-      ""
+  if(bossMode){
+
+    speakChinese(
+      "老师，您好！"
+    );
+
+
+    return;
+
+  }
+
+
+  const word =
+    words[
+      currentIndex
+    ];
+
+
+  if(word){
+
+    speakChinese(
+      word.hanzi
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PINYIN
+========================================================= */
+
+function togglePinyin(){
+
+  showPinyin =
+    !showPinyin;
+
+
+  if(bossMode){
+
+    document
+      .getElementById(
+        "wordPinyin"
+      )
+      .textContent =
+        showPinyin
+        ?
+        "lǎoshī, nín hǎo"
+        :
+        "••••••";
+
+
+    return;
+
+  }
+
+
+  const word =
+    words[
+      currentIndex
+    ];
+
+
+  if(!word){
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "wordPinyin"
     )
-    .trim();
+    .textContent =
+      showPinyin
+      ?
+      word.pinyin
+      :
+      "••••••";
+
+
+  document
+    .getElementById(
+      "gatePinyin"
+    )
+    .textContent =
+      showPinyin
+      ?
+      word.pinyin
+      :
+      "";
 
 }
 
 
-/* ======================================================
-   STATS
-====================================================== */
+/* =========================================================
+   NORMALIZE
+========================================================= */
+
+function normalizeChinese(
+  text
+){
+
+  return String(
+    text
+  )
+  .replace(
+    /[\s，。！？、,.!?：:；;]/g,
+    ""
+  )
+  .trim();
+
+}
+
+
+/* =========================================================
+   UPDATE STATS
+========================================================= */
 
 function updateStats(){
 
   document
-    .getElementById("gateStat")
+    .getElementById(
+      "gateStat"
+    )
     .textContent =
       Math.min(
         currentIndex + 1,
@@ -2791,59 +4309,76 @@ function updateStats(){
 
 
   document
-    .getElementById("scoreStat")
+    .getElementById(
+      "scoreStat"
+    )
     .textContent =
       score;
 
 
   document
-    .getElementById("attemptStat")
+    .getElementById(
+      "attemptStat"
+    )
     .textContent =
       attempts;
 
 }
 
 
-/* ======================================================
+/* =========================================================
    FLASH
-====================================================== */
+========================================================= */
 
-function flashScreen(good){
+function flashScreen(
+  good
+){
 
   const flash =
-    document
-      .getElementById("flash");
+    document.getElementById(
+      "flash"
+    );
 
 
   flash.className =
     good
-    ? "flash good"
-    : "flash bad";
+    ?
+    "flash good"
+    :
+    "flash bad";
 
 
-  setTimeout(() => {
+  setTimeout(
+    () => {
 
-    flash.className =
-      "flash";
+      flash.className =
+        "flash";
 
-  },300);
+    },
+    300
+  );
 
 }
 
 
-/* ======================================================
+/* =========================================================
    SHUFFLE
-====================================================== */
+========================================================= */
 
-function shuffleArray(array){
+function shuffleArray(
+  array
+){
 
   const copy =
     [...array];
 
 
   for(
-    let i = copy.length - 1;
+    let i =
+      copy.length - 1;
+
     i > 0;
+
     i--
   ){
 
@@ -2873,11 +4408,13 @@ function shuffleArray(array){
 }
 
 
-/* ======================================================
-   RANDOM
-====================================================== */
+/* =========================================================
+   RANDOM ITEM
+========================================================= */
 
-function randomItem(array){
+function randomItem(
+  array
+){
 
   return array[
     Math.floor(
@@ -2890,27 +4427,48 @@ function randomItem(array){
 }
 
 
-/* ======================================================
+/* =========================================================
    SAFE HTML
-====================================================== */
+========================================================= */
 
-function escapeHtml(text){
+function escapeHtml(
+  text
+){
 
-  return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    text
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
 
-/* ======================================================
-   TTS
-====================================================== */
+/* =========================================================
+   TEXT TO SPEECH
+========================================================= */
 
-function speakChinese(text){
+function speakChinese(
+  text
+){
 
   if(
     !soundOn
@@ -2926,7 +4484,8 @@ function speakChinese(text){
   }
 
 
-  speechSynthesis.cancel();
+  speechSynthesis
+    .cancel();
 
 
   const speech =
@@ -2940,11 +4499,11 @@ function speakChinese(text){
 
 
   speech.rate =
-    .92;
+    .9;
 
 
   speech.pitch =
-    1.05;
+    1;
 
 
   const voices =
@@ -2956,8 +4515,10 @@ function speakChinese(text){
     voices.find(
       voice =>
         voice.lang
-          .toLowerCase()
-          .startsWith("zh")
+        .toLowerCase()
+        .startsWith(
+          "zh"
+        )
     );
 
 
@@ -2969,18 +4530,20 @@ function speakChinese(text){
   }
 
 
-  speechSynthesis.speak(
-    speech
-  );
+  speechSynthesis
+    .speak(
+      speech
+    );
 
 }
 
 
-/* ======================================================
-   AUDIO EFFECTS
-====================================================== */
+/* =========================================================
+   SOUND EFFECT ENGINE
+========================================================= */
 
-let audioContext = null;
+let audioContext =
+  null;
 
 
 function getAudio(){
@@ -3016,25 +4579,29 @@ function tone(
   frequency,
   duration,
   type = "sine",
-  volume = .05,
+  volume = .04,
   delay = 0
 ){
 
   if(!soundOn){
+
     return;
+
   }
 
 
-  const ctx =
+  const context =
     getAudio();
 
 
   const oscillator =
-    ctx.createOscillator();
+    context
+      .createOscillator();
 
 
   const gain =
-    ctx.createGain();
+    context
+      .createGain();
 
 
   oscillator.type =
@@ -3051,12 +4618,12 @@ function tone(
 
 
   gain.connect(
-    ctx.destination
+    context.destination
   );
 
 
   const start =
-    ctx.currentTime
+    context.currentTime
     +
     delay;
 
@@ -3085,34 +4652,63 @@ function tone(
 }
 
 
+/* correct */
+
 function playCorrectSound(){
 
-  tone(660,.1,"sine",.05,0);
-  tone(880,.12,"sine",.05,.08);
-  tone(1100,.16,"sine",.04,.16);
+  tone(
+    660,
+    .10,
+    "sine",
+    .05,
+    0
+  );
+
+
+  tone(
+    880,
+    .12,
+    "sine",
+    .05,
+    .08
+  );
+
+
+  tone(
+    1100,
+    .16,
+    "sine",
+    .04,
+    .16
+  );
 
 }
 
 
-function playWrongSound(){
-
-  tone(220,.15,"sawtooth",.04,0);
-  tone(160,.2,"sawtooth",.03,.1);
-
-}
-
+/* win */
 
 function playWinSound(){
 
-  [
+  const notes = [
+
     523,
+
     659,
+
     784,
+
     1046,
+
     1318
-  ]
-  .forEach(
-    (note,index) => {
+
+  ];
+
+
+  notes.forEach(
+    (
+      note,
+      index
+    ) => {
 
       tone(
         note,
@@ -3128,9 +4724,9 @@ function playWinSound(){
 }
 
 
-/* ======================================================
+/* =========================================================
    SOUND TOGGLE
-====================================================== */
+========================================================= */
 
 function toggleSound(){
 
@@ -3139,11 +4735,15 @@ function toggleSound(){
 
 
   document
-    .getElementById("soundBtn")
+    .getElementById(
+      "soundButton"
+    )
     .textContent =
       soundOn
-      ? "🔊"
-      : "🔇";
+      ?
+      "🔊"
+      :
+      "🔇";
 
 
   if(
