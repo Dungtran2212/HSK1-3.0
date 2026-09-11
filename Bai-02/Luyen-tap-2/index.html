@@ -1,644 +1,5583 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>综合复习 01 · Secret Code</title>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>综合复习 01 · Bài 02</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
 :root{
-  --bg:#071018;--panel:#0d1822;--panel2:#111f2a;--line:#274050;
-  --cyan:#67e8f9;--green:#7cf7b4;--amber:#ffd166;--red:#ff6b78;
-  --text:#e9f2f7;--muted:#8ea5b3;--ink:#051015
+  --bg:#eee7dc;
+  --paper:#fffaf2;
+  --white:#ffffff;
+
+  --ink:#17232d;
+  --muted:#68747c;
+
+  --wine:#852638;
+  --wine-dark:#671c2a;
+
+  --navy:#18374e;
+
+  --gold:#ca9a45;
+
+  --green:#327b59;
+  --green-soft:#e3f3e8;
+
+  --red:#b44351;
+  --red-soft:#ffe8ea;
+
+  --line:#dacdbb;
+
+  --shadow:
+    0 18px 55px
+    rgba(54,45,34,.12);
 }
+
+
+html{
+  scroll-behavior:smooth;
+}
+
+
 body{
-  min-height:100vh;font-family:Inter,"Noto Sans SC","Microsoft YaHei",Arial,sans-serif;
-  color:var(--text);background:
-  radial-gradient(circle at 15% 0%,#173347 0,transparent 32%),
-  radial-gradient(circle at 100% 85%,#132b3b 0,transparent 30%),var(--bg);
-  overflow-x:hidden
+  margin:0;
+
+  min-height:100vh;
+
+  font-family:
+    Inter,
+    "Noto Sans SC",
+    "Microsoft YaHei",
+    Arial,
+    sans-serif;
+
+  color:var(--ink);
+
+  background:
+    radial-gradient(
+      circle at 8% 0%,
+      #eadcc5,
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      #d7e3df,
+      transparent 30%
+    ),
+    var(--bg);
 }
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
-  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:32px 32px
+
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
 }
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-.shell{width:min(1180px,calc(100% - 24px));margin:auto;padding:18px 0 50px;position:relative;z-index:2}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.brand{font-weight:900;letter-spacing:.08em;font-size:15px;color:var(--cyan)}
-.stats{display:flex;gap:8px;flex-wrap:wrap}
-.stat,.chip{border:1px solid var(--line);background:rgba(13,24,34,.92);padding:8px 12px;border-radius:999px;font-weight:800}
-.card{background:linear-gradient(145deg,rgba(14,27,38,.97),rgba(8,18,27,.97));border:1px solid #294251;
-  border-radius:22px;box-shadow:0 20px 80px rgba(0,0,0,.32);padding:24px}
-.center{text-align:center}
-.kicker{color:var(--cyan);font-size:12px;letter-spacing:.18em;font-weight:900;margin-bottom:10px}
-h1{font-size:clamp(34px,6vw,64px);line-height:1.02;margin-bottom:10px}
-h2{font-size:clamp(23px,3vw,34px);margin-bottom:8px}
-.sub{color:var(--muted);line-height:1.7}
-.btn{border:1px solid #37586a;background:#122433;color:var(--text);border-radius:12px;padding:11px 16px;
-  font-weight:900;transition:.16s}
-.btn:hover{transform:translateY(-2px);border-color:var(--cyan)}
-.btn.primary{background:var(--cyan);color:var(--ink);border-color:var(--cyan)}
-.btn.good{background:#123526;border-color:#286b4b;color:#a5ffd0}
-.btn.warn{background:#382711;border-color:#76501d;color:#ffe3a4}
-.btn.danger{background:#3b1720;border-color:#803143;color:#ffc1c8}
-.start-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:860px;margin:24px auto}
-.start-box{border:1px solid var(--line);background:#0d1923;border-radius:14px;padding:15px}
-.start-box strong{display:block;color:var(--cyan);font-size:18px;margin-bottom:5px}
-.agent{width:min(380px,100%);margin:20px auto 14px;display:block;background:#07131c;border:1px solid #355063;color:white;
-  border-radius:11px;padding:13px 14px;outline:none}
-.agent:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(103,232,249,.1)}
-.mission-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
-.mission-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:17px;background:#0b1822;padding:20px;min-height:205px}
-.mission-card:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(103,232,249,.035);
-  right:-60px;bottom:-80px}
-.mission-card.locked{opacity:.45;filter:saturate(.4);pointer-events:none}
-.mission-card.done{border-color:#2d7b58;box-shadow:0 0 0 1px #2d7b58 inset}
-.mission-num{color:var(--muted);font-size:12px;letter-spacing:.15em;font-weight:900}
-.mission-title{font-size:24px;font-weight:950;margin:8px 0}
-.mission-desc{color:var(--muted);line-height:1.55;min-height:52px}
-.code-frag{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:1px dashed #517184;
-  border-radius:11px;margin-top:14px;font-size:26px;font-weight:1000;color:var(--amber);background:#07131c}
-.code-frag.masked{color:#49606e}
-.header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.progressbar{height:9px;border:1px solid #385365;border-radius:999px;background:#07131c;overflow:hidden;margin:14px 0 20px}
-.progressfill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green));transition:.3s}
-.question{border:1px solid var(--line);border-radius:16px;background:#0b1822;padding:19px;margin-bottom:14px}
-.qnum{color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:.13em}
-.qtitle{font-size:20px;font-weight:900;line-height:1.5;margin:7px 0 14px;white-space:pre-line}
-.answers{display:grid;gap:9px}
-.answer{width:100%;text-align:left;border:1px solid #304b5d;background:#0b151e;color:var(--text);border-radius:11px;padding:12px 14px;font-weight:750}
-.answer:hover:not(:disabled){border-color:var(--cyan);background:#102331}
-.answer.correct{background:#103524;border-color:#2e9361;color:#c6ffe0}
-.answer.wrong{background:#3a1520;border-color:#9e3b50;color:#ffd0d6}
-.answer:disabled{cursor:default}
-.feedback{margin-top:12px;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:#08141d;color:var(--muted);min-height:45px}
-.feedback.good{border-color:#286b4b;color:#a5ffd0;background:#0e281d}
-.feedback.bad{border-color:#803143;color:#ffc1c8;background:#2a1118}
-.audio-row,.action-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0}
-.audio-light{width:10px;height:10px;border-radius:50%;background:#37515f}
-.audio-light.playing{background:var(--green);box-shadow:0 0 15px var(--green);animation:pulse .65s infinite alternate}
-@keyframes pulse{to{transform:scale(1.35)}}
-.order-grid{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
-.order-row{display:contents}
-.order-word{border:1px solid var(--line);background:#091620;border-radius:10px;padding:11px 13px;font-weight:850}
-.order-select{width:76px;background:#07131c;color:white;border:1px solid #365466;border-radius:9px;padding:10px}
-.voice-card{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;border:1px solid var(--line);border-radius:15px;padding:17px;background:#0b1822}
-.voice-target{font-size:42px;font-weight:1000}
-.voice-pinyin{color:var(--amber);font-size:17px;margin-top:4px}
-.mic{width:86px;height:86px;border-radius:50%;border:1px solid #623748;background:#3c1822;color:white;font-size:34px}
-.mic.listening{background:#133b28;border-color:#2f8057;box-shadow:0 0 0 9px rgba(124,247,180,.08),0 0 30px rgba(124,247,180,.2);animation:mic .55s infinite alternate}
-@keyframes mic{to{transform:scale(1.07)}}
-.terminal{background:#02090e;border:1px solid #243b48;border-radius:13px;padding:14px;color:#97fbc7;
-  font-family:"Noto Sans Mono CJK SC",Consolas,monospace;line-height:1.55;min-height:72px}
-.textbox{width:100%;background:#07131c;border:1px solid #365466;color:white;border-radius:11px;padding:12px 13px;outline:none}
-textarea.textbox{min-height:110px;resize:vertical}
-.textbox:focus{border-color:var(--cyan)}
-.match-grid{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
-.match-left{border:1px solid var(--line);border-radius:10px;background:#0b1822;padding:11px}
-.match-select{background:#07131c;color:white;border:1px solid #355365;border-radius:9px;padding:10px;min-width:220px}
-.tf-row{display:flex;gap:8px}
-.tile-zone{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.tile{min-width:52px;border:1px solid #3a586a;background:#10202b;color:white;border-radius:10px;padding:11px 14px;font-size:24px;font-weight:1000}
-.build-box{min-height:54px;border:1px dashed #476476;border-radius:10px;background:#07131c;padding:10px 12px;font-size:28px;font-weight:1000}
-.fill-line{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.fill-select{background:#07131c;color:white;border:1px solid #355365;border-radius:9px;padding:9px}
-.timer60{font-size:64px;font-weight:1000;color:var(--amber);font-variant-numeric:tabular-nums}
-.memory-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.memory-tag{border:1px solid #286b4b;background:#0d2b1f;color:#b5ffda;border-radius:999px;padding:6px 10px;font-weight:850}
-.vault{max-width:650px;margin:20px auto;border:1px solid #3b5666;background:#06121a;border-radius:18px;padding:20px}
-.vault-display{font-family:"Noto Sans Mono CJK SC",Consolas,monospace;letter-spacing:.3em;font-size:48px;font-weight:1000;color:var(--amber);
-  background:#02080c;border:1px solid #2f4857;border-radius:11px;padding:15px;margin:15px 0}
-.code-input{width:220px;max-width:100%;text-align:center;letter-spacing:.25em;font-size:28px;font-weight:1000;background:#030b10;
-  color:white;border:1px solid #476474;border-radius:11px;padding:11px}
-.glitch{animation:glitch .28s 3}
-@keyframes glitch{25%{transform:translateX(3px)}50%{transform:translateX(-4px);filter:hue-rotate(80deg)}75%{transform:translateX(2px)}}
-.stamp{display:inline-block;border:3px solid #3bd386;color:#3bd386;border-radius:8px;padding:8px 15px;font-weight:1000;
-  letter-spacing:.12em;transform:rotate(-4deg);margin:14px}
-@media(max-width:760px){
-  .start-grid,.mission-grid{grid-template-columns:1fr}
-  .card{padding:17px}
-  .voice-card{grid-template-columns:1fr;text-align:center}
-  .mic{margin:auto}
-  .match-grid{grid-template-columns:1fr}
-  .match-select{min-width:0;width:100%}
+
+
+button{
+  cursor:pointer;
 }
+
+
+.hidden{
+  display:none !important;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.app{
+  width:min(
+    1100px,
+    calc(100% - 24px)
+  );
+
+  margin:
+    18px auto
+    70px;
+}
+
+
+/* =========================================================
+   TOP NAV
+========================================================= */
+
+.topNav{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:13px;
+}
+
+
+.brand{
+  color:var(--wine);
+
+  font-size:18px;
+  font-weight:1000;
+
+  letter-spacing:.04em;
+}
+
+
+.navButtons{
+  display:flex;
+  gap:8px;
+}
+
+
+.topButton{
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  gap:6px;
+
+  border:
+    1px solid
+    #bda991;
+
+  border-radius:999px;
+
+  background:white;
+  color:var(--ink);
+
+  padding:
+    9px 14px;
+
+  font-size:14px;
+  font-weight:900;
+
+  transition:.15s;
+}
+
+
+.topButton:hover{
+  transform:
+    translateY(-1px);
+
+  background:#f8f2e8;
+}
+
+
+.homeHSK{
+  background:var(--wine);
+
+  color:white;
+
+  border-color:var(--wine);
+}
+
+
+.homeHSK:hover{
+  background:
+    var(--wine-dark);
+}
+
+
+/* =========================================================
+   GENERIC CARD
+========================================================= */
+
+.card{
+  margin-bottom:16px;
+
+  padding:27px;
+
+  border:
+    1px solid
+    #d0c2b0;
+
+  border-radius:22px;
+
+  background:
+    rgba(
+      255,
+      250,
+      242,
+      .97
+    );
+
+  box-shadow:
+    var(--shadow);
+}
+
+
+.kicker{
+  color:var(--wine);
+
+  font-size:12px;
+  font-weight:1000;
+
+  letter-spacing:.18em;
+}
+
+
+h1{
+  margin:
+    .18em 0;
+
+  font-size:
+    clamp(
+      36px,
+      6vw,
+      65px
+    );
+
+  line-height:1.05;
+}
+
+
+h2{
+  margin:
+    .2em 0;
+
+  font-size:
+    clamp(
+      24px,
+      4vw,
+      35px
+    );
+}
+
+
+.muted{
+  color:var(--muted);
+
+  line-height:1.65;
+}
+
+
+/* =========================================================
+   HUB / HOME SCREEN
+========================================================= */
+
+.hero{
+  position:relative;
+
+  overflow:hidden;
+
+  text-align:center;
+
+  padding:
+    45px 30px
+    38px;
+}
+
+
+.hero::after{
+  content:"复习";
+
+  position:absolute;
+
+  right:-28px;
+  bottom:-70px;
+
+  color:
+    rgba(
+      133,
+      38,
+      56,
+      .045
+    );
+
+  font-size:180px;
+  font-weight:1000;
+
+  pointer-events:none;
+}
+
+
+.heroIcon{
+  margin:
+    13px 0;
+
+  font-size:74px;
+}
+
+
+.studentGrid{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:12px;
+
+  margin:
+    24px auto 0;
+
+  max-width:900px;
+}
+
+
+.field{
+  width:100%;
+
+  padding:
+    13px 14px;
+
+  border:
+    1px solid
+    #bdaa94;
+
+  border-radius:12px;
+
+  background:white;
+
+  color:var(--ink);
+
+  outline:none;
+}
+
+
+.field:focus{
+  border-color:
+    var(--wine);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(
+      133,
+      38,
+      56,
+      .08
+    );
+}
+
+
+/* =========================================================
+   LESSON SELECT
+========================================================= */
+
+.lessonGrid{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:16px;
+
+  margin-top:27px;
+
+  text-align:left;
+}
+
+
+.lessonCard{
+  position:relative;
+
+  display:flex;
+
+  flex-direction:column;
+
+  min-height:305px;
+
+  padding:24px;
+
+  overflow:hidden;
+
+  border:
+    1px solid
+    #d3c4b0;
+
+  border-radius:19px;
+
+  background:white;
+
+  transition:.18s;
+}
+
+
+.lessonCard:hover{
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0 18px 35px
+    rgba(
+      38,
+      34,
+      28,
+      .10
+    );
+}
+
+
+.lessonNumber{
+  color:var(--wine);
+
+  font-size:12px;
+  font-weight:1000;
+
+  letter-spacing:.15em;
+}
+
+
+.lessonIcon{
+  margin:
+    15px 0 7px;
+
+  font-size:54px;
+}
+
+
+.lessonTitle{
+  font-size:28px;
+  font-weight:1000;
+}
+
+
+.lessonCard p{
+  color:var(--muted);
+
+  line-height:1.55;
+}
+
+
+.lessonCard ul{
+  flex:1;
+
+  padding-left:20px;
+
+  color:#53616a;
+
+  line-height:1.75;
+}
+
+
+.lessonStart{
+  width:100%;
+
+  margin-top:10px;
+
+  border:0;
+
+  border-radius:11px;
+
+  padding:13px;
+
+  background:
+    var(--wine);
+
+  color:white;
+
+  font-weight:1000;
+
+  transition:.15s;
+}
+
+
+.lessonStart:hover{
+  background:
+    var(--wine-dark);
+}
+
+
+/* =========================================================
+   LESSON HEADER
+========================================================= */
+
+.lessonHeader{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:center;
+
+  gap:12px;
+
+  margin-bottom:14px;
+}
+
+
+.backHub{
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  border:
+    1px solid
+    #baa78f;
+
+  border-radius:999px;
+
+  background:white;
+
+  padding:
+    9px 14px;
+
+  font-weight:900;
+
+  color:var(--ink);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.sectionTitle{
+  margin:
+    28px 0 12px;
+
+  padding-bottom:8px;
+
+  border-bottom:
+    1px solid
+    var(--line);
+
+  font-size:19px;
+  font-weight:1000;
+}
+
+
+/* =========================================================
+   QUESTION
+========================================================= */
+
+.question{
+  margin:
+    10px 0;
+
+  padding:17px;
+
+  border:
+    1px solid
+    #ddd1c2;
+
+  border-radius:15px;
+
+  background:white;
+}
+
+
+.qnum{
+  color:var(--wine);
+
+  font-size:12px;
+  font-weight:1000;
+
+  letter-spacing:.12em;
+}
+
+
+.qtext{
+  margin:
+    7px 0 12px;
+
+  font-weight:850;
+
+  line-height:1.55;
+
+  white-space:pre-line;
+}
+
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+.options{
+  display:grid;
+  gap:7px;
+}
+
+
+.option{
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:9px;
+
+  padding:10px;
+
+  border-radius:9px;
+
+  cursor:pointer;
+
+  transition:.12s;
+}
+
+
+.option:hover{
+  background:#f8f2e9;
+}
+
+
+.option input{
+  margin-top:3px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.buttonRow{
+  display:flex;
+
+  gap:8px;
+
+  align-items:center;
+
+  flex-wrap:wrap;
+
+  margin:
+    9px 0;
+}
+
+
+.btn{
+  border:
+    1px solid
+    #263c4b;
+
+  border-radius:10px;
+
+  padding:
+    10px 14px;
+
+  font-weight:1000;
+
+  transition:.14s;
+}
+
+
+.btn:hover{
+  transform:
+    translateY(-1px);
+}
+
+
+.btnAudio{
+  background:var(--navy);
+  color:white;
+}
+
+
+.btnLight{
+  background:white;
+  color:var(--ink);
+}
+
+
+.btnMain{
+  border-color:var(--wine);
+
+  background:var(--wine);
+
+  color:white;
+
+  padding:
+    15px 25px;
+
+  font-size:18px;
+}
+
+
+.btnMain:hover{
+  background:
+    var(--wine-dark);
+}
+
+
+/* =========================================================
+   ORDER
+========================================================= */
+
+.orderGrid{
+  display:grid;
+
+  grid-template-columns:
+    1fr 115px;
+
+  gap:9px;
+
+  max-width:520px;
+}
+
+
+.orderGrid > div{
+  display:contents;
+}
+
+
+.orderGrid strong{
+  display:flex;
+
+  align-items:center;
+
+  padding:9px;
+}
+
+
+.orderGrid select{
+  padding:9px;
+
+  border:
+    1px solid
+    #bca991;
+
+  border-radius:9px;
+
+  background:white;
+}
+
+
+/* =========================================================
+   VOICE CARDS
+========================================================= */
+
+.voiceGrid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      5,
+      1fr
+    );
+
+  gap:9px;
+}
+
+
+.voiceCard{
+  padding:15px;
+
+  border:
+    1px solid
+    #d7cab9;
+
+  border-radius:14px;
+
+  background:white;
+
+  text-align:center;
+}
+
+
+.voiceHanzi{
+  font-size:30px;
+  font-weight:1000;
+}
+
+
+.voicePinyin{
+  margin-top:3px;
+
+  color:#90795d;
+
+  font-size:13px;
+}
+
+
+.voiceActions{
+  display:flex;
+
+  justify-content:center;
+
+  gap:6px;
+
+  margin-top:10px;
+}
+
+
+.micBtn{
+  border:
+    1px solid
+    #874751;
+
+  border-radius:999px;
+
+  background:#fff0f2;
+
+  padding:
+    8px 11px;
+
+  font-weight:900;
+}
+
+
+.micBtn.active{
+  border-color:#438663;
+
+  background:#dcf4e5;
+}
+
+
+.transcript{
+  min-height:44px;
+
+  margin-top:8px;
+
+  padding:8px;
+
+  border:
+    1px dashed
+    #c6b6a4;
+
+  border-radius:8px;
+
+  color:#69757d;
+
+  font-size:13px;
+}
+
+
+/* =========================================================
+   SCENARIO
+========================================================= */
+
+.scenario{
+  margin-bottom:11px;
+
+  padding:16px;
+
+  border-left:
+    4px solid
+    var(--gold);
+
+  border-radius:8px;
+
+  background:#fff5df;
+
+  line-height:1.6;
+}
+
+
+/* =========================================================
+   MATCH
+========================================================= */
+
+.matchGrid{
+  display:grid;
+
+  grid-template-columns:
+    1fr minmax(
+      220px,
+      310px
+    );
+
+  gap:9px;
+
+  align-items:center;
+}
+
+
+.matchGrid > div{
+  display:contents;
+}
+
+
+.matchGrid select,
+.fillSelect{
+  padding:10px;
+
+  border:
+    1px solid
+    #bca991;
+
+  border-radius:9px;
+
+  background:white;
+}
+
+
+/* =========================================================
+   DIALOGUE
+========================================================= */
+
+.dialogue{
+  margin:
+    10px 0;
+
+  padding:17px;
+
+  border-radius:12px;
+
+  background:#f5efe6;
+
+  line-height:1.9;
+}
+
+
+/* =========================================================
+   REORDER
+========================================================= */
+
+.build{
+  min-height:52px;
+
+  margin:
+    9px 0;
+
+  padding:10px;
+
+  border:
+    1px dashed
+    #ae9b82;
+
+  border-radius:9px;
+
+  font-size:28px;
+  font-weight:1000;
+}
+
+
+.tiles{
+  display:flex;
+
+  gap:8px;
+
+  flex-wrap:wrap;
+}
+
+
+.tile{
+  border:
+    1px solid
+    #a9957c;
+
+  border-radius:9px;
+
+  background:white;
+
+  padding:
+    9px 14px;
+
+  font-size:23px;
+  font-weight:1000;
+}
+
+
+/* =========================================================
+   WORD BANK
+========================================================= */
+
+.wordBank{
+  display:flex;
+
+  gap:7px;
+
+  flex-wrap:wrap;
+
+  margin:
+    9px 0;
+}
+
+
+.wordBank span{
+  padding:
+    6px 11px;
+
+  border-radius:999px;
+
+  background:#eee3d0;
+
+  font-weight:900;
+}
+
+
+/* =========================================================
+   MEMORY
+========================================================= */
+
+.memoryBox{
+  padding:20px;
+
+  border-radius:15px;
+
+  background:#1a2730;
+
+  color:white;
+}
+
+
+.timer{
+  margin:
+    9px 0;
+
+  color:#ffd676;
+
+  font-size:57px;
+  font-weight:1000;
+}
+
+
+.memoryBox textarea{
+  width:100%;
+
+  min-height:130px;
+
+  margin-top:10px;
+
+  padding:12px;
+
+  border:0;
+
+  border-radius:10px;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.submitCard{
+  text-align:center;
+}
+
+
+.submitStatus{
+  margin-top:14px;
+
+  padding:12px;
+
+  border-radius:10px;
+
+  background:#f4eee4;
+
+  color:#59666e;
+}
+
+
+.resultBox{
+  display:none;
+
+  margin-top:15px;
+
+  padding:18px;
+
+  border:
+    1px solid
+    #a9ceb7;
+
+  border-radius:14px;
+
+  background:
+    var(--green-soft);
+}
+
+
+.resultBox.show{
+  display:block;
+}
+
+
+.bigScore{
+  color:var(--green);
+
+  font-size:48px;
+  font-weight:1000;
+}
+
+
+.reviewList{
+  display:grid;
+
+  gap:6px;
+
+  margin-top:13px;
+
+  text-align:left;
+}
+
+
+.reviewItem{
+  padding:8px 10px;
+
+  border-radius:8px;
+
+  background:white;
+
+  line-height:1.45;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(
+  max-width:760px
+){
+
+  .app{
+    width:
+      calc(
+        100% - 12px
+      );
+
+    margin-top:7px;
+  }
+
+
+  .card{
+    padding:17px;
+  }
+
+
+  .studentGrid,
+  .lessonGrid{
+    grid-template-columns:1fr;
+  }
+
+
+  .voiceGrid{
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
+  }
+
+
+  .matchGrid{
+    grid-template-columns:1fr;
+  }
+
+
+  .topNav{
+    align-items:flex-start;
+  }
+
+
+  .navButtons{
+    flex-direction:column;
+  }
+
+
+  .topButton{
+    font-size:12px;
+  }
+
+
+  .lessonHeader{
+    align-items:flex-start;
+  }
+
+}
+
 </style>
 </head>
+
+
 <body>
-<div class="shell">
-  <div class="topbar">
-    <div class="brand">DOSSIER ZH-01 // LANGUAGE INTELLIGENCE UNIT</div>
-    <div class="stats hidden" id="stats">
-      <div class="stat">AGENT <span id="agentStat">—</span></div>
-      <div class="stat">INTEL <span id="scoreStat">0</span></div>
-      <div class="stat" id="soundBtn" onclick="toggleSound()">AUDIO ON</div>
-    </div>
+
+<div class="app">
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<div class="topNav">
+
+  <div class="brand">
+    综合复习 01
   </div>
- 
-  <section class="card" id="startScreen">
-    <div class="center">
-      <div class="kicker">CLASSIFIED // 综合复习 01</div>
-      <h1>SECRET CODE</h1>
-      <p class="sub">Một hồ sơ tiếng Trung đã bị mã hóa. Hoàn thành 4 nhiệm vụ Nghe - Nói - Đọc - Viết để thu thập 4 mảnh mật mã và mở két cuối.</p>
-      <input id="agentName" class="agent" placeholder="Tên / codename của học viên" />
-      <div class="start-grid">
-        <div class="start-box"><strong>01 AUDIO VAULT</strong>Nghe từ, hội thoại và chuỗi âm thanh.</div>
-        <div class="start-box"><strong>02 VOICE SCANNER</strong>Đọc và phản xạ bằng tiếng Trung.</div>
-        <div class="start-box"><strong>03 LOGIC ARCHIVE</strong>Ghép cặp, đọc hiểu, xác minh hồ sơ.</div>
-        <div class="start-box"><strong>04 CIPHER LAB</strong>Ghép chữ, điền từ, viết và memory hack.</div>
-      </div>
-      <button class="btn primary" onclick="enterHQ()">ENTER SECURE SYSTEM</button>
-    </div>
-  </section>
- 
-  <section class="card hidden" id="hqScreen">
-    <div class="header-row">
-      <div>
-        <div class="kicker">MISSION CONTROL</div>
-        <h2>Thu thập 4 mảnh mật mã</h2>
-        <p class="sub">Mỗi khu vực sẽ mở sau khi khu vực trước được hoàn thành.</p>
-      </div>
-      <button class="btn" onclick="showFinalVault()">FINAL VAULT</button>
-    </div>
-    <div class="mission-grid">
-      <div class="mission-card" id="mcard1">
-        <div class="mission-num">MISSION 01</div><div class="mission-title">Audio Vault</div>
-        <div class="mission-desc">15 tín hiệu âm thanh. Xác định từ, hội thoại và thứ tự nghe.</div>
-        <div class="code-frag masked" id="frag1">?</div><br><br>
-        <button class="btn primary" onclick="startMission1()">BREACH AUDIO VAULT</button>
-      </div>
-      <div class="mission-card locked" id="mcard2">
-        <div class="mission-num">MISSION 02</div><div class="mission-title">Voice Scanner</div>
-        <div class="mission-desc">Đọc 5 thẻ ngẫu nhiên, phản xạ nhanh và xử lý tình huống.</div>
-        <div class="code-frag masked" id="frag2">?</div><br><br>
-        <button class="btn primary" onclick="startMission2()">ACTIVATE SCANNER</button>
-      </div>
-      <div class="mission-card locked" id="mcard3">
-        <div class="mission-num">MISSION 03</div><div class="mission-title">Logic Archive</div>
-        <div class="mission-desc">Ghép cặp giao tiếp, chọn câu đúng và xác minh hội thoại.</div>
-        <div class="code-frag masked" id="frag3">?</div><br><br>
-        <button class="btn primary" onclick="startMission3()">OPEN ARCHIVE</button>
-      </div>
-      <div class="mission-card locked" id="mcard4">
-        <div class="mission-num">MISSION 04</div><div class="mission-title">Cipher Lab</div>
-        <div class="mission-desc">Tái tạo từ, điền chỗ trống, viết câu và thử thách 60 giây.</div>
-        <div class="code-frag masked" id="frag4">?</div><br><br>
-        <button class="btn primary" onclick="startMission4()">ENTER CIPHER LAB</button>
-      </div>
-    </div>
-  </section>
- 
-  <section class="card hidden" id="missionScreen">
-    <div class="header-row">
-      <div><div class="kicker" id="missionKicker">MISSION</div><h2 id="missionTitle"></h2><p class="sub" id="missionSubtitle"></p></div>
-      <button class="btn" onclick="backHQ()">MISSION CONTROL</button>
-    </div>
-    <div class="progressbar"><div class="progressfill" id="missionProgress"></div></div>
-    <div id="missionContent"></div>
-  </section>
- 
-  <section class="card hidden" id="vaultScreen">
-    <div class="center">
-      <div class="kicker">FINAL SECURITY LAYER</div>
-      <h1>THE VAULT</h1>
-      <p class="sub">Nhập 4 mảnh code theo thứ tự Mission 01 → 04.</p>
-      <div class="vault">
-        <div class="vault-display" id="vaultHint">? ? ? ?</div>
-        <input class="code-input" id="vaultInput" maxlength="4" inputmode="numeric" placeholder="••••" />
-        <div style="margin-top:14px"><button class="btn primary" onclick="unlockVault()">UNLOCK</button></div>
-        <div class="feedback" id="vaultFeedback">SECURITY STATUS: WAITING</div>
-      </div>
-      <button class="btn" onclick="backHQ()">RETURN TO HQ</button>
-    </div>
-  </section>
+
+
+  <div class="navButtons">
+
+
+    <!--
+      NÚT NÀY QUAY VỀ:
+      HSK-1-3.0/index.html
+
+      File hiện tại:
+      HSK-1-3.0/Bai-02/Luyen-tap-2/index.html
+    -->
+
+    <button
+      class="topButton homeHSK"
+      onclick="goMainHome()">
+
+      ⌂ Trang chủ HSK
+
+    </button>
+
+  </div>
+
 </div>
- 
+
+
+<!-- =========================================================
+     HUB
+========================================================= -->
+
+<section
+  class="card hero"
+  id="hubScreen">
+
+  <div class="kicker">
+    CHINESE REVIEW HUB
+  </div>
+
+
+  <div class="heroIcon">
+    ☕📚
+  </div>
+
+
+  <h1>
+    综合复习 01
+  </h1>
+
+
+  <p class="muted">
+
+    Bài ôn được chia thành
+    <strong>2 phần ngắn</strong>
+    để học viên đỡ mệt.
+
+    <br>
+
+    Hoàn thành từng bài
+    và nộp riêng.
+
+  </p>
+
+
+  <div class="studentGrid">
+
+    <input
+      class="field"
+      id="studentName"
+      placeholder="姓名 · Họ tên"
+    >
+
+
+    <input
+      class="field"
+      id="studentClass"
+      placeholder="班级 · Lớp"
+    >
+
+  </div>
+
+
+  <div class="lessonGrid">
+
+
+    <!-- LESSON 1 -->
+
+    <div class="lessonCard">
+
+      <div class="lessonNumber">
+        LESSON 01
+      </div>
+
+
+      <div class="lessonIcon">
+        🎧🗣️
+      </div>
+
+
+      <div class="lessonTitle">
+        听一听 + 说一说
+      </div>
+
+
+      <p>
+        Luyện nghe,
+        nhận diện từ
+        và phản xạ nói.
+      </p>
+
+
+      <ul>
+
+        <li>
+          5 câu nghe từ
+        </li>
+
+        <li>
+          5 câu nghe hội thoại
+        </li>
+
+        <li>
+          Nghe chuỗi 5 từ
+        </li>
+
+        <li>
+          5 thẻ đọc ngẫu nhiên
+        </li>
+
+        <li>
+          Phản xạ nhanh
+        </li>
+
+        <li>
+          1 tình huống
+        </li>
+
+      </ul>
+
+
+      <button
+        class="lessonStart"
+        onclick="openLesson1()">
+
+        BẮT ĐẦU BÀI 1 →
+
+      </button>
+
+    </div>
+
+
+    <!-- LESSON 2 -->
+
+    <div class="lessonCard">
+
+      <div class="lessonNumber">
+        LESSON 02
+      </div>
+
+
+      <div class="lessonIcon">
+        📖✍️
+      </div>
+
+
+      <div class="lessonTitle">
+        读一读 + 写一写
+      </div>
+
+
+      <p>
+        Ôn đọc hiểu,
+        chữ Hán
+        và khả năng viết.
+      </p>
+
+
+      <ul>
+
+        <li>
+          5 câu ghép cặp
+        </li>
+
+        <li>
+          5 câu tình huống
+        </li>
+
+        <li>
+          5 câu đúng/sai
+        </li>
+
+        <li>
+          Ghép chữ thành từ
+        </li>
+
+        <li>
+          Điền từ
+        </li>
+
+        <li>
+          Viết + 60 giây
+        </li>
+
+      </ul>
+
+
+      <button
+        class="lessonStart"
+        onclick="openLesson2()">
+
+        BẮT ĐẦU BÀI 2 →
+
+      </button>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     LESSON 1
+========================================================= -->
+
+<section
+  class="hidden"
+  id="lesson1Screen">
+
+
+  <div class="lessonHeader">
+
+    <button
+      class="backHub"
+      onclick="goHub()">
+
+      ← Quay về chọn bài
+
+    </button>
+
+
+    <button
+      class="topButton homeHSK"
+      onclick="goMainHome()">
+
+      ⌂ Trang chủ HSK
+
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+
+    <div class="kicker">
+      LESSON 01
+    </div>
+
+
+    <h2>
+      🎧 听一听 + 🗣️ 说一说
+    </h2>
+
+
+    <p class="muted">
+
+      Phần nghe sử dụng giọng Trung
+      chậm dành cho người mới học.
+
+    </p>
+
+
+    <!-- A -->
+
+    <div class="sectionTitle">
+      A. 听音选词 · Nghe và chọn từ
+    </div>
+
+
+    <div id="listenA"></div>
+
+
+    <!-- B -->
+
+    <div class="sectionTitle">
+      B. 听对话，选答案
+    </div>
+
+
+    <div id="listenB"></div>
+
+
+    <!-- C -->
+
+    <div class="sectionTitle">
+      C. 听一听，写号码
+    </div>
+
+
+    <div class="question">
+
+
+      <div class="qtext">
+
+        Nghe chuỗi 5 từ
+        và đánh số thứ tự
+        từ 1 đến 5.
+
+      </div>
+
+
+      <div class="buttonRow">
+
+        <button
+          class="btn btnAudio"
+          onclick="playSequence(orderAudio)">
+
+          ▶ Nghe chuỗi
+
+        </button>
+
+      </div>
+
+
+      <div
+        class="orderGrid"
+        id="orderGrid">
+      </div>
+
+
+    </div>
+
+
+    <!-- D -->
+
+    <div class="sectionTitle">
+      D. 看词读一读 · Đọc 5 thẻ ngẫu nhiên
+    </div>
+
+
+    <div
+      class="voiceGrid"
+      id="voiceCards">
+    </div>
+
+
+    <!-- E -->
+
+    <div class="sectionTitle">
+      E. 快问快答 · Phản xạ nhanh
+    </div>
+
+
+    <div id="rapidQuestions"></div>
+
+
+    <!-- F -->
+
+    <div class="sectionTitle">
+      F. 情景对话 · Hội thoại tình huống
+    </div>
+
+
+    <div class="question">
+
+
+      <div
+        class="scenario"
+        id="scenarioText">
+      </div>
+
+
+      <textarea
+        class="field"
+        id="scenarioAnswer"
+        rows="5"
+        placeholder="Nhập câu/đoạn hội thoại bằng chữ Hán..."></textarea>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- SUBMIT 1 -->
+
+  <div class="card submitCard">
+
+
+    <div class="kicker">
+      SUBMIT LESSON 01
+    </div>
+
+
+    <h2>
+      Hoàn thành Bài 1?
+    </h2>
+
+
+    <p class="muted">
+
+      Phần nghe được chấm tự động.
+      Phần nói và tình huống
+      được gửi để giáo viên xem thêm.
+
+    </p>
+
+
+    <button
+      class="btn btnMain"
+      onclick="submitLesson1()">
+
+      ✓📨 NỘP BÀI 1 & KIỂM TRA
+
+    </button>
+
+
+    <div
+      class="submitStatus"
+      id="status1">
+
+      Bài chưa được nộp.
+
+    </div>
+
+
+    <div
+      class="resultBox"
+      id="result1">
+
+
+      <div
+        class="bigScore"
+        id="score1">
+
+        0%
+
+      </div>
+
+
+      <div id="resultText1"></div>
+
+
+      <div
+        class="reviewList"
+        id="review1">
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+<!-- =========================================================
+     LESSON 2
+========================================================= -->
+
+<section
+  class="hidden"
+  id="lesson2Screen">
+
+
+  <div class="lessonHeader">
+
+
+    <button
+      class="backHub"
+      onclick="goHub()">
+
+      ← Quay về chọn bài
+
+    </button>
+
+
+    <button
+      class="topButton homeHSK"
+      onclick="goMainHome()">
+
+      ⌂ Trang chủ HSK
+
+    </button>
+
+
+  </div>
+
+
+  <div class="card">
+
+
+    <div class="kicker">
+      LESSON 02
+    </div>
+
+
+    <h2>
+      📖 读一读 + ✍️ 写一写
+    </h2>
+
+
+    <p class="muted">
+
+      Đọc hiểu,
+      chữ Hán,
+      câu giao tiếp
+      và khả năng ghi nhớ.
+
+    </p>
+
+
+    <!-- A -->
+
+    <div class="sectionTitle">
+      A. 找朋友 · Ghép cặp
+    </div>
+
+
+    <div class="question">
+
+      <div
+        class="matchGrid"
+        id="matching">
+      </div>
+
+    </div>
+
+
+    <!-- B -->
+
+    <div class="sectionTitle">
+      B. 谁说得对？· Ai nói đúng?
+    </div>
+
+
+    <div id="readMC"></div>
+
+
+    <!-- C -->
+
+    <div class="sectionTitle">
+      C. 读对话 · Đọc hội thoại
+    </div>
+
+
+    <div class="dialogue">
+
+      王老师：大家好！
+      <br>
+
+      学生们：王老师，您好！
+      <br>
+
+      王老师：同学们，你们好！
+      <br>
+
+      学生们：老师好！
+
+      <br><br>
+
+      ⋯⋯
+
+      <br><br>
+
+      学生们：王老师，谢谢！
+      <br>
+
+      王老师：不客气！
+      <br>
+
+      学生们：王老师，再见！
+      <br>
+
+      王老师：再见！
+
+    </div>
+
+
+    <div id="tfQuestions"></div>
+
+
+    <!-- D -->
+
+    <div class="sectionTitle">
+      D. 拼一拼 · Ghép chữ thành từ
+    </div>
+
+
+    <div id="reorderQs"></div>
+
+
+    <!-- E -->
+
+    <div class="sectionTitle">
+      E. 选词填空 · Chọn từ điền vào chỗ trống
+    </div>
+
+
+    <div class="wordBank">
+
+      <span>您</span>
+      <span>大家</span>
+      <span>们</span>
+      <span>不客气</span>
+      <span>再见</span>
+
+    </div>
+
+
+    <div id="fillQs"></div>
+
+
+    <!-- F -->
+
+    <div class="sectionTitle">
+      F. 我会写 · Tự viết
+    </div>
+
+
+    <div id="writeQs"></div>
+
+
+    <!-- CHALLENGE -->
+
+    <div class="sectionTitle">
+      ⭐ 挑战题 · 60 giây
+    </div>
+
+
+    <div class="memoryBox">
+
+
+      <p>
+
+        Không nhìn danh sách từ vựng.
+
+        Trong 60 giây,
+        hãy viết tất cả từ tiếng Trung
+        bạn nhớ.
+
+      </p>
+
+
+      <div
+        class="timer"
+        id="timer">
+
+        60
+
+      </div>
+
+
+      <button
+        class="btn btnLight"
+        id="timerButton"
+        onclick="startTimer()">
+
+        BẮT ĐẦU 60 GIÂY
+
+      </button>
+
+
+      <textarea
+        id="memoryInput"
+        disabled
+        placeholder="Nhấn bắt đầu rồi nhập từ tại đây..."></textarea>
+
+
+      <p>
+
+        我记得
+
+        <strong
+          id="memoryCount">
+
+          0
+
+        </strong>
+
+        个词！
+
+      </p>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- SUBMIT 2 -->
+
+  <div class="card submitCard">
+
+
+    <div class="kicker">
+      SUBMIT LESSON 02
+    </div>
+
+
+    <h2>
+      Hoàn thành Bài 2?
+    </h2>
+
+
+    <p class="muted">
+
+      Các câu khách quan
+      và câu viết cơ bản
+      được tự chấm.
+
+      Hội thoại mở
+      giáo viên sẽ xem riêng.
+
+    </p>
+
+
+    <button
+      class="btn btnMain"
+      onclick="submitLesson2()">
+
+      ✓📨 NỘP BÀI 2 & KIỂM TRA
+
+    </button>
+
+
+    <div
+      class="submitStatus"
+      id="status2">
+
+      Bài chưa được nộp.
+
+    </div>
+
+
+    <div
+      class="resultBox"
+      id="result2">
+
+
+      <div
+        class="bigScore"
+        id="score2">
+
+        0%
+
+      </div>
+
+
+      <div id="resultText2"></div>
+
+
+      <div
+        class="reviewList"
+        id="review2">
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+</div>
+
+
+<!-- =========================================================
+     FORM GỬI EMAIL
+========================================================= -->
+
+<iframe
+  name="mailFrame"
+  style="display:none">
+</iframe>
+
+
+<form
+  id="emailForm"
+  action="https://formsubmit.co/dungtran92qc@gmail.com"
+  method="POST"
+  target="mailFrame"
+  style="display:none">
+
+
+  <input
+    type="hidden"
+    name="_captcha"
+    value="false"
+  >
+
+
+  <input
+    type="hidden"
+    name="_template"
+    value="table"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailSubject"
+    name="_subject"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailName"
+    name="Họ tên"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailClass"
+    name="Lớp"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailLesson"
+    name="Bài"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailScore"
+    name="Điểm tự động"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailDetails"
+    name="Chi tiết bài làm"
+  >
+
+
+</form>
+
+
 <script>
-const codeFragments=["7","3","5","9"];
-let agent="AGENT";
-let totalScore=0;
-let completed=[false,false,false,false];
-let soundOn=true;
-let currentMission=0;
-let recognition=null,isListening=false,voiceQueue=[],voiceIndex=0,voiceHits=0;
-let typedScenario=null;
-let memoryTimer=null,memorySeconds=60,memoryStarted=false;
- 
-const listenA=[
- {audio:"你们",opts:["你好","你们","您"],correct:1},
- {audio:"同学",opts:["学生","老师","同学"],correct:2},
- {audio:"大家好",opts:["大家","大家好","你好"],correct:1},
- {audio:"不客气",opts:["谢谢","再见","不客气"],correct:2},
- {audio:"同学们",opts:["同学","同学们","学生"],correct:1}
+
+/* =========================================================
+   DATA · LISTEN
+========================================================= */
+
+const listenA = [
+
+  {
+    audio:"你们",
+
+    options:[
+      "你好",
+      "你们",
+      "您"
+    ],
+
+    correct:1
+  },
+
+
+  {
+    audio:"同学",
+
+    options:[
+      "学生",
+      "老师",
+      "同学"
+    ],
+
+    correct:2
+  },
+
+
+  {
+    audio:"大家好",
+
+    options:[
+      "大家",
+      "大家好",
+      "你好"
+    ],
+
+    correct:1
+  },
+
+
+  {
+    audio:"不客气",
+
+    options:[
+      "谢谢",
+      "再见",
+      "不客气"
+    ],
+
+    correct:2
+  },
+
+
+  {
+    audio:"同学们",
+
+    options:[
+      "同学",
+      "同学们",
+      "学生"
+    ],
+
+    correct:1
+  }
+
 ];
-const listenB=[
- {audio:["A：你好！","B：你好！"],q:"Bạn nghe thấy lời chào nào?",opts:["你好！","谢谢！","再见！"],correct:0},
- {audio:["学生：王老师，您好！","王老师：你好！"],q:"Người nói đang chào ai?",opts:["王老师","学生们","同学"],correct:0},
- {audio:["A：谢谢！","B：不客气！"],q:"Sau “谢谢！”, người còn lại nói gì?",opts:["你好！","不客气！","再见！"],correct:1},
- {audio:["王老师：同学们，你们好！","学生们：老师好！"],q:"Câu nào bạn nghe được?",opts:["老师好！","大家好！","你们好！"],correct:0},
- {audio:["A：谢谢！","B：不客气！再见！","A：再见！"],q:"Cuộc hội thoại kết thúc bằng từ nào?",opts:["好","谢谢","再见"],correct:2}
+
+
+const listenB = [
+
+  {
+
+    audio:[
+      "你好！",
+      "你好！"
+    ],
+
+    question:
+      "Bạn nghe thấy lời chào nào?",
+
+    options:[
+      "你好！",
+      "谢谢！",
+      "再见！"
+    ],
+
+    correct:0
+
+  },
+
+
+  {
+
+    audio:[
+      "王老师，您好！",
+      "你好！"
+    ],
+
+    question:
+      "Người nói đang chào ai?",
+
+    options:[
+      "王老师",
+      "学生们",
+      "同学"
+    ],
+
+    correct:0
+
+  },
+
+
+  {
+
+    audio:[
+      "谢谢！",
+      "不客气！"
+    ],
+
+    question:
+      "Sau “谢谢！”, người còn lại nói gì?",
+
+    options:[
+      "你好！",
+      "不客气！",
+      "再见！"
+    ],
+
+    correct:1
+
+  },
+
+
+  {
+
+    audio:[
+      "同学们，你们好！",
+      "老师好！"
+    ],
+
+    question:
+      "Câu nào bạn nghe được?",
+
+    options:[
+      "老师好！",
+      "大家好！",
+      "你们好！"
+    ],
+
+    correct:0
+
+  },
+
+
+  {
+
+    audio:[
+      "谢谢！",
+      "不客气！再见！",
+      "再见！"
+    ],
+
+    question:
+      "Cuộc hội thoại kết thúc bằng từ nào?",
+
+    options:[
+      "好",
+      "谢谢",
+      "再见"
+    ],
+
+    correct:2
+
+  }
+
 ];
-const sequenceAudio=["谢谢","老师","同学","学生","再见"];
-const sequenceWords=["老师","谢谢","学生","再见","同学"];
-const sequenceCorrect={"老师":"2","谢谢":"1","学生":"4","再见":"5","同学":"3"};
- 
-const vocab=[
- {h:"你好",p:"nǐ hǎo"},{h:"老师",p:"lǎoshī"},{h:"学生",p:"xuésheng"},{h:"同学",p:"tóngxué"},{h:"谢谢",p:"xièxie"},
- {h:"不客气",p:"bú kèqi"},{h:"大家",p:"dàjiā"},{h:"您",p:"nín"},{h:"你们",p:"nǐmen"},{h:"再见",p:"zàijiàn"}
+
+
+const orderAudio = [
+
+  "谢谢",
+  "老师",
+  "同学",
+  "学生",
+  "再见"
+
 ];
-const rapid=[
- {prompt:"GV: 你好！",sample:"你好！",accepted:["你好"]},
- {prompt:"GV: 谢谢！",sample:"不客气！",accepted:["不客气"]},
- {prompt:"GV: 再见！",sample:"再见！",accepted:["再见"]},
- {prompt:"GV: 同学们，你们好！",sample:"老师好！",accepted:["老师好","王老师您好","王老师你好"]},
- {prompt:"GV: 大家好！",sample:"大家好！",accepted:["大家好","老师好","王老师您好","王老师你好"]}
+
+
+const orderWords = [
+
+  "老师",
+  "谢谢",
+  "学生",
+  "再见",
+  "同学"
+
 ];
-const scenarios=[
- {name:"TÌNH HUỐNG A · Gặp giáo viên",desc:"Bạn gặp cô Vương. Hãy chào cô một cách lịch sự.",hint:"Ví dụ hợp lý: 王老师，您好！",
-  validate:t=>norm(t).includes("王老师")&&norm(t).includes("您好")},
- {name:"TÌNH HUỐNG B · Được giúp đỡ",desc:"Một bạn vừa giúp bạn. Viết hai lượt lời: bạn cảm ơn → người kia đáp lại.",hint:"Cần có 谢谢 và 不客气.",
-  validate:t=>norm(t).includes("谢谢")&&norm(t).includes("不客气")},
- {name:"TÌNH HUỐNG C · Tan học",desc:"Bạn gặp cô Vương trước khi về. Viết một đoạn hội thoại ngắn để chào tạm biệt.",hint:"Cần có 王老师 và 再见.",
-  validate:t=>norm(t).includes("王老师")&&norm(t).includes("再见")}
+
+
+const orderCorrect = {
+
+  "老师":"2",
+
+  "谢谢":"1",
+
+  "学生":"4",
+
+  "再见":"5",
+
+  "同学":"3"
+
+};
+
+
+/* =========================================================
+   SPEAK
+========================================================= */
+
+const speakingWords = [
+
+  {
+    hanzi:"你好",
+    pinyin:"nǐ hǎo"
+  },
+
+  {
+    hanzi:"老师",
+    pinyin:"lǎoshī"
+  },
+
+  {
+    hanzi:"学生",
+    pinyin:"xuésheng"
+  },
+
+  {
+    hanzi:"同学",
+    pinyin:"tóngxué"
+  },
+
+  {
+    hanzi:"谢谢",
+    pinyin:"xièxie"
+  },
+
+  {
+    hanzi:"不客气",
+    pinyin:"bú kèqi"
+  },
+
+  {
+    hanzi:"大家",
+    pinyin:"dàjiā"
+  },
+
+  {
+    hanzi:"您",
+    pinyin:"nín"
+  },
+
+  {
+    hanzi:"你们",
+    pinyin:"nǐmen"
+  },
+
+  {
+    hanzi:"再见",
+    pinyin:"zàijiàn"
+  }
+
 ];
- 
-const matchItems=[
- ["你好！","你好！"],["谢谢！","不客气！"],["再见！","再见！"],["王老师：同学们，你们好！","老师好！"],["学生们见到王老师","王老师，您好！"]
+
+
+const rapidQuestions = [
+
+  {
+    teacher:"你好！"
+  },
+
+  {
+    teacher:"谢谢！"
+  },
+
+  {
+    teacher:"再见！"
+  },
+
+  {
+    teacher:"同学们，你们好！"
+  },
+
+  {
+    teacher:"大家好！"
+  }
+
 ];
-const matchOptions=["不客气！","王老师，您好！","你好！","再见！","老师好！"];
-const readMC=[
- ["小明 gặp cô Vương. 小明 nói:",["王老师，您好！","王老师，不客气！","王老师，谢谢大家！"],0],
- ["Cô Vương bước vào lớp và muốn chào cả lớp:",["学生，再见！","大家好！","谢谢！"],1],
- ["Một người nói “谢谢！”. Bạn trả lời:",["你好！","再见！","不客气！"],2],
- ["Tan học, học sinh nói với giáo viên:",["老师，再见！","老师，不客气！","老师，谢谢大家！"],0],
- ["“同学们” chỉ:",["một bạn học","các bạn học","giáo viên"],1]
+
+
+const scenarios = [
+
+  {
+
+    title:
+      "Tình huống A · Gặp giáo viên",
+
+    text:
+      "Bạn gặp cô Vương. Hãy chào cô một cách lịch sự."
+
+  },
+
+
+  {
+
+    title:
+      "Tình huống B · Được giúp đỡ",
+
+    text:
+      "Một bạn vừa giúp bạn. Bạn cảm ơn → bạn kia đáp lại."
+
+  },
+
+
+  {
+
+    title:
+      "Tình huống C · Tan học",
+
+    text:
+      "Bạn gặp cô Vương trước khi về. Hãy tạo một đoạn hội thoại ngắn để chào tạm biệt."
+
+  }
+
 ];
-const tfItems=[
- ["王老师是老师。",true],
- ["“学生们” chỉ có một học sinh.",false],
- ["学生们说：“王老师，您好！”",true],
- ["王老师说：“谢谢！”，学生说“不客气！”。",false],
- ["Cuối đoạn hội thoại, mọi người nói “再见”.",true]
+
+
+/* =========================================================
+   READ
+========================================================= */
+
+const matchItems = [
+
+  [
+    "你好！",
+    "你好！"
+  ],
+
+  [
+    "谢谢！",
+    "不客气！"
+  ],
+
+  [
+    "再见！",
+    "再见！"
+  ],
+
+  [
+    "王老师：同学们，你们好！",
+    "老师好！"
+  ],
+
+  [
+    "学生们见到王老师",
+    "王老师，您好！"
+  ]
+
 ];
- 
-const reorder=[
- {chars:["好","你"],ans:"你好"},{chars:["师","老"],ans:"老师"},{chars:["生","学"],ans:"学生"},{chars:["学","同"],ans:"同学"},{chars:["见","再"],ans:"再见"}
+
+
+const matchOptions = [
+
+  "不客气！",
+
+  "王老师，您好！",
+
+  "你好！",
+
+  "再见！",
+
+  "老师好！"
+
 ];
-const fill=[
- {text:"王老师，_____好！",ans:"您"},
- {text:"_____好！我是王老师。",ans:"大家"},
- {text:"同学_____，你们好！",ans:"们"},
- {text:"A：谢谢！　B：__________！",ans:"不客气"},
- {text:"A：老师，再见！　B：__________！",ans:"再见"}
+
+
+const readingMC = [
+
+  [
+
+    "小明 gặp cô Vương. 小明 nói:",
+
+    [
+      "王老师，您好！",
+      "王老师，不客气！",
+      "王老师，谢谢大家！"
+    ],
+
+    0
+
+  ],
+
+
+  [
+
+    "Cô Vương bước vào lớp và muốn chào cả lớp:",
+
+    [
+      "学生，再见！",
+      "大家好！",
+      "谢谢！"
+    ],
+
+    1
+
+  ],
+
+
+  [
+
+    "Một người nói “谢谢！”. Bạn trả lời:",
+
+    [
+      "你好！",
+      "再见！",
+      "不客气！"
+    ],
+
+    2
+
+  ],
+
+
+  [
+
+    "Tan học, học sinh nói với giáo viên:",
+
+    [
+      "老师，再见！",
+      "老师，不客气！",
+      "老师，谢谢大家！"
+    ],
+
+    0
+
+  ],
+
+
+  [
+
+    "“同学们” chỉ:",
+
+    [
+      "một bạn học",
+      "các bạn học",
+      "giáo viên"
+    ],
+
+    1
+
+  ]
+
 ];
-const fillBank=["您","大家","们","不客气","再见"];
-const writeExact=[
- {q:"Viết bằng chữ Hán: “Xin chào!”",answers:["你好"]},
- {q:"Viết bằng chữ Hán: “Cảm ơn!”",answers:["谢谢"]},
- {q:"Viết bằng chữ Hán: “Đừng khách sáo!”",answers:["不客气"]},
- {q:"Viết một câu để chào cô Vương một cách lịch sự.",answers:["王老师您好","王老师你好"]}
+
+
+const trueFalseItems = [
+
+  [
+    "王老师是老师。",
+    true
+  ],
+
+  [
+    "“学生们” chỉ có một học sinh.",
+    false
+  ],
+
+  [
+    "学生们说：“王老师，您好！”",
+    true
+  ],
+
+  [
+    "王老师说：“谢谢！”，学生说“不客气！”。",
+    false
+  ],
+
+  [
+    "Cuối đoạn hội thoại, mọi người nói “再见”.",
+    true
+  ]
+
 ];
-const memoryVocab=["你好","王老师","大家","好","学生","们","老师","您","你们","谢谢","不客气","同学","再见"];
- 
-function show(id){
- ["startScreen","hqScreen","missionScreen","vaultScreen"].forEach(x=>document.getElementById(x).classList.add("hidden"));
- document.getElementById(id).classList.remove("hidden");
+
+
+/* =========================================================
+   WRITE
+========================================================= */
+
+const reorderItems = [
+
+  {
+
+    chars:[
+      "好",
+      "你"
+    ],
+
+    answer:"你好"
+
+  },
+
+
+  {
+
+    chars:[
+      "师",
+      "老"
+    ],
+
+    answer:"老师"
+
+  },
+
+
+  {
+
+    chars:[
+      "生",
+      "学"
+    ],
+
+    answer:"学生"
+
+  },
+
+
+  {
+
+    chars:[
+      "学",
+      "同"
+    ],
+
+    answer:"同学"
+
+  },
+
+
+  {
+
+    chars:[
+      "见",
+      "再"
+    ],
+
+    answer:"再见"
+
+  }
+
+];
+
+
+const fillItems = [
+
+  [
+
+    "王老师，_____好！",
+
+    "您"
+
+  ],
+
+
+  [
+
+    "_____好！我是王老师。",
+
+    "大家"
+
+  ],
+
+
+  [
+
+    "同学_____，你们好！",
+
+    "们"
+
+  ],
+
+
+  [
+
+    "A：谢谢！ B：__________！",
+
+    "不客气"
+
+  ],
+
+
+  [
+
+    "A：老师，再见！ B：__________！",
+
+    "再见"
+
+  ]
+
+];
+
+
+const fillBank = [
+
+  "您",
+
+  "大家",
+
+  "们",
+
+  "不客气",
+
+  "再见"
+
+];
+
+
+const exactWriting = [
+
+  [
+
+    "Viết bằng chữ Hán: “Xin chào!”",
+
+    [
+      "你好"
+    ]
+
+  ],
+
+
+  [
+
+    "Viết bằng chữ Hán: “Cảm ơn!”",
+
+    [
+      "谢谢"
+    ]
+
+  ],
+
+
+  [
+
+    "Viết bằng chữ Hán: “Đừng khách sáo!”",
+
+    [
+      "不客气"
+    ]
+
+  ],
+
+
+  [
+
+    "Viết một câu để chào cô Vương một cách lịch sự.",
+
+    [
+      "王老师您好",
+      "王老师你好"
+    ]
+
+  ]
+
+];
+
+
+const memoryVocabulary = [
+
+  "你好",
+
+  "王老师",
+
+  "大家",
+
+  "好",
+
+  "学生",
+
+  "们",
+
+  "老师",
+
+  "您",
+
+  "你们",
+
+  "谢谢",
+
+  "不客气",
+
+  "同学",
+
+  "再见"
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let selectedSpeakingWords =
+  shuffleArray(
+    speakingWords
+  )
+  .slice(
+    0,
+    5
+  );
+
+
+let selectedScenario =
+  randomItem(
+    scenarios
+  );
+
+
+let builtWords = [
+
+  "",
+  "",
+  "",
+  "",
+  ""
+
+];
+
+
+let recognition =
+  null;
+
+
+let currentTranscriptBox =
+  null;
+
+
+let currentMicButton =
+  null;
+
+
+let timerID =
+  null;
+
+
+let secondsLeft =
+  60;
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+renderLesson1();
+
+renderLesson2();
+
+
+/* =========================================================
+   MAIN WEBSITE HOME
+
+   CẤU TRÚC BÀ ĐANG CÓ:
+
+   HSK-1-3.0/
+   ├── index.html
+   └── Bai-02/
+       └── Luyen-tap-2/
+           └── index.html
+
+   Vì vậy cần ../../index.html
+========================================================= */
+
+function goMainHome(){
+
+  window.location.href =
+    "../../index.html";
+
 }
-function enterHQ(){
- agent=document.getElementById("agentName").value.trim()||"AGENT";
- document.getElementById("agentStat").textContent=agent.toUpperCase();
- document.getElementById("stats").classList.remove("hidden");
- show("hqScreen");refreshHQ();
+
+
+/* =========================================================
+   HUB NAVIGATION
+========================================================= */
+
+function validateStudent(){
+
+  const name =
+    document
+      .getElementById(
+        "studentName"
+      )
+      .value
+      .trim();
+
+
+  const studentClass =
+    document
+      .getElementById(
+        "studentClass"
+      )
+      .value
+      .trim();
+
+
+  if(!name){
+
+    alert(
+      "Vui lòng nhập Họ tên trước."
+    );
+
+
+    document
+      .getElementById(
+        "studentName"
+      )
+      .focus();
+
+
+    return false;
+
+  }
+
+
+  if(!studentClass){
+
+    alert(
+      "Vui lòng nhập Lớp trước."
+    );
+
+
+    document
+      .getElementById(
+        "studentClass"
+      )
+      .focus();
+
+
+    return false;
+
+  }
+
+
+  return true;
+
 }
-function refreshHQ(){
- for(let i=0;i<4;i++){
-  const card=document.getElementById("mcard"+(i+1)),frag=document.getElementById("frag"+(i+1));
-  card.classList.toggle("locked",i>0&&!completed[i-1]&&!completed[i]);
-  card.classList.toggle("done",completed[i]);
-  frag.textContent=completed[i]?codeFragments[i]:"?";
-  frag.classList.toggle("masked",!completed[i]);
- }
- document.getElementById("scoreStat").textContent=totalScore;
+
+
+function openLesson1(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  showOnly(
+    "lesson1Screen"
+  );
+
 }
-function backHQ(){stopMic();show("hqScreen");refreshHQ()}
-function setMission(n,title,subtitle){
- currentMission=n;document.getElementById("missionKicker").textContent=`MISSION 0${n}`;
- document.getElementById("missionTitle").textContent=title;document.getElementById("missionSubtitle").textContent=subtitle;
- document.getElementById("missionProgress").style.width="0%";show("missionScreen");
+
+
+function openLesson2(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  showOnly(
+    "lesson2Screen"
+  );
+
 }
-function setProgress(p){document.getElementById("missionProgress").style.width=Math.max(0,Math.min(100,p))+"%"}
-function awardMission(index,points){
- if(!completed[index])totalScore+=points;
- completed[index]=true;document.getElementById("scoreStat").textContent=totalScore;
- document.getElementById("missionContent").innerHTML=`
- <div class="center"><div class="kicker">ACCESS GRANTED</div><h2>Nhiệm vụ hoàn thành</h2>
- <p class="sub">Mảnh mật mã thu được:</p><div class="vault-display" style="max-width:220px;margin:18px auto">${codeFragments[index]}</div>
- <div class="stamp">DECRYPTED</div><br><button class="btn primary" onclick="backHQ()">RETURN TO HQ</button></div>`;
- setProgress(100);playSuccess();speak("任务完成");
+
+
+function goHub(){
+
+  showOnly(
+    "hubScreen"
+  );
+
 }
- 
-function startMission1(){setMission(1,"AUDIO VAULT","Nghe 10 tín hiệu + giải thứ tự 5 từ để trích xuất mảnh code.");renderListenQuestion(0)}
-function renderListenQuestion(i){
- if(i<5){
-  const x=listenA[i];
-  document.getElementById("missionContent").innerHTML=`
-   <div class="question"><div class="qnum">AUDIO SIGNAL ${i+1} / 15</div>
-   <div class="qtitle">Nghe và chọn từ/cụm từ bạn nghe được.</div>
-   <div class="audio-row"><button class="btn primary" onclick='speak(${JSON.stringify(x.audio)})'>PLAY SIGNAL</button><span class="audio-light"></span></div>
-   <div class="answers">${x.opts.map((o,k)=>`<button class="answer" onclick="checkListenA(${i},${k},this)">${String.fromCharCode(65+k)}. ${o}</button>`).join("")}</div>
-   <div class="feedback" id="listenFeedback">Chọn đáp án sau khi nghe.</div></div>`;
-  setProgress(i/15*100);return;
- }
- if(i<10){
-  const j=i-5,x=listenB[j];
-  document.getElementById("missionContent").innerHTML=`
-   <div class="question"><div class="qnum">DIALOGUE SIGNAL ${i+1} / 15</div><div class="qtitle">${x.q}</div>
-   <div class="audio-row"><button class="btn primary" onclick='speakSequence(${JSON.stringify(x.audio)})'>PLAY DIALOGUE</button><span class="audio-light"></span></div>
-   <div class="answers">${x.opts.map((o,k)=>`<button class="answer" onclick="checkListenB(${j},${k},this)">${String.fromCharCode(65+k)}. ${o}</button>`).join("")}</div>
-   <div class="feedback" id="listenFeedback">Có thể phát lại trước khi trả lời.</div></div>`;
-  setProgress(i/15*100);return;
- }
- renderSequence();
+
+
+function showOnly(id){
+
+  [
+
+    "hubScreen",
+
+    "lesson1Screen",
+
+    "lesson2Screen"
+
+  ]
+  .forEach(
+    screenID => {
+
+      document
+        .getElementById(
+          screenID
+        )
+        .classList
+        .add(
+          "hidden"
+        );
+
+    }
+  );
+
+
+  document
+    .getElementById(
+      id
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
+
+
+  window.scrollTo({
+
+    top:0,
+
+    behavior:"smooth"
+
+  });
+
 }
-function lockAnswers(btn,correctIndex){
- const arr=[...btn.parentElement.querySelectorAll(".answer")];arr.forEach((b,k)=>{b.disabled=true;b.classList.toggle("correct",k===correctIndex)});
+
+
+/* =========================================================
+   RENDER LESSON 1
+========================================================= */
+
+function renderLesson1(){
+
+
+  /* LISTEN A */
+
+  document
+    .getElementById(
+      "listenA"
+    )
+    .innerHTML =
+      listenA
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          return multipleChoiceHTML({
+
+            name:
+              `LISTEN-A-${index}`,
+
+            number:
+              index + 1,
+
+            text:
+              "Nghe từ/cụm từ và chọn đáp án.",
+
+            options:
+              item.options,
+
+            audio:
+              `
+              playSlow(
+                '${escapeJS(item.audio)}'
+              )
+              `
+
+          });
+
+        }
+      )
+      .join("");
+
+
+  /* LISTEN B */
+
+  document
+    .getElementById(
+      "listenB"
+    )
+    .innerHTML =
+      listenB
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          return multipleChoiceHTML({
+
+            name:
+              `LISTEN-B-${index}`,
+
+            number:
+              index + 6,
+
+            text:
+              item.question,
+
+            options:
+              item.options,
+
+            audio:
+              `
+              playSequence(
+                ${JSON.stringify(
+                  item.audio
+                )}
+              )
+              `
+
+          });
+
+        }
+      )
+      .join("");
+
+
+  /* ORDER */
+
+  document
+    .getElementById(
+      "orderGrid"
+    )
+    .innerHTML =
+      orderWords
+      .map(
+        word => {
+
+          return `
+          <div>
+
+            <strong>
+              ${word}
+            </strong>
+
+            <select
+              id="order-${word}">
+
+              <option value="">
+                —
+              </option>
+
+              <option value="1">
+                1
+              </option>
+
+              <option value="2">
+                2
+              </option>
+
+              <option value="3">
+                3
+              </option>
+
+              <option value="4">
+                4
+              </option>
+
+              <option value="5">
+                5
+              </option>
+
+            </select>
+
+          </div>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  /* SPEAK CARDS */
+
+  document
+    .getElementById(
+      "voiceCards"
+    )
+    .innerHTML =
+      selectedSpeakingWords
+      .map(
+        (
+          word,
+          index
+        ) => {
+
+          return `
+          <div class="voiceCard">
+
+            <div class="voiceHanzi">
+
+              ${word.hanzi}
+
+            </div>
+
+
+            <div class="voicePinyin">
+
+              ${word.pinyin}
+
+            </div>
+
+
+            <div class="voiceActions">
+
+
+              <button
+                class="btn btnLight"
+                onclick="
+                  playSlow(
+                    '${escapeJS(word.hanzi)}'
+                  )
+                ">
+
+                🔊
+
+              </button>
+
+
+              <button
+                class="micBtn"
+                onclick="
+                  startSpeech(
+                    'voice-transcript-${index}',
+                    this
+                  )
+                ">
+
+                🎙 Đọc
+
+              </button>
+
+
+            </div>
+
+
+            <div
+              class="transcript"
+              id="voice-transcript-${index}">
+
+              Chưa ghi nhận.
+
+            </div>
+
+
+          </div>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  /* RAPID */
+
+  document
+    .getElementById(
+      "rapidQuestions"
+    )
+    .innerHTML =
+      rapidQuestions
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          return `
+          <div class="question">
+
+            <div class="qnum">
+
+              ${index + 1}
+
+            </div>
+
+
+            <div class="qtext">
+
+              GV:
+              ${item.teacher}
+
+            </div>
+
+
+            <div class="buttonRow">
+
+
+              <button
+                class="btn btnAudio"
+                onclick="
+                  playSlow(
+                    '${escapeJS(item.teacher)}'
+                  )
+                ">
+
+                ▶ Nghe GV
+
+              </button>
+
+
+              <button
+                class="micBtn"
+                onclick="
+                  startSpeech(
+                    'rapid-transcript-${index}',
+                    this
+                  )
+                ">
+
+                🎙 Trả lời
+
+              </button>
+
+
+            </div>
+
+
+            <div
+              class="transcript"
+              id="rapid-transcript-${index}">
+
+              Chưa ghi nhận.
+
+            </div>
+
+
+          </div>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  /* SCENARIO */
+
+  document
+    .getElementById(
+      "scenarioText"
+    )
+    .innerHTML =
+      `
+      <strong>
+        ${selectedScenario.title}
+      </strong>
+
+      <br>
+
+      ${selectedScenario.text}
+      `;
+
 }
-function checkListenA(i,k,btn){
- const ok=k===listenA[i].correct;lockAnswers(btn,listenA[i].correct);if(!ok)btn.classList.add("wrong");
- feedback("listenFeedback",ok?"SIGNAL VERIFIED.":"Sai tín hiệu. Đáp án đúng đã được đánh dấu.",ok);
- if(ok)totalScore+=10;updateScore();setTimeout(()=>renderListenQuestion(i+1),700);
+
+
+/* =========================================================
+   RENDER LESSON 2
+========================================================= */
+
+function renderLesson2(){
+
+
+  /* MATCHING */
+
+  document
+    .getElementById(
+      "matching"
+    )
+    .innerHTML =
+      matchItems
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          return `
+          <div>
+
+
+            <strong>
+
+              ${index + 1}.
+              ${item[0]}
+
+            </strong>
+
+
+            <select
+              id="match-${index}">
+
+              <option value="">
+
+                -- chọn --
+
+              </option>
+
+
+              ${
+                matchOptions
+                .map(
+                  option => {
+
+                    return `
+                    <option
+                      value="${option}">
+
+                      ${option}
+
+                    </option>
+                    `;
+
+                  }
+                )
+                .join("")
+              }
+
+
+            </select>
+
+
+          </div>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  /* READING MC */
+
+  document
+    .getElementById(
+      "readMC"
+    )
+    .innerHTML =
+      readingMC
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          return multipleChoiceHTML({
+
+            name:
+              `READ-MC-${index}`,
+
+            number:
+              index + 6,
+
+            text:
+              item[0],
+
+            options:
+              item[1]
+
+          });
+
+        }
+      )
+      .join("");
+
+
+  /* TRUE FALSE */
+
+  document
+    .getElementById(
+      "tfQuestions"
+    )
+    .innerHTML =
+      trueFalseItems
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          return `
+          <div class="question">
+
+            <div class="qnum">
+
+              ${index + 11}
+
+            </div>
+
+
+            <div class="qtext">
+
+              ${item[0]}
+
+            </div>
+
+
+            <div class="options">
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="TF-${index}"
+                  value="true">
+
+                ✓ Đúng
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="TF-${index}"
+                  value="false">
+
+                ✗ Sai
+
+              </label>
+
+
+            </div>
+
+
+          </div>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  /* REORDER */
+
+  document
+    .getElementById(
+      "reorderQs"
+    )
+    .innerHTML =
+      reorderItems
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          const shuffled =
+            shuffleArray(
+              item.chars
+            );
+
+
+          return `
+          <div class="question">
+
+            <div class="qnum">
+
+              ${index + 1}
+
+            </div>
+
+
+            <div class="qtext">
+
+              Sắp xếp các chữ
+              để tạo thành từ đúng.
+
+            </div>
+
+
+            <div
+              class="build"
+              id="build-${index}">
+            </div>
+
+
+            <div class="tiles">
+
+
+              ${
+                shuffled
+                .map(
+                  char => {
+
+                    return `
+                    <button
+                      class="tile"
+                      onclick="
+                        addCharacter(
+                          ${index},
+                          '${char}',
+                          this
+                        )
+                      ">
+
+                      ${char}
+
+                    </button>
+                    `;
+
+                  }
+                )
+                .join("")
+              }
+
+
+            </div>
+
+
+            <button
+              class="btn btnLight"
+              style="margin-top:9px"
+              onclick="
+                resetBuild(
+                  ${index}
+                )
+              ">
+
+              Làm lại
+
+            </button>
+
+
+          </div>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  /* FILL */
+
+  document
+    .getElementById(
+      "fillQs"
+    )
+    .innerHTML =
+      fillItems
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          return `
+          <div class="question">
+
+            <div class="qnum">
+
+              ${index + 6}
+
+            </div>
+
+
+            <div class="qtext">
+
+              ${item[0]}
+
+            </div>
+
+
+            <select
+              class="fillSelect"
+              id="fill-${index}">
+
+              <option value="">
+
+                -- chọn từ --
+
+              </option>
+
+
+              ${
+                fillBank
+                .map(
+                  word => {
+
+                    return `
+                    <option
+                      value="${word}">
+
+                      ${word}
+
+                    </option>
+                    `;
+
+                  }
+                )
+                .join("")
+              }
+
+
+            </select>
+
+
+          </div>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  /* WRITE */
+
+  document
+    .getElementById(
+      "writeQs"
+    )
+    .innerHTML =
+      exactWriting
+      .map(
+        (
+          item,
+          index
+        ) => {
+
+          return `
+          <div class="question">
+
+            <div class="qnum">
+
+              ${index + 11}
+
+            </div>
+
+
+            <div class="qtext">
+
+              ${item[0]}
+
+            </div>
+
+
+            <input
+              class="field"
+              id="write-${index}"
+              placeholder="Nhập chữ Hán...">
+
+
+          </div>
+          `;
+
+        }
+      )
+      .join("")
+      +
+
+      `
+      <div class="question">
+
+        <div class="qnum">
+
+          15
+
+        </div>
+
+
+        <div class="qtext">
+
+          Viết một đoạn hội thoại
+          3 lượt lời,
+          sử dụng ít nhất 3 từ:
+
+          你好 / 谢谢 / 不客气 /
+          老师 / 同学 / 再见
+
+        </div>
+
+
+        <textarea
+          class="field"
+          id="openDialogue"
+          rows="5"
+          placeholder="A：...
+B：...
+A：..."></textarea>
+
+
+      </div>
+      `;
+
 }
-function checkListenB(j,k,btn){
- const ok=k===listenB[j].correct;lockAnswers(btn,listenB[j].correct);if(!ok)btn.classList.add("wrong");
- feedback("listenFeedback",ok?"DIALOGUE VERIFIED.":"Sai. Xem đáp án đã xác minh.",ok);
- if(ok)totalScore+=10;updateScore();setTimeout(()=>renderListenQuestion(j+6),700);
+
+
+/* =========================================================
+   GENERATE MULTIPLE CHOICE
+========================================================= */
+
+function multipleChoiceHTML({
+
+  name,
+
+  number,
+
+  text,
+
+  options,
+
+  audio = ""
+
+}){
+
+
+  return `
+  <div class="question">
+
+
+    <div class="qnum">
+
+      ${number}
+
+    </div>
+
+
+    <div class="qtext">
+
+      ${text}
+
+    </div>
+
+
+    ${
+      audio
+      ?
+      `
+      <div class="buttonRow">
+
+        <button
+          class="btn btnAudio"
+          onclick="${audio}">
+
+          ▶ Nghe
+
+        </button>
+
+      </div>
+      `
+      :
+      ""
+    }
+
+
+    <div class="options">
+
+
+      ${
+        options
+        .map(
+          (
+            option,
+            index
+          ) => {
+
+            return `
+            <label class="option">
+
+              <input
+                type="radio"
+                name="${name}"
+                value="${index}">
+
+              ${
+                String
+                .fromCharCode(
+                  65 + index
+                )
+              }.
+
+              ${option}
+
+            </label>
+            `;
+
+          }
+        )
+        .join("")
+      }
+
+
+    </div>
+
+
+  </div>
+  `;
+
 }
-function renderSequence(){
- document.getElementById("missionContent").innerHTML=`
-  <div class="question"><div class="qnum">SEQUENCE TRACE 11–15</div>
-  <div class="qtitle">Nghe chuỗi 5 từ. Gán số thứ tự 1–5 cho từng từ.</div>
-  <div class="audio-row"><button class="btn primary" onclick='speakSequence(${JSON.stringify(sequenceAudio)})'>PLAY FULL SEQUENCE</button></div>
-  <div class="order-grid">${sequenceWords.map(w=>`<div class="order-row"><div class="order-word">${w}</div>
-  <select class="order-select seq" data-word="${w}"><option value="">—</option>${[1,2,3,4,5].map(n=>`<option>${n}</option>`).join("")}</select></div>`).join("")}</div>
-  <div class="action-row"><button class="btn primary" onclick="checkSequence()">VERIFY SEQUENCE</button></div>
-  <div class="feedback" id="seqFeedback">Chuỗi phát: mỗi từ cách nhau một nhịp.</div></div>`;
- setProgress(10/15*100);
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+function getChineseVoice(){
+
+  const voices =
+    speechSynthesis
+    .getVoices();
+
+
+  return voices
+    .find(
+      voice => {
+
+        return voice.lang
+          .toLowerCase()
+          .startsWith(
+            "zh"
+          );
+
+      }
+    );
+
 }
-function checkSequence(){
- const selects=[...document.querySelectorAll(".seq")];let correct=0;
- selects.forEach(s=>{if(s.value===sequenceCorrect[s.dataset.word])correct++});
- const ok=correct===5;feedback("seqFeedback",ok?"SEQUENCE COMPLETE. 5/5 khớp.":`Khớp ${correct}/5. Hãy nghe lại và sửa trước khi mở vault.`,ok);
- if(ok){totalScore+=50;updateScore();setTimeout(()=>awardMission(0,0),650)}
+
+
+function playSlow(text){
+
+  if(
+    !(
+      "speechSynthesis"
+      in window
+    )
+  ){
+
+    alert(
+      "Trình duyệt này không hỗ trợ giọng đọc."
+    );
+
+    return;
+
+  }
+
+
+  speechSynthesis.cancel();
+
+
+  const speech =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+
+  speech.lang =
+    "zh-CN";
+
+
+  /*
+    CHẬM CHO NGƯỜI MỚI
+  */
+
+  speech.rate =
+    .72;
+
+
+  speech.pitch =
+    1;
+
+
+  const chineseVoice =
+    getChineseVoice();
+
+
+  if(chineseVoice){
+
+    speech.voice =
+      chineseVoice;
+
+  }
+
+
+  speechSynthesis
+    .speak(
+      speech
+    );
+
 }
- 
+
+
+/* =========================================================
+   AUDIO SEQUENCE
+========================================================= */
+
+function playSequence(
+  lines
+){
+
+  if(
+    !(
+      "speechSynthesis"
+      in window
+    )
+  ){
+
+    return;
+
+  }
+
+
+  speechSynthesis.cancel();
+
+
+  let index =
+    0;
+
+
+  function playNext(){
+
+    if(
+      index >=
+      lines.length
+    ){
+
+      return;
+
+    }
+
+
+    const speech =
+      new SpeechSynthesisUtterance(
+        lines[index]
+      );
+
+
+    index++;
+
+
+    speech.lang =
+      "zh-CN";
+
+
+    speech.rate =
+      .70;
+
+
+    speech.pitch =
+      1;
+
+
+    const chineseVoice =
+      getChineseVoice();
+
+
+    if(chineseVoice){
+
+      speech.voice =
+        chineseVoice;
+
+    }
+
+
+    speech.onend =
+      () => {
+
+        setTimeout(
+          playNext,
+          650
+        );
+
+      };
+
+
+    speechSynthesis
+      .speak(
+        speech
+      );
+
+  }
+
+
+  playNext();
+
+}
+
+
+/* =========================================================
+   SPEECH RECOGNITION
+========================================================= */
+
 function setupRecognition(){
- const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return false;
- recognition=new SR();recognition.lang="zh-CN";recognition.interimResults=true;recognition.continuous=true;recognition.maxAlternatives=5;
- recognition.onstart=()=>{isListening=true;document.querySelectorAll(".mic").forEach(x=>x.classList.add("listening"))};
- recognition.onend=()=>{isListening=false;document.querySelectorAll(".mic").forEach(x=>x.classList.remove("listening"))};
- recognition.onerror=e=>{if(e.error!=="aborted")voiceTerminal("Mic error: "+e.error,false)};
- recognition.onresult=e=>{
-  let t="";for(let i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;
-  t=t.trim();if(t)processVoice(t);
- };
- return true;
-}
-function startMission2(){
- setMission(2,"VOICE SCANNER","Scanner dùng nhận dạng zh-CN realtime: 5 thẻ ngẫu nhiên → 5 phản xạ nhanh → 1 tình huống gõ.");
- voiceQueue=shuffle(vocab).slice(0,5);voiceIndex=0;voiceHits=0;if(!recognition)setupRecognition();renderVoiceCard();
-}
-function renderVoiceCard(){
- if(voiceIndex>=5){renderRapid(0);return}
- const w=voiceQueue[voiceIndex];
- document.getElementById("missionContent").innerHTML=`
- <div class="voice-card"><div><div class="qnum">VOICE ID ${voiceIndex+1}/5</div><div class="voice-target">${w.h}</div><div class="voice-pinyin">${w.p}</div>
- <div class="action-row"><button class="btn" onclick='speak(${JSON.stringify(w.h)})'>LISTEN SAMPLE</button></div></div>
- <button class="mic" onclick="startMic()">🎙</button></div>
- <div class="terminal" id="voiceTerminal">&gt; Nhấn mic và đọc từ. Scanner sẽ chấp nhận ngay khi nhận diện trúng.</div>`;
- setProgress(voiceIndex/11*100);window.voiceMode="cards";
-}
-function startMic(){
- if(!recognition&&!setupRecognition()){voiceTerminal("Trình duyệt không hỗ trợ SpeechRecognition. Dùng Chrome/Edge.",false);return}
- if(isListening){stopMic();return}
- try{recognition.start()}catch(e){}
-}
-function stopMic(){if(recognition&&isListening){try{recognition.stop()}catch(e){}}}
-function processVoice(t){
- voiceTerminal("> heard: "+t,true,true);
- if(window.voiceMode==="cards"){
-  const target=voiceQueue[voiceIndex].h;if(norm(t).includes(norm(target))){
-   stopMic();voiceHits++;totalScore+=15;updateScore();voiceTerminal("ACCESS MATCH // "+target,true);
-   setTimeout(()=>{voiceIndex++;renderVoiceCard()},600);
+
+  const SpeechRecognition =
+    window.SpeechRecognition
+    ||
+    window.webkitSpeechRecognition;
+
+
+  if(!SpeechRecognition){
+
+    return false;
+
   }
- }else if(window.voiceMode==="rapid"){
-  const r=rapid[voiceIndex];if(r.accepted.some(a=>norm(t).includes(norm(a)))){
-   stopMic();voiceHits++;totalScore+=15;updateScore();voiceTerminal("RESPONSE ACCEPTED",true);
-   setTimeout(()=>{voiceIndex++;renderRapid(voiceIndex)},600);
+
+
+  recognition =
+    new SpeechRecognition();
+
+
+  recognition.lang =
+    "zh-CN";
+
+
+  recognition.continuous =
+    false;
+
+
+  recognition.interimResults =
+    true;
+
+
+  recognition.maxAlternatives =
+    3;
+
+
+  recognition.onresult =
+    event => {
+
+      let transcript =
+        "";
+
+
+      for(
+        let i =
+          event.resultIndex;
+
+        i <
+          event.results.length;
+
+        i++
+      ){
+
+        transcript +=
+          event.results[i][0]
+          .transcript;
+
+      }
+
+
+      transcript =
+        transcript.trim();
+
+
+      if(
+        currentTranscriptBox
+      ){
+
+        currentTranscriptBox
+          .textContent =
+            transcript
+            ||
+            "Không nghe rõ.";
+
+      }
+
+    };
+
+
+  recognition.onend =
+    () => {
+
+
+      if(
+        currentMicButton
+      ){
+
+        currentMicButton
+          .classList
+          .remove(
+            "active"
+          );
+
+      }
+
+
+      currentMicButton =
+        null;
+
+    };
+
+
+  recognition.onerror =
+    event => {
+
+
+      if(
+        currentTranscriptBox
+      ){
+
+        currentTranscriptBox
+          .textContent =
+            event.error ===
+              "not-allowed"
+
+            ?
+
+            "Microphone đang bị chặn. Hãy cấp quyền mic."
+
+            :
+
+            "Chưa nghe rõ. Hãy thử lại.";
+
+      }
+
+    };
+
+
+  return true;
+
+}
+
+
+function startSpeech(
+  boxID,
+  button
+){
+
+  currentTranscriptBox =
+    document
+      .getElementById(
+        boxID
+      );
+
+
+  currentMicButton =
+    button;
+
+
+  if(
+    !recognition
+    &&
+    !setupRecognition()
+  ){
+
+    currentTranscriptBox
+      .textContent =
+        "Trình duyệt không hỗ trợ nhận giọng nói. Hãy dùng Chrome hoặc Edge.";
+
+    return;
+
   }
- }
+
+
+  button
+    .classList
+    .add(
+      "active"
+    );
+
+
+  currentTranscriptBox
+    .textContent =
+      "🎙️ Đang nghe...";
+
+
+  try{
+
+    recognition.start();
+
+  }
+
+  catch(error){
+
+    console.log(
+      error
+    );
+
+  }
+
 }
-function voiceTerminal(t,good=false,append=false){
- const el=document.getElementById("voiceTerminal");if(!el)return;
- if(append)el.textContent=t;else el.textContent=t;el.style.color=good?"#97fbc7":"#ffb4bd";
+
+
+/* =========================================================
+   REORDER
+========================================================= */
+
+function addCharacter(
+  index,
+  char,
+  button
+){
+
+  builtWords[index] +=
+    char;
+
+
+  button.disabled =
+    true;
+
+
+  document
+    .getElementById(
+      `build-${index}`
+    )
+    .textContent =
+      builtWords[index];
+
 }
-function renderRapid(i){
- voiceIndex=i;if(i>=rapid.length){renderScenario();return}
- window.voiceMode="rapid";const r=rapid[i];
- document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">QUICK RESPONSE ${i+1}/5</div><div class="qtitle">${r.prompt}</div>
- <p class="sub">Phản xạ ngay bằng tiếng Trung. Nút “gợi ý âm thanh” chỉ dùng khi bí.</p>
- <div class="action-row"><button class="btn" onclick='speak(${JSON.stringify(r.sample)})'>AUDIO HINT</button><button class="mic" onclick="startMic()">🎙</button></div>
- <div class="terminal" id="voiceTerminal">&gt; scanner_ready</div></div>`;
- setProgress((5+i)/11*100);
+
+
+function resetBuild(index){
+
+  builtWords[index] =
+    "";
+
+
+  const build =
+    document
+      .getElementById(
+        `build-${index}`
+      );
+
+
+  build.textContent =
+    "";
+
+
+  build
+    .parentElement
+    .querySelectorAll(
+      ".tile"
+    )
+    .forEach(
+      button => {
+
+        button.disabled =
+          false;
+
+      }
+    );
+
 }
-function renderScenario(){
- window.voiceMode="none";stopMic();typedScenario=randomItem(scenarios);
- document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">FIELD SCENARIO</div><div class="qtitle">${typedScenario.name}</div>
- <p class="sub">${typedScenario.desc}</p><textarea class="textbox" id="scenarioAnswer" placeholder="Gõ câu/đoạn hội thoại bằng chữ Hán..."></textarea>
- <div class="action-row"><button class="btn primary" onclick="checkScenario()">SUBMIT FIELD RESPONSE</button></div>
- <div class="feedback" id="scenarioFeedback">Đáp án mở: hệ thống kiểm tra các từ khóa giao tiếp cốt lõi.</div></div>`;
- setProgress(10/11*100);
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+  if(timerID){
+
+    return;
+
+  }
+
+
+  secondsLeft =
+    60;
+
+
+  document
+    .getElementById(
+      "timer"
+    )
+    .textContent =
+      secondsLeft;
+
+
+  const input =
+    document
+      .getElementById(
+        "memoryInput"
+      );
+
+
+  input.disabled =
+    false;
+
+
+  input.focus();
+
+
+  document
+    .getElementById(
+      "timerButton"
+    )
+    .disabled =
+      true;
+
+
+  timerID =
+    setInterval(
+      () => {
+
+
+        secondsLeft--;
+
+
+        document
+          .getElementById(
+            "timer"
+          )
+          .textContent =
+            secondsLeft;
+
+
+        updateMemoryCount();
+
+
+        if(
+          secondsLeft <=
+          0
+        ){
+
+          clearInterval(
+            timerID
+          );
+
+
+          timerID =
+            null;
+
+
+          input.disabled =
+            true;
+
+        }
+
+
+      },
+      1000
+    );
+
 }
-function checkScenario(){
- const t=document.getElementById("scenarioAnswer").value;const ok=typedScenario.validate(t);
- feedback("scenarioFeedback",ok?"FIELD RESPONSE ACCEPTED.":`Chưa đủ dữ kiện. ${typedScenario.hint}`,ok);
- if(ok){totalScore+=25;updateScore();setTimeout(()=>awardMission(1,0),650)}
+
+
+document
+  .getElementById(
+    "memoryInput"
+  )
+  .addEventListener(
+    "input",
+    updateMemoryCount
+  );
+
+
+function updateMemoryCount(){
+
+  const text =
+    document
+      .getElementById(
+        "memoryInput"
+      )
+      .value;
+
+
+  const found =
+    [
+      ...new Set(
+
+        memoryVocabulary
+        .filter(
+          word => {
+
+            return text.includes(
+              word
+            );
+
+          }
+        )
+
+      )
+    ];
+
+
+  document
+    .getElementById(
+      "memoryCount"
+    )
+    .textContent =
+      found.length;
+
 }
- 
-function startMission3(){setMission(3,"LOGIC ARCHIVE","Giải 5 cặp giao tiếp + 5 câu tình huống + 5 xác minh đúng/sai.");renderMatching()}
-function renderMatching(){
- document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">ARCHIVE A · 找朋友</div><div class="qtitle">Ghép hai phần để tạo cặp giao tiếp tự nhiên.</div>
- <div class="match-grid">${matchItems.map((x,i)=>`<div class="match-left">${i+1}. ${x[0]}</div><select class="match-select match" data-i="${i}">
- <option value="">-- chọn --</option>${matchOptions.map(o=>`<option>${o}</option>`).join("")}</select>`).join("")}</div>
- <div class="action-row"><button class="btn primary" onclick="checkMatching()">VERIFY LINKS</button></div><div class="feedback" id="matchFeedback"></div></div>`;
- setProgress(0);
+
+
+/* =========================================================
+   SUBMIT LESSON 1
+========================================================= */
+
+function submitLesson1(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  let correct =
+    0;
+
+
+  let total =
+    0;
+
+
+  const details =
+    [];
+
+
+  const review =
+    [];
+
+
+  /* LISTEN A */
+
+  listenA
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        total++;
+
+
+        const selected =
+          getRadio(
+            `LISTEN-A-${index}`
+          );
+
+
+        const isCorrect =
+          Number(selected)
+          ===
+          item.correct;
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        const answerText =
+          selected === null
+          ?
+          "Chưa trả lời"
+          :
+          item.options[
+            Number(selected)
+          ];
+
+
+        details.push(
+          `Nghe ${index + 1}: ${answerText} ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+        review.push(
+          `
+          <div class="reviewItem">
+
+            ${
+              isCorrect
+              ?
+              "✅"
+              :
+              "❌"
+            }
+
+            Câu ${index + 1}:
+            ${answerText}
+
+            ${
+              !isCorrect
+              ?
+              ` · Đáp án: ${item.options[item.correct]}`
+              :
+              ""
+            }
+
+          </div>
+          `
+        );
+
+
+      }
+    );
+
+
+  /* LISTEN B */
+
+  listenB
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        total++;
+
+
+        const selected =
+          getRadio(
+            `LISTEN-B-${index}`
+          );
+
+
+        const isCorrect =
+          Number(selected)
+          ===
+          item.correct;
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        const answerText =
+          selected === null
+          ?
+          "Chưa trả lời"
+          :
+          item.options[
+            Number(selected)
+          ];
+
+
+        details.push(
+          `Nghe ${index + 6}: ${answerText} ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+        review.push(
+          `
+          <div class="reviewItem">
+
+            ${
+              isCorrect
+              ?
+              "✅"
+              :
+              "❌"
+            }
+
+            Câu ${index + 6}:
+            ${answerText}
+
+            ${
+              !isCorrect
+              ?
+              ` · Đáp án: ${item.options[item.correct]}`
+              :
+              ""
+            }
+
+          </div>
+          `
+        );
+
+
+      }
+    );
+
+
+  /* ORDER */
+
+  orderWords
+    .forEach(
+      word => {
+
+
+        total++;
+
+
+        const answer =
+          document
+            .getElementById(
+              `order-${word}`
+            )
+            .value;
+
+
+        const isCorrect =
+          answer ===
+          orderCorrect[word];
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        details.push(
+          `Thứ tự ${word}: ${answer || "—"} ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+      }
+    );
+
+
+  /* SPEAK */
+
+  selectedSpeakingWords
+    .forEach(
+      (
+        word,
+        index
+      ) => {
+
+
+        details.push(
+          `Đọc ${word.hanzi}: ${
+            document
+              .getElementById(
+                `voice-transcript-${index}`
+              )
+              .textContent
+          }`
+        );
+
+
+      }
+    );
+
+
+  /* RAPID */
+
+  rapidQuestions
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        details.push(
+          `Phản xạ ${index + 1}: ${
+            document
+              .getElementById(
+                `rapid-transcript-${index}`
+              )
+              .textContent
+          }`
+        );
+
+
+      }
+    );
+
+
+  /* SCENARIO */
+
+  details.push(
+    `Tình huống ${selectedScenario.title}: ${
+      document
+        .getElementById(
+          "scenarioAnswer"
+        )
+        .value
+        ||
+        "(trống)"
+    }`
+  );
+
+
+  const percent =
+    Math.round(
+      correct
+      /
+      total
+      *
+      100
+    );
+
+
+  displayResult({
+
+    lesson:1,
+
+    correct,
+
+    total,
+
+    percent,
+
+    review
+
+  });
+
+
+  sendEmail({
+
+    lesson:
+      "BÀI 1 · NGHE + NÓI",
+
+    correct,
+
+    total,
+
+    percent,
+
+    details
+
+  });
+
 }
-function checkMatching(){
- const arr=[...document.querySelectorAll(".match")];let n=0;arr.forEach(s=>{if(s.value===matchItems[+s.dataset.i][1])n++});
- const ok=n===5;feedback("matchFeedback",ok?"5/5 links verified.":`${n}/5 đúng. Sửa các liên kết trước khi tiếp tục.`,ok);
- if(ok){totalScore+=50;updateScore();setTimeout(()=>renderReadMC(0),600)}
+
+
+/* =========================================================
+   SUBMIT LESSON 2
+========================================================= */
+
+function submitLesson2(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  let correct =
+    0;
+
+
+  let total =
+    0;
+
+
+  const details =
+    [];
+
+
+  const review =
+    [];
+
+
+  /* MATCH */
+
+  matchItems
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        total++;
+
+
+        const answer =
+          document
+            .getElementById(
+              `match-${index}`
+            )
+            .value;
+
+
+        const isCorrect =
+          answer ===
+          item[1];
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        details.push(
+          `Ghép ${index + 1}: ${answer || "—"} ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+        review.push(
+          `
+          <div class="reviewItem">
+
+            ${
+              isCorrect
+              ?
+              "✅"
+              :
+              "❌"
+            }
+
+            Ghép ${index + 1}
+
+            ${
+              !isCorrect
+              ?
+              ` · Đáp án: ${item[1]}`
+              :
+              ""
+            }
+
+          </div>
+          `
+        );
+
+
+      }
+    );
+
+
+  /* READING MC */
+
+  readingMC
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        total++;
+
+
+        const selected =
+          getRadio(
+            `READ-MC-${index}`
+          );
+
+
+        const isCorrect =
+          Number(selected)
+          ===
+          item[2];
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        const answer =
+          selected === null
+          ?
+          "Chưa trả lời"
+          :
+          item[1][
+            Number(selected)
+          ];
+
+
+        details.push(
+          `Đọc ${index + 6}: ${answer} ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+        review.push(
+          `
+          <div class="reviewItem">
+
+            ${
+              isCorrect
+              ?
+              "✅"
+              :
+              "❌"
+            }
+
+            Câu ${index + 6}
+
+            ${
+              !isCorrect
+              ?
+              ` · Đáp án: ${item[1][item[2]]}`
+              :
+              ""
+            }
+
+          </div>
+          `
+        );
+
+
+      }
+    );
+
+
+  /* TRUE FALSE */
+
+  trueFalseItems
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        total++;
+
+
+        const selected =
+          getRadio(
+            `TF-${index}`
+          );
+
+
+        const isCorrect =
+          selected !== null
+          &&
+          (
+            selected ===
+            "true"
+          )
+          ===
+          item[1];
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        details.push(
+          `Đúng/Sai ${index + 11}: ${
+            selected === null
+            ?
+            "—"
+            :
+            selected
+          } ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+      }
+    );
+
+
+  /* REORDER */
+
+  reorderItems
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        total++;
+
+
+        const answer =
+          builtWords[index];
+
+
+        const isCorrect =
+          answer ===
+          item.answer;
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        details.push(
+          `Ghép chữ ${index + 1}: ${answer || "—"} ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+        review.push(
+          `
+          <div class="reviewItem">
+
+            ${
+              isCorrect
+              ?
+              "✅"
+              :
+              "❌"
+            }
+
+            Ghép chữ ${index + 1}
+
+            ${
+              !isCorrect
+              ?
+              ` · Đáp án: ${item.answer}`
+              :
+              ""
+            }
+
+          </div>
+          `
+        );
+
+
+      }
+    );
+
+
+  /* FILL */
+
+  fillItems
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        total++;
+
+
+        const answer =
+          document
+            .getElementById(
+              `fill-${index}`
+            )
+            .value;
+
+
+        const isCorrect =
+          answer ===
+          item[1];
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        details.push(
+          `Điền ${index + 6}: ${answer || "—"} ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+      }
+    );
+
+
+  /* EXACT WRITE */
+
+  exactWriting
+    .forEach(
+      (
+        item,
+        index
+      ) => {
+
+
+        total++;
+
+
+        const raw =
+          document
+            .getElementById(
+              `write-${index}`
+            )
+            .value;
+
+
+        const answer =
+          normalizeChinese(
+            raw
+          );
+
+
+        const isCorrect =
+          item[1]
+          .some(
+            accepted => {
+
+              return normalizeChinese(
+                accepted
+              )
+              ===
+              answer;
+
+            }
+          );
+
+
+        if(isCorrect){
+
+          correct++;
+
+        }
+
+
+        details.push(
+          `Viết ${index + 11}: ${raw || "—"} ${isCorrect ? "✓" : "✗"}`
+        );
+
+
+      }
+    );
+
+
+  /* OPEN WRITE */
+
+  details.push(
+    `Hội thoại 15: ${
+      document
+        .getElementById(
+          "openDialogue"
+        )
+        .value
+        ||
+        "(trống)"
+    }`
+  );
+
+
+  /* MEMORY */
+
+  details.push(
+    `Memory 60s: ${
+      document
+        .getElementById(
+          "memoryInput"
+        )
+        .value
+        ||
+        "(trống)"
+    } | Nhớ ${
+      document
+        .getElementById(
+          "memoryCount"
+        )
+        .textContent
+    } từ`
+  );
+
+
+  const percent =
+    Math.round(
+      correct
+      /
+      total
+      *
+      100
+    );
+
+
+  displayResult({
+
+    lesson:2,
+
+    correct,
+
+    total,
+
+    percent,
+
+    review
+
+  });
+
+
+  sendEmail({
+
+    lesson:
+      "BÀI 2 · ĐỌC + VIẾT",
+
+    correct,
+
+    total,
+
+    percent,
+
+    details
+
+  });
+
 }
-function renderReadMC(i){
- if(i>=5){renderDialogueTF();return}
- const x=readMC[i];
- document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">ARCHIVE B · CASE ${i+6}/10</div><div class="qtitle">${x[0]}</div>
- <div class="answers">${x[1].map((o,k)=>`<button class="answer" onclick="checkReadMC(${i},${k},this)">${String.fromCharCode(65+k)}. ${o}</button>`).join("")}</div>
- <div class="feedback" id="readFeedback"></div></div>`;
- setProgress((5+i)/15*100);
+
+
+/* =========================================================
+   DISPLAY RESULTS
+========================================================= */
+
+function displayResult({
+
+  lesson,
+
+  correct,
+
+  total,
+
+  percent,
+
+  review
+
+}){
+
+
+  document
+    .getElementById(
+      `result${lesson}`
+    )
+    .classList
+    .add(
+      "show"
+    );
+
+
+  document
+    .getElementById(
+      `score${lesson}`
+    )
+    .textContent =
+      percent
+      +
+      "%";
+
+
+  document
+    .getElementById(
+      `resultText${lesson}`
+    )
+    .textContent =
+      `Điểm tự động: ${correct}/${total}. Các câu nói/câu mở giáo viên sẽ xem thêm.`;
+
+
+  document
+    .getElementById(
+      `review${lesson}`
+    )
+    .innerHTML =
+      review.join("");
+
+
+  document
+    .getElementById(
+      `status${lesson}`
+    )
+    .innerHTML =
+      `
+      ✅ Đã kiểm tra đáp án.
+      <br>
+      📨 Đang gửi bài tới giáo viên...
+      `;
+
 }
-function checkReadMC(i,k,btn){
- const x=readMC[i],ok=k===x[2];lockAnswers(btn,x[2]);if(!ok)btn.classList.add("wrong");
- feedback("readFeedback",ok?"CASE VERIFIED.":"Không khớp hồ sơ.",ok);if(ok){totalScore+=10;updateScore()}setTimeout(()=>renderReadMC(i+1),600);
+
+
+/* =========================================================
+   SEND EMAIL
+========================================================= */
+
+function sendEmail({
+
+  lesson,
+
+  correct,
+
+  total,
+
+  percent,
+
+  details
+
+}){
+
+
+  const name =
+    document
+      .getElementById(
+        "studentName"
+      )
+      .value
+      .trim();
+
+
+  const studentClass =
+    document
+      .getElementById(
+        "studentClass"
+      )
+      .value
+      .trim();
+
+
+  document
+    .getElementById(
+      "mailSubject"
+    )
+    .value =
+      `${lesson} · ${name} · ${studentClass}`;
+
+
+  document
+    .getElementById(
+      "mailName"
+    )
+    .value =
+      name;
+
+
+  document
+    .getElementById(
+      "mailClass"
+    )
+    .value =
+      studentClass;
+
+
+  document
+    .getElementById(
+      "mailLesson"
+    )
+    .value =
+      lesson;
+
+
+  document
+    .getElementById(
+      "mailScore"
+    )
+    .value =
+      `${correct}/${total} (${percent}%) + phần mở GV chấm`;
+
+
+  document
+    .getElementById(
+      "mailDetails"
+    )
+    .value =
+      details.join(
+        "\n"
+      );
+
+
+  /*
+    Gửi vào hidden iframe
+    để học viên KHÔNG bị nhảy khỏi trang.
+  */
+
+  document
+    .getElementById(
+      "emailForm"
+    )
+    .submit();
+
+
+  setTimeout(
+    () => {
+
+
+      const statusID =
+        lesson.includes(
+          "BÀI 1"
+        )
+        ?
+        "status1"
+        :
+        "status2";
+
+
+      document
+        .getElementById(
+          statusID
+        )
+        .innerHTML =
+          `
+          ✅ Đã kiểm tra bài.
+          <br>
+          📨 Yêu cầu gửi bài đã được thực hiện.
+          `;
+
+
+    },
+    1200
+  );
+
 }
-function renderDialogueTF(){
- const dialogue=`王老师：大家好！\n学生们：王老师，您好！\n王老师：同学们，你们好！\n学生们：老师好！\n⋯⋯\n学生们：王老师，谢谢！\n王老师：不客气！\n学生们：王老师，再见！\n王老师：再见！`;
- document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">ARCHIVE C · DIALOGUE VERIFICATION</div><div class="terminal" style="white-space:pre-line">${dialogue}</div>
- <div style="margin-top:15px">${tfItems.map((x,i)=>`<div class="question" style="margin-bottom:8px"><div class="qtitle" style="font-size:16px">${i+11}. ${x[0]}</div>
- <div class="tf-row"><button class="btn" onclick="pickTF(${i},true,this)">✓ ĐÚNG</button><button class="btn" onclick="pickTF(${i},false,this)">✗ SAI</button></div></div>`).join("")}</div>
- <div class="feedback" id="tfFeedback">Xác minh đủ 5 nhận định.</div></div>`;
- window.tfAnswers={};setProgress(10/15*100);
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function getRadio(name){
+
+  const checked =
+    document
+      .querySelector(
+        `input[name="${name}"]:checked`
+      );
+
+
+  return checked
+  ?
+  checked.value
+  :
+  null;
+
 }
-function pickTF(i,v,btn){
- window.tfAnswers[i]=v;btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("good"));btn.classList.add("good");
- if(Object.keys(window.tfAnswers).length===5){
-  let n=0;tfItems.forEach((x,k)=>{if(window.tfAnswers[k]===x[1])n++});
-  const ok=n===5;feedback("tfFeedback",ok?"ALL RECORDS VERIFIED.":`${n}/5 đúng. Điều chỉnh những nhận định sai.`,ok);
-  if(ok){totalScore+=50;updateScore();setTimeout(()=>awardMission(2,0),650)}
- }
+
+
+function normalizeChinese(text){
+
+  return String(
+    text
+    ||
+    ""
+  )
+  .replace(
+    /[\s，。！？、,.!?：:；;]/g,
+    ""
+  )
+  .trim();
+
 }
- 
-function startMission4(){
- setMission(4,"CIPHER LAB","Tái tạo từ → điền từ → viết câu → 60-second Memory Hack.");
- window.reorderIndex=0;renderReorder(0);
+
+
+function shuffleArray(array){
+
+  const copy =
+    [...array];
+
+
+  for(
+    let i =
+      copy.length - 1;
+
+    i >
+      0;
+
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random()
+        *
+        (
+          i + 1
+        )
+      );
+
+
+    [
+      copy[i],
+      copy[j]
+    ]
+    =
+    [
+      copy[j],
+      copy[i]
+    ];
+
+  }
+
+
+  return copy;
+
 }
-function renderReorder(i){
- if(i>=reorder.length){renderFill();return}
- window.reorderIndex=i;const x=reorder[i],chars=shuffle(x.chars);
- document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">CIPHER A · 拼一拼 ${i+1}/5</div><div class="qtitle">Sắp xếp các chữ để tạo thành từ đúng.</div>
- <div class="build-box" id="buildBox"></div><div class="tile-zone">${chars.map(c=>`<button class="tile" onclick="addTile(this,'${c}')">${c}</button>`).join("")}</div>
- <div class="action-row"><button class="btn" onclick="clearBuild()">RESET</button><button class="btn primary" onclick="checkBuild()">VERIFY</button></div>
- <div class="feedback" id="buildFeedback"></div></div>`;
- window.built="";setProgress(i/15*100);
+
+
+function randomItem(array){
+
+  return array[
+    Math.floor(
+      Math.random()
+      *
+      array.length
+    )
+  ];
+
 }
-function addTile(btn,c){window.built+=c;btn.disabled=true;document.getElementById("buildBox").textContent=window.built}
-function clearBuild(){renderReorder(window.reorderIndex)}
-function checkBuild(){
- const ok=window.built===reorder[window.reorderIndex].ans;feedback("buildFeedback",ok?"CIPHER RESTORED.":"Thứ tự chưa đúng.",ok);
- if(ok){totalScore+=10;updateScore();setTimeout(()=>renderReorder(window.reorderIndex+1),500)}
+
+
+function escapeJS(text){
+
+  return String(
+    text
+  )
+  .replace(
+    /\\/g,
+    "\\\\"
+  )
+  .replace(
+    /'/g,
+    "\\'"
+  );
+
 }
-function renderFill(){
- document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">CIPHER B · 选词填空</div><div class="qtitle">Chọn từ để khôi phục 5 dòng dữ liệu.</div>
- ${fill.map((x,i)=>`<div class="fill-line" style="margin:9px 0"><strong>${i+6}.</strong><span>${x.text}</span>
- <select class="fill-select fill" data-i="${i}"><option value="">--</option>${fillBank.map(w=>`<option>${w}</option>`).join("")}</select></div>`).join("")}
- <div class="action-row"><button class="btn primary" onclick="checkFill()">VERIFY DATA</button></div><div class="feedback" id="fillFeedback"></div></div>`;
- setProgress(5/15*100);
-}
-function checkFill(){
- let n=0;[...document.querySelectorAll(".fill")].forEach(s=>{if(s.value===fill[+s.dataset.i].ans)n++});
- const ok=n===5;feedback("fillFeedback",ok?"5/5 data lines restored.":`${n}/5 đúng.`,ok);
- if(ok){totalScore+=50;updateScore();setTimeout(()=>renderWriting(0),600)}
-}
-function renderWriting(i){
- if(i>=writeExact.length){renderDialogueWrite();return}
- const x=writeExact[i];document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">CIPHER C · WRITE ${i+11}/15</div><div class="qtitle">${x.q}</div>
- <input class="textbox" id="writeAnswer" placeholder="Nhập chữ Hán..." />
- <div class="action-row"><button class="btn primary" onclick="checkWriting(${i})">VERIFY</button></div><div class="feedback" id="writeFeedback"></div></div>`;
- setProgress((10+i)/15*100);
-}
-function checkWriting(i){
- const t=norm(document.getElementById("writeAnswer").value),ok=writeExact[i].answers.some(a=>norm(a)===t);
- feedback("writeFeedback",ok?"TEXT VERIFIED.":"Chưa khớp đáp án mục tiêu. Kiểm tra chữ Hán và cách dùng.",ok);
- if(ok){totalScore+=15;updateScore();setTimeout(()=>renderWriting(i+1),500)}
-}
-function renderDialogueWrite(){
- document.getElementById("missionContent").innerHTML=`
- <div class="question"><div class="qnum">CIPHER C · FINAL WRITING</div><div class="qtitle">Viết đoạn hội thoại 3 lượt lời, sử dụng ít nhất 3 từ:
- 你好 / 谢谢 / 不客气 / 老师 / 同学 / 再见</div>
- <textarea class="textbox" id="dialogueWrite" placeholder="A：...\nB：...\nA：..."></textarea>
- <div class="action-row"><button class="btn primary" onclick="checkDialogueWrite()">SCAN DIALOGUE</button></div><div class="feedback" id="dialogueFeedback"></div></div>`;
- setProgress(14/15*100);
-}
-function checkDialogueWrite(){
- const t=document.getElementById("dialogueWrite").value;const used=["你好","谢谢","不客气","老师","同学","再见"].filter(w=>t.includes(w));
- const lines=t.split(/\n+/).filter(x=>x.trim()).length;const ok=used.length>=3&&lines>=3;
- feedback("dialogueFeedback",ok?`DIALOGUE ACCEPTED · ${used.length} từ khóa.`:"Cần tối thiểu 3 lượt lời và ít nhất 3 từ trong danh sách.",ok);
- if(ok){totalScore+=30;updateScore();setTimeout(renderMemoryHack,650)}
-}
-function renderMemoryHack(){
- memorySeconds=60;memoryStarted=false;
- document.getElementById("missionContent").innerHTML=`
- <div class="center"><div class="kicker">OPTIONAL BONUS · MEMORY HACK</div><h2>60-SECOND RECALL</h2>
- <p class="sub">Không nhìn danh sách từ vựng. Trong 60 giây, nhập tất cả từ tiếng Trung bạn nhớ. Có thể cách nhau bằng dấu cách, dấu phẩy hoặc xuống dòng.</p>
- <div class="timer60" id="memoryClock">60</div><textarea class="textbox" id="memoryInput" placeholder="你好  谢谢  ..." disabled></textarea>
- <div class="action-row" style="justify-content:center"><button class="btn primary" id="memoryStart" onclick="startMemory()">START 60s</button>
- <button class="btn hidden" id="memoryFinish" onclick="finishMemory()">FINISH NOW</button></div>
- <div class="memory-tags" id="memoryTags"></div><div class="feedback" id="memoryFeedback">Bonus không ảnh hưởng việc mở khóa nhiệm vụ.</div></div>`;
- setProgress(96);
-}
-function startMemory(){
- if(memoryStarted)return;memoryStarted=true;document.getElementById("memoryInput").disabled=false;document.getElementById("memoryInput").focus();
- document.getElementById("memoryStart").classList.add("hidden");document.getElementById("memoryFinish").classList.remove("hidden");
- memoryTimer=setInterval(()=>{memorySeconds--;document.getElementById("memoryClock").textContent=memorySeconds;if(memorySeconds<=0)finishMemory()},1000);
-}
-function finishMemory(){
- clearInterval(memoryTimer);const t=document.getElementById("memoryInput").value;
- const found=memoryVocab.filter(w=>t.includes(w));const unique=[...new Set(found)];
- document.getElementById("memoryTags").innerHTML=unique.map(w=>`<span class="memory-tag">${w}</span>`).join("");
- feedback("memoryFeedback",`我记得 ${unique.length} 个词！ Bonus +${unique.length*5} INTEL.`,true);
- totalScore+=unique.length*5;updateScore();document.getElementById("memoryFinish").classList.add("hidden");
- setTimeout(()=>awardMission(3,0),1200);
-}
- 
-function showFinalVault(){
- show("vaultScreen");document.getElementById("vaultHint").textContent=completed.map((x,i)=>x?codeFragments[i]:"?").join(" ");
- document.getElementById("vaultFeedback").className="feedback";document.getElementById("vaultFeedback").textContent=
- completed.every(Boolean)?"ALL FRAGMENTS ACQUIRED. ENTER CODE.":"LOCKED: Complete all four missions first.";
-}
-function unlockVault(){
- const fb=document.getElementById("vaultFeedback");if(!completed.every(Boolean)){feedback("vaultFeedback","Không đủ 4 mảnh mật mã.",false);return}
- const ok=document.getElementById("vaultInput").value===codeFragments.join("");
- if(ok){
-  fb.className="feedback good";fb.innerHTML=`ACCESS GRANTED // ${agent.toUpperCase()}<br><span class="stamp">DOSSIER DECRYPTED</span><br>Tổng INTEL: ${totalScore}`;
-  document.querySelector(".vault").classList.add("glitch");playSuccess();speak("恭喜你，任务完成");
- }else{feedback("vaultFeedback","ACCESS DENIED. Kiểm tra thứ tự 4 mảnh code.",false);playError()}
-}
- 
-function feedback(id,text,good){const e=document.getElementById(id);if(!e)return;e.textContent=text;e.className="feedback "+(good?"good":"bad");if(good)playSuccess();else playError()}
-function updateScore(){document.getElementById("scoreStat").textContent=totalScore}
-function norm(t){return String(t).replace(/[\s，。！？、,.!?：:；;]/g,"").trim()}
-function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
-function randomItem(a){return a[Math.floor(Math.random()*a.length)]}
-function speak(text){
- if(!soundOn||!("speechSynthesis"in window))return;speechSynthesis.cancel();
- const u=new SpeechSynthesisUtterance(text);u.lang="zh-CN";u.rate=.88;u.pitch=1;
- const v=speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith("zh"));if(v)u.voice=v;speechSynthesis.speak(u);
-}
-function speakSequence(lines){
- if(!soundOn||!("speechSynthesis"in window))return;speechSynthesis.cancel();
- let i=0;function next(){if(i>=lines.length)return;const u=new SpeechSynthesisUtterance(lines[i++]);u.lang="zh-CN";u.rate=.84;
- const v=speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith("zh"));if(v)u.voice=v;u.onend=()=>setTimeout(next,360);speechSynthesis.speak(u)}next();
-}
-let audioCtx=null;
-function tone(f,d,type="sine",vol=.035,delay=0){
- if(!soundOn)return;audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume();
- const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=f;o.connect(g);g.connect(audioCtx.destination);
- const t=audioCtx.currentTime+delay;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.start(t);o.stop(t+d)
-}
-function playSuccess(){tone(620,.08,"sine",.035);tone(820,.1,"sine",.035,.07);tone(1040,.14,"sine",.03,.14)}
-function playError(){tone(190,.11,"sawtooth",.025);tone(135,.16,"sawtooth",.02,.08)}
-function toggleSound(){soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"AUDIO ON":"AUDIO OFF";if(!soundOn&&"speechSynthesis"in window)speechSynthesis.cancel()}
+
 </script>
+
 </body>
 </html>

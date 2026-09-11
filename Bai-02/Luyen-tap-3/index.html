@@ -1,0 +1,4631 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>综合复习 01 · Bài tập 3–5</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#eee7dc;
+  --paper:#fffaf2;
+  --white:#ffffff;
+
+  --ink:#17232d;
+  --muted:#68747c;
+
+  --wine:#852638;
+  --wineDark:#661b29;
+
+  --navy:#18364c;
+
+  --gold:#c89a48;
+
+  --green:#2f7d59;
+  --greenSoft:#e5f4e9;
+
+  --red:#b53d4e;
+  --redSoft:#ffe8eb;
+
+  --line:#d9cdbc;
+
+  --shadow:
+    0 18px 55px
+    rgba(52,43,33,.12);
+}
+
+
+html{
+  scroll-behavior:smooth;
+}
+
+
+body{
+  margin:0;
+
+  min-height:100vh;
+
+  font-family:
+    Inter,
+    "Noto Sans SC",
+    "Microsoft YaHei",
+    Arial,
+    sans-serif;
+
+  color:var(--ink);
+
+  background:
+    radial-gradient(
+      circle at 8% 0,
+      #eadcc5,
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      #d7e3df,
+      transparent 30%
+    ),
+    var(--bg);
+}
+
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+
+button{
+  cursor:pointer;
+}
+
+
+.hidden{
+  display:none !important;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+  width:min(
+    1100px,
+    calc(100% - 24px)
+  );
+
+  margin:
+    18px auto
+    70px;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:center;
+
+  gap:12px;
+
+  margin-bottom:14px;
+}
+
+
+.logo{
+  color:var(--wine);
+
+  font-size:18px;
+  font-weight:1000;
+
+  letter-spacing:.04em;
+}
+
+
+.homeBtn{
+  border:1px solid var(--wine);
+
+  border-radius:999px;
+
+  background:var(--wine);
+
+  color:white;
+
+  padding:10px 16px;
+
+  font-size:14px;
+  font-weight:900;
+
+  transition:.15s;
+}
+
+
+.homeBtn:hover{
+  background:var(--wineDark);
+
+  transform:translateY(-1px);
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card{
+  margin-bottom:16px;
+
+  padding:27px;
+
+  border:
+    1px solid
+    #d0c2b0;
+
+  border-radius:22px;
+
+  background:
+    rgba(
+      255,
+      250,
+      242,
+      .97
+    );
+
+  box-shadow:
+    var(--shadow);
+}
+
+
+.kicker{
+  color:var(--wine);
+
+  font-size:12px;
+  font-weight:1000;
+
+  letter-spacing:.18em;
+}
+
+
+h1{
+  margin:.18em 0;
+
+  font-size:
+    clamp(
+      37px,
+      6vw,
+      65px
+    );
+}
+
+
+h2{
+  margin:.2em 0;
+
+  font-size:
+    clamp(
+      25px,
+      4vw,
+      36px
+    );
+}
+
+
+.muted{
+  color:var(--muted);
+
+  line-height:1.65;
+}
+
+
+/* =========================================================
+   HUB
+========================================================= */
+
+.hero{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:
+    44px 30px
+    36px;
+
+  text-align:center;
+}
+
+
+.hero::after{
+  content:"复习";
+
+  position:absolute;
+
+  right:-35px;
+  bottom:-80px;
+
+  color:
+    rgba(
+      133,
+      38,
+      56,
+      .045
+    );
+
+  font-size:190px;
+  font-weight:1000;
+
+  pointer-events:none;
+}
+
+
+.heroIcon{
+  margin:12px 0;
+
+  font-size:67px;
+}
+
+
+.studentGrid{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:12px;
+
+  max-width:880px;
+
+  margin:
+    24px auto 0;
+}
+
+
+.field{
+  width:100%;
+
+  padding:
+    13px 14px;
+
+  border:
+    1px solid
+    #baa791;
+
+  border-radius:11px;
+
+  background:white;
+
+  outline:none;
+}
+
+
+.field:focus{
+  border-color:var(--wine);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(133,38,56,.08);
+}
+
+
+/* =========================================================
+   EXERCISE CARDS
+========================================================= */
+
+.exerciseGrid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:14px;
+
+  margin-top:28px;
+
+  text-align:left;
+}
+
+
+.exerciseCard{
+  position:relative;
+
+  display:flex;
+
+  flex-direction:column;
+
+  min-height:315px;
+
+  padding:22px;
+
+  border:
+    1px solid
+    #d3c4b1;
+
+  border-radius:18px;
+
+  background:white;
+
+  overflow:hidden;
+
+  transition:.18s;
+}
+
+
+.exerciseCard:hover{
+  transform:translateY(-5px);
+
+  box-shadow:
+    0 17px 32px
+    rgba(42,36,29,.11);
+}
+
+
+.exerciseNum{
+  color:var(--wine);
+
+  font-size:12px;
+  font-weight:1000;
+
+  letter-spacing:.13em;
+}
+
+
+.exerciseIcon{
+  margin:
+    15px 0 8px;
+
+  font-size:52px;
+}
+
+
+.exerciseTitle{
+  font-size:27px;
+  font-weight:1000;
+}
+
+
+.exerciseCard p{
+  color:var(--muted);
+
+  line-height:1.55;
+}
+
+
+.exerciseCard ul{
+  flex:1;
+
+  padding-left:18px;
+
+  color:#53616a;
+
+  line-height:1.75;
+}
+
+
+.startBtn{
+  width:100%;
+
+  margin-top:12px;
+
+  border:0;
+
+  border-radius:11px;
+
+  padding:13px;
+
+  background:var(--wine);
+
+  color:white;
+
+  font-weight:1000;
+}
+
+
+.startBtn:hover{
+  background:var(--wineDark);
+}
+
+
+/* =========================================================
+   EXERCISE HEADER
+========================================================= */
+
+.exerciseHeader{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:13px;
+}
+
+
+.backBtn{
+  border:
+    1px solid
+    #b9a58d;
+
+  border-radius:999px;
+
+  background:white;
+
+  padding:
+    9px 14px;
+
+  color:var(--ink);
+
+  font-weight:900;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.sectionTitle{
+  margin:
+    27px 0 12px;
+
+  padding-bottom:8px;
+
+  border-bottom:
+    1px solid
+    var(--line);
+
+  font-size:19px;
+  font-weight:1000;
+}
+
+
+/* =========================================================
+   QUESTION
+========================================================= */
+
+.question{
+  margin:10px 0;
+
+  padding:17px;
+
+  border:
+    1px solid
+    #ddd1c1;
+
+  border-radius:14px;
+
+  background:white;
+}
+
+
+.qnum{
+  color:var(--wine);
+
+  font-size:12px;
+  font-weight:1000;
+
+  letter-spacing:.1em;
+}
+
+
+.qtext{
+  margin:
+    7px 0 11px;
+
+  font-weight:850;
+
+  line-height:1.6;
+
+  white-space:pre-line;
+}
+
+
+/* =========================================================
+   OPTION
+========================================================= */
+
+.options{
+  display:grid;
+
+  gap:7px;
+}
+
+
+.option{
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:9px;
+
+  padding:10px;
+
+  border-radius:9px;
+
+  cursor:pointer;
+
+  transition:.12s;
+}
+
+
+.option:hover{
+  background:#f7f1e8;
+}
+
+
+.option input{
+  margin-top:4px;
+}
+
+
+/* =========================================================
+   MATCH
+========================================================= */
+
+.matchGrid{
+  display:grid;
+
+  grid-template-columns:
+    1fr minmax(
+      220px,
+      310px
+    );
+
+  gap:9px;
+
+  align-items:center;
+}
+
+
+.matchGrid > div{
+  display:contents;
+}
+
+
+.matchGrid strong{
+  padding:8px 4px;
+}
+
+
+.matchGrid select,
+.fillSelect{
+  padding:10px;
+
+  border:
+    1px solid
+    #baa78e;
+
+  border-radius:9px;
+
+  background:white;
+}
+
+
+/* =========================================================
+   DIALOGUE
+========================================================= */
+
+.dialogue{
+  margin:
+    10px 0;
+
+  padding:18px;
+
+  border-radius:13px;
+
+  background:#f4eee5;
+
+  line-height:1.9;
+}
+
+
+.speaker{
+  color:var(--wine);
+
+  font-weight:1000;
+}
+
+
+/* =========================================================
+   REORDER
+========================================================= */
+
+.buildBox{
+  min-height:55px;
+
+  margin:
+    10px 0;
+
+  padding:10px 13px;
+
+  border:
+    1px dashed
+    #a99579;
+
+  border-radius:9px;
+
+  background:#fffaf4;
+
+  font-size:29px;
+  font-weight:1000;
+}
+
+
+.tiles{
+  display:flex;
+
+  gap:8px;
+
+  flex-wrap:wrap;
+}
+
+
+.tile{
+  min-width:55px;
+
+  border:
+    1px solid
+    #a8957c;
+
+  border-radius:10px;
+
+  background:white;
+
+  padding:
+    10px 14px;
+
+  font-size:25px;
+  font-weight:1000;
+
+  transition:.12s;
+}
+
+
+.tile:hover{
+  transform:translateY(-2px);
+
+  background:#faf4e9;
+}
+
+
+.tile:disabled{
+  opacity:.35;
+
+  cursor:not-allowed;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.buttonRow{
+  display:flex;
+
+  gap:8px;
+
+  flex-wrap:wrap;
+
+  margin-top:10px;
+}
+
+
+.smallBtn{
+  border:
+    1px solid
+    #b9a58e;
+
+  border-radius:9px;
+
+  background:white;
+
+  color:var(--ink);
+
+  padding:
+    9px 13px;
+
+  font-weight:900;
+}
+
+
+.submitBtn{
+  border:0;
+
+  border-radius:13px;
+
+  background:var(--wine);
+
+  color:white;
+
+  padding:
+    15px 28px;
+
+  font-size:18px;
+  font-weight:1000;
+
+  transition:.15s;
+}
+
+
+.submitBtn:hover{
+  background:var(--wineDark);
+
+  transform:translateY(-2px);
+}
+
+
+/* =========================================================
+   WORD BANK
+========================================================= */
+
+.wordBank{
+  display:flex;
+
+  gap:8px;
+
+  flex-wrap:wrap;
+
+  margin:
+    10px 0 15px;
+}
+
+
+.wordBank span{
+  border:
+    1px solid
+    #dac7a8;
+
+  border-radius:999px;
+
+  background:#f1e6d2;
+
+  padding:
+    7px 11px;
+
+  font-weight:900;
+}
+
+
+/* =========================================================
+   MEMORY CHALLENGE
+========================================================= */
+
+.memoryBox{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:24px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #182833,
+      #101b22
+    );
+
+  color:white;
+}
+
+
+.memoryBox::after{
+  content:"60";
+
+  position:absolute;
+
+  right:-20px;
+  bottom:-65px;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      .04
+    );
+
+  font-size:220px;
+  font-weight:1000;
+
+  pointer-events:none;
+}
+
+
+.timer{
+  position:relative;
+
+  z-index:2;
+
+  margin:
+    10px 0;
+
+  color:#ffd575;
+
+  font-size:72px;
+  font-weight:1000;
+
+  font-variant-numeric:
+    tabular-nums;
+}
+
+
+.memoryInput{
+  position:relative;
+
+  z-index:2;
+
+  width:100%;
+
+  min-height:150px;
+
+  margin-top:12px;
+
+  border:0;
+
+  border-radius:12px;
+
+  padding:14px;
+
+  resize:vertical;
+}
+
+
+.challengeStats{
+  position:relative;
+
+  z-index:2;
+
+  display:flex;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+
+  margin-top:13px;
+}
+
+
+.challengeChip{
+  border:
+    1px solid
+    rgba(255,255,255,.18);
+
+  border-radius:999px;
+
+  padding:
+    7px 11px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .08
+    );
+
+  font-weight:900;
+}
+
+
+/* =========================================================
+   SUBMIT / RESULTS
+========================================================= */
+
+.submitCard{
+  text-align:center;
+}
+
+
+.submitStatus{
+  margin-top:13px;
+
+  padding:11px;
+
+  border-radius:10px;
+
+  background:#f4eee4;
+
+  color:#58656d;
+}
+
+
+.result{
+  display:none;
+
+  margin-top:16px;
+
+  padding:18px;
+
+  border:
+    1px solid
+    #a7cdb5;
+
+  border-radius:14px;
+
+  background:var(--greenSoft);
+}
+
+
+.result.show{
+  display:block;
+}
+
+
+.scoreBig{
+  color:var(--green);
+
+  font-size:51px;
+  font-weight:1000;
+}
+
+
+.review{
+  display:grid;
+
+  gap:7px;
+
+  margin-top:14px;
+
+  text-align:left;
+}
+
+
+.reviewItem{
+  padding:
+    9px 11px;
+
+  border-radius:9px;
+
+  background:white;
+
+  line-height:1.5;
+}
+
+
+.good{
+  color:var(--green);
+
+  font-weight:900;
+}
+
+
+.bad{
+  color:var(--red);
+
+  font-weight:900;
+}
+
+
+/* =========================================================
+   COMPLETION
+========================================================= */
+
+.completeBanner{
+  margin-top:18px;
+
+  padding:17px;
+
+  border:
+    1px solid
+    #e0c58b;
+
+  border-radius:13px;
+
+  background:#fff4d9;
+
+  line-height:1.6;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+  .app{
+    width:
+      calc(
+        100% - 12px
+      );
+
+    margin-top:7px;
+  }
+
+
+  .card{
+    padding:17px;
+  }
+
+
+  .studentGrid,
+  .exerciseGrid{
+    grid-template-columns:1fr;
+  }
+
+
+  .matchGrid{
+    grid-template-columns:1fr;
+  }
+
+
+  .exerciseHeader{
+    align-items:flex-start;
+  }
+
+
+  .topbar{
+    align-items:flex-start;
+  }
+
+
+  .homeBtn{
+    font-size:12px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<div class="topbar">
+
+  <div class="logo">
+    综合复习 01
+  </div>
+
+
+  <button
+    class="homeBtn"
+    onclick="goMainHome()">
+
+    ⌂ Trang chủ HSK
+
+  </button>
+
+</div>
+
+
+<!-- =========================================================
+     HUB
+========================================================= -->
+
+<section
+  class="card hero"
+  id="hubScreen">
+
+
+  <div class="kicker">
+    REVIEW · PART 03–05
+  </div>
+
+
+  <div class="heroIcon">
+    📖 ✍️ ⭐
+  </div>
+
+
+  <h1>
+    综合复习 01
+  </h1>
+
+
+  <p class="muted">
+
+    Chia bài thành từng phần ngắn
+    để học viên làm thoải mái hơn.
+
+    <br>
+
+    Hoàn thành từng bài,
+    kiểm tra đáp án
+    và nộp kết quả riêng.
+
+  </p>
+
+
+  <!-- STUDENT INFO -->
+
+  <div class="studentGrid">
+
+
+    <input
+      class="field"
+      id="studentName"
+      placeholder="姓名 · Họ tên"
+    >
+
+
+    <input
+      class="field"
+      id="studentClass"
+      placeholder="班级 · Lớp"
+    >
+
+
+  </div>
+
+
+  <!-- EXERCISE CARDS -->
+
+  <div class="exerciseGrid">
+
+
+    <!-- 3 -->
+
+    <div class="exerciseCard">
+
+
+      <div class="exerciseNum">
+        BÀI TẬP 03
+      </div>
+
+
+      <div class="exerciseIcon">
+        📖
+      </div>
+
+
+      <div class="exerciseTitle">
+        读一读
+      </div>
+
+
+      <p>
+        Đọc hiểu và giao tiếp.
+      </p>
+
+
+      <ul>
+
+        <li>
+          Ghép 5 cặp giao tiếp
+        </li>
+
+        <li>
+          5 tình huống thực tế
+        </li>
+
+        <li>
+          Đọc hội thoại
+        </li>
+
+        <li>
+          5 câu đúng / sai
+        </li>
+
+      </ul>
+
+
+      <button
+        class="startBtn"
+        onclick="openExercise3()">
+
+        BẮT ĐẦU BÀI 3 →
+
+      </button>
+
+
+    </div>
+
+
+    <!-- 4 -->
+
+    <div class="exerciseCard">
+
+
+      <div class="exerciseNum">
+        BÀI TẬP 04
+      </div>
+
+
+      <div class="exerciseIcon">
+        ✍️
+      </div>
+
+
+      <div class="exerciseTitle">
+        写一写
+      </div>
+
+
+      <p>
+        Chữ Hán và viết câu.
+      </p>
+
+
+      <ul>
+
+        <li>
+          Ghép chữ thành từ
+        </li>
+
+        <li>
+          Điền từ
+        </li>
+
+        <li>
+          Viết chữ Hán
+        </li>
+
+        <li>
+          Viết hội thoại ngắn
+        </li>
+
+      </ul>
+
+
+      <button
+        class="startBtn"
+        onclick="openExercise4()">
+
+        BẮT ĐẦU BÀI 4 →
+
+      </button>
+
+
+    </div>
+
+
+    <!-- 5 -->
+
+    <div class="exerciseCard">
+
+
+      <div class="exerciseNum">
+        FINAL CHALLENGE
+      </div>
+
+
+      <div class="exerciseIcon">
+        ⭐
+      </div>
+
+
+      <div class="exerciseTitle">
+        挑战题
+      </div>
+
+
+      <p>
+        Memory Hack 60 giây.
+      </p>
+
+
+      <ul>
+
+        <li>
+          Không nhìn từ vựng
+        </li>
+
+        <li>
+          Countdown 60 giây
+        </li>
+
+        <li>
+          Tự đếm từ nhớ được
+        </li>
+
+        <li>
+          Nhận kết quả cuối
+        </li>
+
+      </ul>
+
+
+      <button
+        class="startBtn"
+        onclick="openExercise5()">
+
+        NHẬN THỬ THÁCH →
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+<!-- =========================================================
+     EXERCISE 3
+========================================================= -->
+
+<section
+  class="hidden"
+  id="exercise3">
+
+
+  <div class="exerciseHeader">
+
+
+    <button
+      class="backBtn"
+      onclick="goHub()">
+
+      ← Quay về chọn bài
+
+    </button>
+
+
+    <button
+      class="homeBtn"
+      onclick="goMainHome()">
+
+      ⌂ Trang chủ HSK
+
+    </button>
+
+
+  </div>
+
+
+  <div class="card">
+
+
+    <div class="kicker">
+      第三部分 · EXERCISE 03
+    </div>
+
+
+    <h2>
+      📖 读一读 · PHẦN 3 ĐỌC
+    </h2>
+
+
+    <p class="muted">
+      Đọc – suy nghĩ – chọn câu tự nhiên nhất.
+    </p>
+
+
+    <!-- A MATCH -->
+
+    <div class="sectionTitle">
+
+      A. 找朋友 · Tìm “người bạn” phù hợp
+
+    </div>
+
+
+    <div class="question">
+
+
+      <div class="qtext">
+
+        Ghép hai phần
+        để tạo thành cặp giao tiếp tự nhiên.
+
+      </div>
+
+
+      <div
+        class="matchGrid"
+        id="matching">
+      </div>
+
+
+    </div>
+
+
+    <!-- B -->
+
+    <div class="sectionTitle">
+
+      B. 谁说得对？· Ai nói đúng?
+
+    </div>
+
+
+    <div id="readingMC"></div>
+
+
+    <!-- C -->
+
+    <div class="sectionTitle">
+
+      C. 读对话 · Đọc hội thoại
+
+    </div>
+
+
+    <div class="dialogue">
+
+
+      <span class="speaker">
+        王老师：
+      </span>
+
+      大家好！
+
+      <br>
+
+
+      <span class="speaker">
+        学生们：
+      </span>
+
+      王老师，您好！
+
+      <br>
+
+
+      <span class="speaker">
+        王老师：
+      </span>
+
+      同学们，你们好！
+
+      <br>
+
+
+      <span class="speaker">
+        学生们：
+      </span>
+
+      老师好！
+
+
+      <br><br>
+
+      ⋯⋯
+
+      <br><br>
+
+
+      <span class="speaker">
+        学生们：
+      </span>
+
+      王老师，谢谢！
+
+      <br>
+
+
+      <span class="speaker">
+        王老师：
+      </span>
+
+      不客气！
+
+      <br>
+
+
+      <span class="speaker">
+        学生们：
+      </span>
+
+      王老师，再见！
+
+      <br>
+
+
+      <span class="speaker">
+        王老师：
+      </span>
+
+      再见！
+
+
+    </div>
+
+
+    <div id="trueFalse"></div>
+
+
+  </div>
+
+
+  <!-- SUBMIT -->
+
+  <div class="card submitCard">
+
+
+    <div class="kicker">
+      SUBMIT · EXERCISE 03
+    </div>
+
+
+    <h2>
+      Xong phần Đọc rồi?
+    </h2>
+
+
+    <p class="muted">
+
+      Bấm một lần để
+      kiểm tra đáp án
+      và gửi bài cho giáo viên.
+
+    </p>
+
+
+    <button
+      class="submitBtn"
+      onclick="submitExercise3()">
+
+      ✓📨 NỘP BÀI & KIỂM TRA
+
+    </button>
+
+
+    <div
+      class="submitStatus"
+      id="status3">
+
+      Bài chưa được nộp.
+
+    </div>
+
+
+    <div
+      class="result"
+      id="result3">
+
+
+      <div
+        class="scoreBig"
+        id="score3">
+
+        0%
+
+      </div>
+
+
+      <div id="resultText3"></div>
+
+
+      <div
+        class="review"
+        id="review3">
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+<!-- =========================================================
+     EXERCISE 4
+========================================================= -->
+
+<section
+  class="hidden"
+  id="exercise4">
+
+
+  <div class="exerciseHeader">
+
+
+    <button
+      class="backBtn"
+      onclick="goHub()">
+
+      ← Quay về chọn bài
+
+    </button>
+
+
+    <button
+      class="homeBtn"
+      onclick="goMainHome()">
+
+      ⌂ Trang chủ HSK
+
+    </button>
+
+
+  </div>
+
+
+  <div class="card">
+
+
+    <div class="kicker">
+      第四部分 · EXERCISE 04
+    </div>
+
+
+    <h2>
+      ✍️ 写一写 · PHẦN 4 VIẾT
+    </h2>
+
+
+    <p class="muted">
+
+      Khôi phục chữ Hán,
+      chọn từ phù hợp
+      và tự tạo câu.
+
+    </p>
+
+
+    <!-- A -->
+
+    <div class="sectionTitle">
+
+      A. 拼一拼 · Ghép chữ thành từ
+
+    </div>
+
+
+    <div id="reorderQuestions"></div>
+
+
+    <!-- B -->
+
+    <div class="sectionTitle">
+
+      B. 选词填空 · Chọn từ điền vào chỗ trống
+
+    </div>
+
+
+    <div class="wordBank">
+
+      <span>您</span>
+
+      <span>大家</span>
+
+      <span>们</span>
+
+      <span>不客气</span>
+
+      <span>再见</span>
+
+    </div>
+
+
+    <div id="fillQuestions"></div>
+
+
+    <!-- C -->
+
+    <div class="sectionTitle">
+
+      C. 我会写 · Tự viết
+
+    </div>
+
+
+    <div id="writingQuestions"></div>
+
+
+  </div>
+
+
+  <!-- SUBMIT -->
+
+  <div class="card submitCard">
+
+
+    <div class="kicker">
+      SUBMIT · EXERCISE 04
+    </div>
+
+
+    <h2>
+      Hoàn thành phần Viết?
+    </h2>
+
+
+    <p class="muted">
+
+      Hệ thống tự chấm
+      các câu có đáp án cố định.
+
+      <br>
+
+      Câu hội thoại 15
+      sẽ được gửi để giáo viên xem riêng.
+
+    </p>
+
+
+    <button
+      class="submitBtn"
+      onclick="submitExercise4()">
+
+      ✓📨 NỘP BÀI & KIỂM TRA
+
+    </button>
+
+
+    <div
+      class="submitStatus"
+      id="status4">
+
+      Bài chưa được nộp.
+
+    </div>
+
+
+    <div
+      class="result"
+      id="result4">
+
+
+      <div
+        class="scoreBig"
+        id="score4">
+
+        0%
+
+      </div>
+
+
+      <div id="resultText4"></div>
+
+
+      <div
+        class="review"
+        id="review4">
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+<!-- =========================================================
+     EXERCISE 5
+========================================================= -->
+
+<section
+  class="hidden"
+  id="exercise5">
+
+
+  <div class="exerciseHeader">
+
+
+    <button
+      class="backBtn"
+      onclick="goHub()">
+
+      ← Quay về chọn bài
+
+    </button>
+
+
+    <button
+      class="homeBtn"
+      onclick="goMainHome()">
+
+      ⌂ Trang chủ HSK
+
+    </button>
+
+
+  </div>
+
+
+  <div class="card">
+
+
+    <div class="kicker">
+      挑战题 · FINAL CHALLENGE
+    </div>
+
+
+    <h2>
+      ⭐ MEMORY HACK · 60 GIÂY
+    </h2>
+
+
+    <p class="muted">
+
+      Không nhìn lại bài.
+
+      Trong 60 giây,
+      hãy nhập tất cả từ tiếng Trung
+      bạn còn nhớ.
+
+    </p>
+
+
+    <div class="memoryBox">
+
+
+      <div
+        class="timer"
+        id="timer">
+
+        60
+
+      </div>
+
+
+      <button
+        class="smallBtn"
+        id="timerButton"
+        onclick="startMemoryChallenge()">
+
+        ⏱ BẮT ĐẦU 60 GIÂY
+
+      </button>
+
+
+      <textarea
+        class="memoryInput"
+        id="memoryInput"
+        disabled
+        placeholder="Bấm BẮT ĐẦU rồi nhập các từ bạn nhớ ở đây..."></textarea>
+
+
+      <div class="challengeStats">
+
+
+        <div class="challengeChip">
+
+          我记得
+
+          <strong id="memoryCount">
+            0
+          </strong>
+
+          个词
+
+        </div>
+
+
+        <div class="challengeChip">
+
+          🎯 Mục tiêu:
+          13 từ
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+    <div class="question">
+
+
+      <div class="qtext">
+
+        Sau khi hoàn thành,
+        bạn cảm thấy bài này thế nào?
+
+      </div>
+
+
+      <div class="options">
+
+
+        <label class="option">
+
+          <input
+            type="radio"
+            name="feeling"
+            value="Dễ">
+
+          😎 Dễ
+
+        </label>
+
+
+        <label class="option">
+
+          <input
+            type="radio"
+            name="feeling"
+            value="Vừa sức">
+
+          🙂 Vừa sức
+
+        </label>
+
+
+        <label class="option">
+
+          <input
+            type="radio"
+            name="feeling"
+            value="Cần ôn thêm">
+
+          🥲 Cần ôn thêm
+
+        </label>
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- SUBMIT -->
+
+  <div class="card submitCard">
+
+
+    <div class="kicker">
+      FINAL SUBMIT
+    </div>
+
+
+    <h2>
+      Hoàn thành thử thách?
+    </h2>
+
+
+    <button
+      class="submitBtn"
+      onclick="submitExercise5()">
+
+      ⭐📨 NỘP KẾT QUẢ
+
+    </button>
+
+
+    <div
+      class="submitStatus"
+      id="status5">
+
+      Chưa nộp thử thách.
+
+    </div>
+
+
+    <div
+      class="result"
+      id="result5">
+
+
+      <div
+        class="scoreBig"
+        id="score5">
+
+        0 từ
+
+      </div>
+
+
+      <div id="resultText5"></div>
+
+
+      <div
+        class="completeBanner"
+        id="completeMessage">
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+</div>
+
+
+<!-- =========================================================
+     EMAIL
+========================================================= -->
+
+<iframe
+  name="mailFrame"
+  style="display:none">
+</iframe>
+
+
+<form
+  id="emailForm"
+  action="https://formsubmit.co/dungtran92qc@gmail.com"
+  method="POST"
+  target="mailFrame"
+  style="display:none">
+
+
+  <input
+    type="hidden"
+    name="_captcha"
+    value="false"
+  >
+
+
+  <input
+    type="hidden"
+    name="_template"
+    value="table"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailSubject"
+    name="_subject"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailName"
+    name="Họ tên"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailClass"
+    name="Lớp"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailExercise"
+    name="Bài tập"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailScore"
+    name="Kết quả"
+  >
+
+
+  <input
+    type="hidden"
+    id="mailDetails"
+    name="Chi tiết bài làm"
+  >
+
+
+</form>
+
+
+<script>
+
+/* =========================================================
+   DATA · EXERCISE 3
+========================================================= */
+
+const matchingData = [
+
+  {
+    left:"你好！",
+    answer:"你好！"
+  },
+
+  {
+    left:"谢谢！",
+    answer:"不客气！"
+  },
+
+  {
+    left:"再见！",
+    answer:"再见！"
+  },
+
+  {
+    left:"王老师：同学们，你们好！",
+    answer:"老师好！"
+  },
+
+  {
+    left:"学生们见到王老师",
+    answer:"王老师，您好！"
+  }
+
+];
+
+
+const matchingOptions = [
+
+  "不客气！",
+
+  "王老师，您好！",
+
+  "你好！",
+
+  "再见！",
+
+  "老师好！"
+
+];
+
+
+const readingQuestions = [
+
+  {
+
+    text:
+      "小明 gặp cô Vương. 小明 nói:",
+
+    options:[
+
+      "王老师，您好！",
+
+      "王老师，不客气！",
+
+      "王老师，谢谢大家！"
+
+    ],
+
+    answer:0
+
+  },
+
+
+  {
+
+    text:
+      "Cô Vương bước vào lớp và muốn chào cả lớp:",
+
+    options:[
+
+      "学生，再见！",
+
+      "大家好！",
+
+      "谢谢！"
+
+    ],
+
+    answer:1
+
+  },
+
+
+  {
+
+    text:
+      "Một người nói “谢谢！”. Bạn trả lời:",
+
+    options:[
+
+      "你好！",
+
+      "再见！",
+
+      "不客气！"
+
+    ],
+
+    answer:2
+
+  },
+
+
+  {
+
+    text:
+      "Tan học, học sinh nói với giáo viên:",
+
+    options:[
+
+      "老师，再见！",
+
+      "老师，不客气！",
+
+      "老师，谢谢大家！"
+
+    ],
+
+    answer:0
+
+  },
+
+
+  {
+
+    text:
+      "“同学们” chỉ:",
+
+    options:[
+
+      "một bạn học",
+
+      "các bạn học",
+
+      "giáo viên"
+
+    ],
+
+    answer:1
+
+  }
+
+];
+
+
+const trueFalseData = [
+
+  {
+    text:"王老师是老师。",
+    answer:true
+  },
+
+  {
+    text:"“学生们” chỉ có một học sinh.",
+    answer:false
+  },
+
+  {
+    text:"学生们说：“王老师，您好！”",
+    answer:true
+  },
+
+  {
+    text:
+      "王老师说：“谢谢！”，学生说“不客气！”。",
+
+    answer:false
+  },
+
+  {
+    text:
+      "Cuối đoạn hội thoại, mọi người nói “再见”.",
+
+    answer:true
+  }
+
+];
+
+
+/* =========================================================
+   DATA · EXERCISE 4
+========================================================= */
+
+const reorderData = [
+
+  {
+    chars:[
+      "好",
+      "你"
+    ],
+
+    answer:"你好"
+  },
+
+
+  {
+    chars:[
+      "师",
+      "老"
+    ],
+
+    answer:"老师"
+  },
+
+
+  {
+    chars:[
+      "生",
+      "学"
+    ],
+
+    answer:"学生"
+  },
+
+
+  {
+    chars:[
+      "学",
+      "同"
+    ],
+
+    answer:"同学"
+  },
+
+
+  {
+    chars:[
+      "见",
+      "再"
+    ],
+
+    answer:"再见"
+  }
+
+];
+
+
+const fillData = [
+
+  {
+    text:
+      "王老师，_____好！",
+
+    answer:"您"
+  },
+
+
+  {
+    text:
+      "_____好！我是王老师。",
+
+    answer:"大家"
+  },
+
+
+  {
+    text:
+      "同学_____，你们好！",
+
+    answer:"们"
+  },
+
+
+  {
+    text:
+      "A：谢谢！\nB：__________！",
+
+    answer:"不客气"
+  },
+
+
+  {
+    text:
+      "A：老师，再见！\nB：__________！",
+
+    answer:"再见"
+  }
+
+];
+
+
+const fillBank = [
+
+  "您",
+
+  "大家",
+
+  "们",
+
+  "不客气",
+
+  "再见"
+
+];
+
+
+const writingData = [
+
+  {
+
+    text:
+      "Viết bằng chữ Hán: “Xin chào!”",
+
+    answers:[
+      "你好"
+    ]
+
+  },
+
+
+  {
+
+    text:
+      "Viết bằng chữ Hán: “Cảm ơn!”",
+
+    answers:[
+      "谢谢"
+    ]
+
+  },
+
+
+  {
+
+    text:
+      "Viết bằng chữ Hán: “Đừng khách sáo!”",
+
+    answers:[
+      "不客气"
+    ]
+
+  },
+
+
+  {
+
+    text:
+      "Viết một câu để chào cô Vương một cách lịch sự.",
+
+    answers:[
+
+      "王老师您好",
+
+      "王老师你好"
+
+    ]
+
+  }
+
+];
+
+
+/* =========================================================
+   DATA · EXERCISE 5
+========================================================= */
+
+const memoryVocabulary = [
+
+  "你好",
+
+  "王老师",
+
+  "大家",
+
+  "好",
+
+  "学生",
+
+  "们",
+
+  "老师",
+
+  "您",
+
+  "你们",
+
+  "谢谢",
+
+  "不客气",
+
+  "同学",
+
+  "再见"
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let builtWords = [
+
+  "",
+  "",
+  "",
+  "",
+  ""
+
+];
+
+
+let timerID =
+  null;
+
+
+let secondsLeft =
+  60;
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+renderExercise3();
+
+renderExercise4();
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goMainHome(){
+
+  /*
+    File hiện tại:
+    HSK-1-3.0/Bai-02/Luyen-tap-2/index.html
+
+    Trang chủ:
+    HSK-1-3.0/index.html
+  */
+
+  window.location.href =
+    "../../index.html";
+
+}
+
+
+function validateStudent(){
+
+  const name =
+    document
+    .getElementById(
+      "studentName"
+    )
+    .value
+    .trim();
+
+
+  const studentClass =
+    document
+    .getElementById(
+      "studentClass"
+    )
+    .value
+    .trim();
+
+
+  if(!name){
+
+    alert(
+      "Vui lòng nhập Họ tên trước."
+    );
+
+
+    document
+    .getElementById(
+      "studentName"
+    )
+    .focus();
+
+
+    return false;
+
+  }
+
+
+  if(!studentClass){
+
+    alert(
+      "Vui lòng nhập Lớp trước."
+    );
+
+
+    document
+    .getElementById(
+      "studentClass"
+    )
+    .focus();
+
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+function openExercise3(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  showScreen(
+    "exercise3"
+  );
+
+}
+
+
+function openExercise4(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  showScreen(
+    "exercise4"
+  );
+
+}
+
+
+function openExercise5(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  showScreen(
+    "exercise5"
+  );
+
+}
+
+
+function goHub(){
+
+  showScreen(
+    "hubScreen"
+  );
+
+}
+
+
+function showScreen(id){
+
+  [
+
+    "hubScreen",
+
+    "exercise3",
+
+    "exercise4",
+
+    "exercise5"
+
+  ]
+  .forEach(
+    screenID => {
+
+      document
+      .getElementById(
+        screenID
+      )
+      .classList
+      .add(
+        "hidden"
+      );
+
+    }
+  );
+
+
+  document
+  .getElementById(
+    id
+  )
+  .classList
+  .remove(
+    "hidden"
+  );
+
+
+  window.scrollTo({
+
+    top:0,
+
+    behavior:"smooth"
+
+  });
+
+}
+
+
+/* =========================================================
+   RENDER EXERCISE 3
+========================================================= */
+
+function renderExercise3(){
+
+
+  /* A · MATCH */
+
+  document
+  .getElementById(
+    "matching"
+  )
+  .innerHTML =
+    matchingData
+    .map(
+      (
+        item,
+        index
+      ) => {
+
+        return `
+        <div>
+
+          <strong>
+
+            ${index + 1}.
+            ${item.left}
+
+          </strong>
+
+
+          <select
+            id="match-${index}">
+
+            <option value="">
+
+              -- chọn --
+
+            </option>
+
+
+            ${
+              matchingOptions
+              .map(
+                (
+                  option,
+                  optionIndex
+                ) => {
+
+                  return `
+                  <option
+                    value="${option}">
+
+                    ${
+                      String
+                      .fromCharCode(
+                        65
+                        +
+                        optionIndex
+                      )
+                    }.
+
+                    ${option}
+
+                  </option>
+                  `;
+
+                }
+              )
+              .join("")
+            }
+
+
+          </select>
+
+        </div>
+        `;
+
+      }
+    )
+    .join("");
+
+
+  /* B · MC */
+
+  document
+  .getElementById(
+    "readingMC"
+  )
+  .innerHTML =
+    readingQuestions
+    .map(
+      (
+        item,
+        index
+      ) => {
+
+        return `
+        <div class="question">
+
+
+          <div class="qnum">
+
+            ${index + 6}
+
+          </div>
+
+
+          <div class="qtext">
+
+            ${item.text}
+
+          </div>
+
+
+          <div class="options">
+
+
+            ${
+              item.options
+              .map(
+                (
+                  option,
+                  optionIndex
+                ) => {
+
+                  return `
+                  <label class="option">
+
+                    <input
+                      type="radio"
+                      name="reading-${index}"
+                      value="${optionIndex}"
+                    >
+
+                    ${
+                      String
+                      .fromCharCode(
+                        65
+                        +
+                        optionIndex
+                      )
+                    }.
+
+                    ${option}
+
+                  </label>
+                  `;
+
+                }
+              )
+              .join("")
+            }
+
+
+          </div>
+
+
+        </div>
+        `;
+
+      }
+    )
+    .join("");
+
+
+  /* C · TRUE FALSE */
+
+  document
+  .getElementById(
+    "trueFalse"
+  )
+  .innerHTML =
+    trueFalseData
+    .map(
+      (
+        item,
+        index
+      ) => {
+
+        return `
+        <div class="question">
+
+
+          <div class="qnum">
+
+            ${index + 11}
+
+          </div>
+
+
+          <div class="qtext">
+
+            ${item.text}
+
+          </div>
+
+
+          <div class="options">
+
+
+            <label class="option">
+
+              <input
+                type="radio"
+                name="tf-${index}"
+                value="true"
+              >
+
+              ✓ Đúng
+
+            </label>
+
+
+            <label class="option">
+
+              <input
+                type="radio"
+                name="tf-${index}"
+                value="false"
+              >
+
+              ✗ Sai
+
+            </label>
+
+
+          </div>
+
+
+        </div>
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* =========================================================
+   RENDER EXERCISE 4
+========================================================= */
+
+function renderExercise4(){
+
+
+  /* A · REORDER */
+
+  document
+  .getElementById(
+    "reorderQuestions"
+  )
+  .innerHTML =
+    reorderData
+    .map(
+      (
+        item,
+        index
+      ) => {
+
+        const chars =
+          shuffle(
+            item.chars
+          );
+
+
+        return `
+        <div class="question">
+
+
+          <div class="qnum">
+
+            ${index + 1}
+
+          </div>
+
+
+          <div class="qtext">
+
+            Sắp xếp các chữ
+            để tạo thành từ đúng.
+
+          </div>
+
+
+          <div
+            class="buildBox"
+            id="build-${index}">
+          </div>
+
+
+          <div class="tiles">
+
+
+            ${
+              chars
+              .map(
+                char => {
+
+                  return `
+                  <button
+                    class="tile"
+                    onclick="
+                      addCharacter(
+                        ${index},
+                        '${char}',
+                        this
+                      )
+                    ">
+
+                    ${char}
+
+                  </button>
+                  `;
+
+                }
+              )
+              .join("")
+            }
+
+
+          </div>
+
+
+          <div class="buttonRow">
+
+
+            <button
+              class="smallBtn"
+              onclick="
+                resetWord(
+                  ${index}
+                )
+              ">
+
+              ↻ Làm lại
+
+            </button>
+
+
+          </div>
+
+
+        </div>
+        `;
+
+      }
+    )
+    .join("");
+
+
+  /* B · FILL */
+
+  document
+  .getElementById(
+    "fillQuestions"
+  )
+  .innerHTML =
+    fillData
+    .map(
+      (
+        item,
+        index
+      ) => {
+
+        return `
+        <div class="question">
+
+
+          <div class="qnum">
+
+            ${index + 6}
+
+          </div>
+
+
+          <div class="qtext">
+
+            ${item.text}
+
+          </div>
+
+
+          <select
+            class="fillSelect"
+            id="fill-${index}">
+
+
+            <option value="">
+
+              -- chọn từ --
+
+            </option>
+
+
+            ${
+              fillBank
+              .map(
+                word => {
+
+                  return `
+                  <option
+                    value="${word}">
+
+                    ${word}
+
+                  </option>
+                  `;
+
+                }
+              )
+              .join("")
+            }
+
+
+          </select>
+
+
+        </div>
+        `;
+
+      }
+    )
+    .join("");
+
+
+  /* C · WRITING */
+
+  document
+  .getElementById(
+    "writingQuestions"
+  )
+  .innerHTML =
+    writingData
+    .map(
+      (
+        item,
+        index
+      ) => {
+
+        return `
+        <div class="question">
+
+
+          <div class="qnum">
+
+            ${index + 11}
+
+          </div>
+
+
+          <div class="qtext">
+
+            ${item.text}
+
+          </div>
+
+
+          <input
+            class="field"
+            id="writing-${index}"
+            placeholder="Nhập chữ Hán..."
+          >
+
+
+        </div>
+        `;
+
+      }
+    )
+    .join("")
+
+    +
+
+    `
+    <div class="question">
+
+
+      <div class="qnum">
+
+        15
+
+      </div>
+
+
+      <div class="qtext">
+
+        Viết một đoạn hội thoại
+        3 lượt lời,
+        sử dụng ít nhất 3 từ sau:
+
+        你好 / 谢谢 / 不客气 /
+        老师 / 同学 / 再见
+
+      </div>
+
+
+      <textarea
+        class="field"
+        id="openDialogue"
+        rows="6"
+        placeholder="A：...
+B：...
+A：..."></textarea>
+
+
+    </div>
+    `;
+
+}
+
+
+/* =========================================================
+   REORDER ACTIONS
+========================================================= */
+
+function addCharacter(
+  index,
+  char,
+  button
+){
+
+  builtWords[index] +=
+    char;
+
+
+  button.disabled =
+    true;
+
+
+  document
+  .getElementById(
+    `build-${index}`
+  )
+  .textContent =
+    builtWords[index];
+
+}
+
+
+function resetWord(index){
+
+  builtWords[index] =
+    "";
+
+
+  const box =
+    document
+    .getElementById(
+      `build-${index}`
+    );
+
+
+  box.textContent =
+    "";
+
+
+  box
+  .parentElement
+  .querySelectorAll(
+    ".tile"
+  )
+  .forEach(
+    button => {
+
+      button.disabled =
+        false;
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SUBMIT EXERCISE 3
+========================================================= */
+
+function submitExercise3(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  let correct =
+    0;
+
+
+  let total =
+    0;
+
+
+  const details =
+    [];
+
+
+  const review =
+    [];
+
+
+  /* MATCH */
+
+  matchingData
+  .forEach(
+    (
+      item,
+      index
+    ) => {
+
+
+      total++;
+
+
+      const answer =
+        document
+        .getElementById(
+          `match-${index}`
+        )
+        .value;
+
+
+      const ok =
+        answer ===
+        item.answer;
+
+
+      if(ok){
+
+        correct++;
+
+      }
+
+
+      details.push(
+
+        `Câu ${index + 1}: ${answer || "Chưa trả lời"} ${ok ? "✓" : "✗"}`
+      );
+
+
+      review.push(
+        `
+        <div class="reviewItem">
+
+          <span class="${ok ? "good" : "bad"}">
+
+            ${ok ? "✅ Đúng" : "❌ Sai"}
+
+          </span>
+
+          · Câu ${index + 1}
+
+          ${
+            !ok
+            ?
+            ` · Đáp án: ${item.answer}`
+            :
+            ""
+          }
+
+        </div>
+        `
+      );
+
+
+    }
+  );
+
+
+  /* MC */
+
+  readingQuestions
+  .forEach(
+    (
+      item,
+      index
+    ) => {
+
+
+      total++;
+
+
+      const selected =
+        getRadio(
+          `reading-${index}`
+        );
+
+
+      const ok =
+        selected !== null
+        &&
+        Number(selected)
+        ===
+        item.answer;
+
+
+      if(ok){
+
+        correct++;
+
+      }
+
+
+      const studentAnswer =
+        selected === null
+        ?
+        "Chưa trả lời"
+        :
+        item.options[
+          Number(selected)
+        ];
+
+
+      details.push(
+
+        `Câu ${index + 6}: ${studentAnswer} ${ok ? "✓" : "✗"}`
+      );
+
+
+      review.push(
+        `
+        <div class="reviewItem">
+
+          <span class="${ok ? "good" : "bad"}">
+
+            ${ok ? "✅ Đúng" : "❌ Sai"}
+
+          </span>
+
+          · Câu ${index + 6}
+
+          ${
+            !ok
+            ?
+            ` · Đáp án: ${item.options[item.answer]}`
+            :
+            ""
+          }
+
+        </div>
+        `
+      );
+
+
+    }
+  );
+
+
+  /* TRUE FALSE */
+
+  trueFalseData
+  .forEach(
+    (
+      item,
+      index
+    ) => {
+
+
+      total++;
+
+
+      const selected =
+        getRadio(
+          `tf-${index}`
+        );
+
+
+      const ok =
+        selected !== null
+        &&
+        (
+          selected ===
+          "true"
+        )
+        ===
+        item.answer;
+
+
+      if(ok){
+
+        correct++;
+
+      }
+
+
+      details.push(
+
+        `Câu ${index + 11}: ${
+          selected === null
+          ?
+          "Chưa trả lời"
+          :
+          selected === "true"
+          ?
+          "Đúng"
+          :
+          "Sai"
+        } ${ok ? "✓" : "✗"}`
+      );
+
+
+      review.push(
+        `
+        <div class="reviewItem">
+
+          <span class="${ok ? "good" : "bad"}">
+
+            ${ok ? "✅ Đúng" : "❌ Sai"}
+
+          </span>
+
+          · Câu ${index + 11}
+
+          ${
+            !ok
+            ?
+            ` · Đáp án: ${item.answer ? "✓ Đúng" : "✗ Sai"}`
+            :
+            ""
+          }
+
+        </div>
+        `
+      );
+
+
+    }
+  );
+
+
+  const percent =
+    Math.round(
+      correct
+      /
+      total
+      *
+      100
+    );
+
+
+  showResult({
+
+    exercise:3,
+
+    correct,
+
+    total,
+
+    percent,
+
+    review
+
+  });
+
+
+  sendEmail({
+
+    exercise:
+      "BÀI TẬP 3 · ĐỌC",
+
+    score:
+      `${correct}/${total} (${percent}%)`,
+
+    details
+
+  });
+
+}
+
+
+/* =========================================================
+   SUBMIT EXERCISE 4
+========================================================= */
+
+function submitExercise4(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  let correct =
+    0;
+
+
+  let total =
+    0;
+
+
+  const details =
+    [];
+
+
+  const review =
+    [];
+
+
+  /* REORDER */
+
+  reorderData
+  .forEach(
+    (
+      item,
+      index
+    ) => {
+
+
+      total++;
+
+
+      const answer =
+        builtWords[index];
+
+
+      const ok =
+        answer ===
+        item.answer;
+
+
+      if(ok){
+
+        correct++;
+
+      }
+
+
+      details.push(
+
+        `Ghép ${index + 1}: ${answer || "Chưa làm"} ${ok ? "✓" : "✗"}`
+      );
+
+
+      review.push(
+        `
+        <div class="reviewItem">
+
+          <span class="${ok ? "good" : "bad"}">
+
+            ${ok ? "✅" : "❌"}
+
+          </span>
+
+          Câu ${index + 1}:
+          ${answer || "Chưa làm"}
+
+          ${
+            !ok
+            ?
+            ` → ${item.answer}`
+            :
+            ""
+          }
+
+        </div>
+        `
+      );
+
+
+    }
+  );
+
+
+  /* FILL */
+
+  fillData
+  .forEach(
+    (
+      item,
+      index
+    ) => {
+
+
+      total++;
+
+
+      const answer =
+        document
+        .getElementById(
+          `fill-${index}`
+        )
+        .value;
+
+
+      const ok =
+        answer ===
+        item.answer;
+
+
+      if(ok){
+
+        correct++;
+
+      }
+
+
+      details.push(
+
+        `Điền ${index + 6}: ${answer || "Chưa trả lời"} ${ok ? "✓" : "✗"}`
+      );
+
+
+      review.push(
+        `
+        <div class="reviewItem">
+
+          <span class="${ok ? "good" : "bad"}">
+
+            ${ok ? "✅" : "❌"}
+
+          </span>
+
+          Câu ${index + 6}
+
+          ${
+            !ok
+            ?
+            ` · Đáp án: ${item.answer}`
+            :
+            ""
+          }
+
+        </div>
+        `
+      );
+
+
+    }
+  );
+
+
+  /* WRITING 11 - 14 */
+
+  writingData
+  .forEach(
+    (
+      item,
+      index
+    ) => {
+
+
+      total++;
+
+
+      const raw =
+        document
+        .getElementById(
+          `writing-${index}`
+        )
+        .value;
+
+
+      const normalized =
+        normalizeChinese(
+          raw
+        );
+
+
+      const ok =
+        item.answers
+        .some(
+          answer => {
+
+            return normalizeChinese(
+              answer
+            )
+            ===
+            normalized;
+
+          }
+        );
+
+
+      if(ok){
+
+        correct++;
+
+      }
+
+
+      details.push(
+
+        `Viết ${index + 11}: ${raw || "Chưa trả lời"} ${ok ? "✓" : "✗"}`
+      );
+
+
+      review.push(
+        `
+        <div class="reviewItem">
+
+          <span class="${ok ? "good" : "bad"}">
+
+            ${ok ? "✅" : "❌"}
+
+          </span>
+
+          Câu ${index + 11}
+
+          ${
+            !ok
+            ?
+            ` · Gợi ý: ${item.answers[0]}`
+            :
+            ""
+          }
+
+        </div>
+        `
+      );
+
+
+    }
+  );
+
+
+  /* OPEN DIALOGUE */
+
+  const dialogue =
+    document
+    .getElementById(
+      "openDialogue"
+    )
+    .value;
+
+
+  details.push(
+
+    `Câu 15 · GV chấm: ${dialogue || "(trống)"}`
+  );
+
+
+  const percent =
+    Math.round(
+      correct
+      /
+      total
+      *
+      100
+    );
+
+
+  showResult({
+
+    exercise:4,
+
+    correct,
+
+    total,
+
+    percent,
+
+    review
+
+  });
+
+
+  sendEmail({
+
+    exercise:
+      "BÀI TẬP 4 · VIẾT",
+
+    score:
+      `${correct}/${total} (${percent}%) + câu 15 GV chấm`,
+
+    details
+
+  });
+
+}
+
+
+/* =========================================================
+   MEMORY CHALLENGE
+========================================================= */
+
+function startMemoryChallenge(){
+
+  if(timerID){
+
+    return;
+
+  }
+
+
+  secondsLeft =
+    60;
+
+
+  document
+  .getElementById(
+    "timer"
+  )
+  .textContent =
+    secondsLeft;
+
+
+  const input =
+    document
+    .getElementById(
+      "memoryInput"
+    );
+
+
+  input.disabled =
+    false;
+
+
+  input.value =
+    "";
+
+
+  input.focus();
+
+
+  document
+  .getElementById(
+    "memoryCount"
+  )
+  .textContent =
+    "0";
+
+
+  document
+  .getElementById(
+    "timerButton"
+  )
+  .disabled =
+    true;
+
+
+  timerID =
+    setInterval(
+      () => {
+
+
+        secondsLeft--;
+
+
+        document
+        .getElementById(
+          "timer"
+        )
+        .textContent =
+          secondsLeft;
+
+
+        updateMemoryCount();
+
+
+        if(
+          secondsLeft <=
+          0
+        ){
+
+          clearInterval(
+            timerID
+          );
+
+
+          timerID =
+            null;
+
+
+          input.disabled =
+            true;
+
+
+          document
+          .getElementById(
+            "timerButton"
+          )
+          .textContent =
+            "⏰ HẾT GIỜ";
+
+        }
+
+
+      },
+      1000
+    );
+
+}
+
+
+document
+.addEventListener(
+  "input",
+  event => {
+
+
+    if(
+      event.target.id ===
+      "memoryInput"
+    ){
+
+      updateMemoryCount();
+
+    }
+
+
+  }
+);
+
+
+function getRememberedWords(){
+
+  const text =
+    document
+    .getElementById(
+      "memoryInput"
+    )
+    .value;
+
+
+  /*
+    Ưu tiên cụm dài trước,
+    để 王老师 không bị tính
+    thêm 老师 một lần.
+  */
+
+  const sorted =
+    [...memoryVocabulary]
+    .sort(
+      (
+        a,
+        b
+      ) =>
+        b.length
+        -
+        a.length
+    );
+
+
+  const remembered =
+    [];
+
+
+  let remaining =
+    text;
+
+
+  sorted
+  .forEach(
+    word => {
+
+
+      if(
+        remaining.includes(
+          word
+        )
+      ){
+
+        remembered.push(
+          word
+        );
+
+
+        remaining =
+          remaining.replaceAll(
+            word,
+            ""
+          );
+
+      }
+
+
+    }
+  );
+
+
+  return remembered;
+
+}
+
+
+function updateMemoryCount(){
+
+  const remembered =
+    getRememberedWords();
+
+
+  document
+  .getElementById(
+    "memoryCount"
+  )
+  .textContent =
+    remembered.length;
+
+}
+
+
+/* =========================================================
+   SUBMIT EXERCISE 5
+========================================================= */
+
+function submitExercise5(){
+
+  if(!validateStudent()){
+
+    return;
+
+  }
+
+
+  if(timerID){
+
+    clearInterval(
+      timerID
+    );
+
+
+    timerID =
+      null;
+
+  }
+
+
+  document
+  .getElementById(
+    "memoryInput"
+  )
+  .disabled =
+    true;
+
+
+  const remembered =
+    getRememberedWords();
+
+
+  const count =
+    remembered.length;
+
+
+  const feeling =
+    getRadio(
+      "feeling"
+    )
+    ||
+    "Chưa chọn";
+
+
+  let message =
+    "";
+
+
+  if(
+    count >=
+    10
+  ){
+
+    message =
+      "🏆 Xuất sắc! Bạn nhớ được phần lớn từ vựng của bài.";
+
+  }
+
+  else if(
+    count >=
+    7
+  ){
+
+    message =
+      "🌟 Rất ổn! Chỉ cần ôn thêm vài từ nữa.";
+
+  }
+
+  else if(
+    count >=
+    4
+  ){
+
+    message =
+      "💪 Bạn đã nhớ được một phần khá tốt. Thử ôn lại rồi chơi lần nữa.";
+
+  }
+
+  else{
+
+    message =
+      "📚 Đây là tín hiệu để quay lại ôn một vòng ngắn rồi thử lại challenge.";
+
+  }
+
+
+  document
+  .getElementById(
+    "result5"
+  )
+  .classList
+  .add(
+    "show"
+  );
+
+
+  document
+  .getElementById(
+    "score5"
+  )
+  .textContent =
+    count
+    +
+    " từ";
+
+
+  document
+  .getElementById(
+    "resultText5"
+  )
+  .innerHTML =
+    `
+    我记得
+    <strong>
+      ${count}
+    </strong>
+    个词！
+
+    <br><br>
+
+    ${
+      remembered.length
+      ?
+      "Bạn nhớ: "
+      +
+      remembered.join(
+        " · "
+      )
+      :
+      "Hệ thống chưa nhận ra từ mục tiêu nào."
+    }
+    `;
+
+
+  document
+  .getElementById(
+    "completeMessage"
+  )
+  .innerHTML =
+    message;
+
+
+  document
+  .getElementById(
+    "status5"
+  )
+  .innerHTML =
+    `
+    ✅ Đã hoàn thành thử thách.
+    <br>
+    📨 Đang gửi kết quả tới giáo viên...
+    `;
+
+
+  const raw =
+    document
+    .getElementById(
+      "memoryInput"
+    )
+    .value;
+
+
+  sendEmail({
+
+    exercise:
+      "BÀI TẬP 5 · THỬ THÁCH 60 GIÂY",
+
+    score:
+      `${count}/${memoryVocabulary.length} từ`,
+
+    details:[
+
+      `Học viên nhập: ${raw || "(trống)"}`,
+
+      `Từ được nhận diện: ${remembered.join(" · ") || "(không có)"}`,
+
+      `Số từ nhớ được: ${count}`,
+
+      `Cảm nhận: ${feeling}`
+
+    ]
+
+  });
+
+
+  setTimeout(
+    () => {
+
+      document
+      .getElementById(
+        "status5"
+      )
+      .innerHTML =
+        `
+        ✅ Đã nộp thử thách.
+        <br>
+        Bạn có thể quay về chọn bài
+        hoặc về Trang chủ HSK.
+        `;
+
+    },
+    1200
+  );
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function showResult({
+
+  exercise,
+
+  correct,
+
+  total,
+
+  percent,
+
+  review
+
+}){
+
+
+  document
+  .getElementById(
+    `result${exercise}`
+  )
+  .classList
+  .add(
+    "show"
+  );
+
+
+  document
+  .getElementById(
+    `score${exercise}`
+  )
+  .textContent =
+    percent
+    +
+    "%";
+
+
+  document
+  .getElementById(
+    `resultText${exercise}`
+  )
+  .textContent =
+    `Bạn làm đúng ${correct}/${total} mục tự động chấm.`;
+
+
+  document
+  .getElementById(
+    `review${exercise}`
+  )
+  .innerHTML =
+    review.join("");
+
+
+  document
+  .getElementById(
+    `status${exercise}`
+  )
+  .innerHTML =
+    `
+    ✅ Đã kiểm tra đáp án.
+    <br>
+    📨 Đang gửi kết quả tới giáo viên...
+    `;
+
+
+  setTimeout(
+    () => {
+
+
+      document
+      .getElementById(
+        `status${exercise}`
+      )
+      .innerHTML =
+        `
+        ✅ Đã kiểm tra bài.
+        <br>
+        📨 Yêu cầu gửi bài đã được thực hiện.
+        `;
+
+
+    },
+    1200
+  );
+
+}
+
+
+/* =========================================================
+   EMAIL
+========================================================= */
+
+function sendEmail({
+
+  exercise,
+
+  score,
+
+  details
+
+}){
+
+
+  const name =
+    document
+    .getElementById(
+      "studentName"
+    )
+    .value
+    .trim();
+
+
+  const studentClass =
+    document
+    .getElementById(
+      "studentClass"
+    )
+    .value
+    .trim();
+
+
+  document
+  .getElementById(
+    "mailSubject"
+  )
+  .value =
+    `${exercise} · ${name} · ${studentClass}`;
+
+
+  document
+  .getElementById(
+    "mailName"
+  )
+  .value =
+    name;
+
+
+  document
+  .getElementById(
+    "mailClass"
+  )
+  .value =
+    studentClass;
+
+
+  document
+  .getElementById(
+    "mailExercise"
+  )
+  .value =
+    exercise;
+
+
+  document
+  .getElementById(
+    "mailScore"
+  )
+  .value =
+    score;
+
+
+  document
+  .getElementById(
+    "mailDetails"
+  )
+  .value =
+    details.join(
+      "\n"
+    );
+
+
+  document
+  .getElementById(
+    "emailForm"
+  )
+  .submit();
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function getRadio(name){
+
+  const element =
+    document
+    .querySelector(
+      `input[name="${name}"]:checked`
+    );
+
+
+  return element
+  ?
+  element.value
+  :
+  null;
+
+}
+
+
+function normalizeChinese(text){
+
+  return String(
+    text
+    ||
+    ""
+  )
+  .replace(
+    /[\s，。！？、,.!?：:；;]/g,
+    ""
+  )
+  .trim();
+
+}
+
+
+function shuffle(array){
+
+  const copy =
+    [...array];
+
+
+  for(
+    let i =
+      copy.length - 1;
+
+    i >
+      0;
+
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random()
+        *
+        (
+          i
+          +
+          1
+        )
+      );
+
+
+    [
+      copy[i],
+      copy[j]
+    ]
+    =
+    [
+      copy[j],
+      copy[i]
+    ];
+
+  }
+
+
+  return copy;
+
+}
+
+</script>
+
+</body>
+
+</html>
