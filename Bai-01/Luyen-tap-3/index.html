@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panda Chinese Arcade</title>
+<title>Đập chuột</title>
 
 <style>
 /* =========================================================
@@ -681,7 +681,8 @@ h2 {
 
 /* =========================================================
    FLOATING SCORE
-========================================================= */
+=============================
+============================ */
 
 .float-score {
     position: fixed;
@@ -922,6 +923,138 @@ body.fever {
         display: none;
     }
 }
+
+/* =========================================================
+   PATCH · 中文–越南语主界面 / GIAO DIỆN TRUNG–VIỆT
+========================================================= */
+
+/* Title prominent and easy to spot */
+#startScreen h1{
+    display:inline-block;
+    margin:10px auto 8px;
+    padding:14px 22px 16px;
+    max-width:900px;
+    font-size:clamp(38px,6.8vw,72px);
+    line-height:1.08;
+    letter-spacing:.02em;
+    background:linear-gradient(135deg,#fff4a8,#ffffff);
+    border:4px solid var(--ink);
+    border-radius:22px;
+    box-shadow:7px 7px 0 var(--ink);
+}
+
+#startScreen .subtitle{
+    max-width:780px;
+    margin:22px auto 4px;
+    font-size:clamp(17px,2.2vw,22px);
+    color:#34424c;
+}
+
+.logo{
+    font-size:clamp(16px,2vw,22px);
+    padding:12px 17px;
+}
+
+/* Mission/target becomes the visual focal point */
+.mission{
+    background:#fff8df;
+    border:3px solid var(--ink);
+    border-radius:18px;
+    padding:10px 16px;
+    box-shadow:4px 4px 0 var(--ink);
+}
+
+.mission-small{
+    font-size:clamp(13px,1.8vw,17px);
+    color:#4e5b64;
+}
+
+.target{
+    font-size:clamp(34px,5.5vw,58px);
+    line-height:1.15;
+    overflow-wrap:anywhere;
+}
+
+/* Slower visual pop-up transition */
+.mole{
+    height:150px;
+    bottom:-165px;
+    transition:
+        bottom .28s cubic-bezier(.25,.9,.35,1.1),
+        transform .14s;
+}
+
+/* Bigger, fully visible answer label */
+.mole-answer{
+    width:92%;
+    max-width:94%;
+    min-width:92%;
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:7px;
+    padding:7px 9px;
+    font-size:clamp(17px,2.1vw,23px);
+    line-height:1.18;
+    white-space:normal;
+    overflow:visible;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+
+/* More room so long answers are not clipped */
+.hole{
+    height:190px;
+}
+
+.hole.up .mole{
+    bottom:24px;
+}
+
+/* Boss answer/tình huống can be longer */
+body:has(#gameScreen:not(.hidden)) .field{
+    overflow:visible;
+}
+
+@media(max-width:700px){
+    #startScreen h1{
+        font-size:clamp(31px,9vw,48px);
+        padding:12px 14px;
+    }
+
+    .hole{
+        height:150px;
+    }
+
+    .mole{
+        height:125px;
+        width:94%;
+        bottom:-140px;
+    }
+
+    .mole-face{
+        font-size:30px;
+    }
+
+    .mole-answer{
+        width:94%;
+        min-width:94%;
+        min-height:38px;
+        padding:6px 5px;
+        font-size:clamp(15px,4.2vw,19px);
+        line-height:1.12;
+    }
+
+    .hole.up .mole{
+        bottom:20px;
+    }
+
+    .target{
+        font-size:clamp(29px,8vw,43px);
+    }
+}
+
 </style>
 </head>
 
@@ -956,7 +1089,7 @@ body.fever {
         <div class="topbar">
 
             <div class="logo">
-                🐼 PANDA ARCADE · 打地鼠
+                🐼 ĐẬP CHUỘT🐼
             </div>
 
             <div class="stats hidden" id="stats">
@@ -998,15 +1131,16 @@ body.fever {
                 </div>
 
                 <h1>
-                    PANDA MOLE MAYHEM!
+                    ĐẬP CHUỘT
                 </h1>
 
                 <p class="subtitle">
-                    Đừng chọn đáp án.
-                    <strong>Hãy săn nó!</strong>
+                    看准答案再出手！
+                    <strong>Nhìn kỹ rồi đập đáp án đúng!</strong>
                     <br>
-                    Chuột sẽ nhảy liên tục giữa 9 cái lỗ.
-                    Đập đúng trước khi nó trốn mất.
+                    地鼠会从 9 个洞里出现 · Chuột sẽ xuất hiện ở 9 cái lỗ.
+                    <br>
+                    找到正确答案再打 · Tìm đúng đáp án rồi hãy đập.
                 </p>
 
 
@@ -1014,22 +1148,22 @@ body.fever {
 
                     <div class="instruction">
                         <span class="icon">🐹</span>
-                        Đập đáp án đúng
+                        打正确答案 · Đập đáp án đúng
                     </div>
 
                     <div class="instruction">
                         <span class="icon">🪙</span>
-                        Chuột vàng +300
+                        金色地鼠 +300 · Chuột vàng +300
                     </div>
 
                     <div class="instruction">
                         <span class="icon">🧊</span>
-                        Freeze thời gian
+                        冰冻减速 · Đóng băng làm chậm
                     </div>
 
                     <div class="instruction">
                         <span class="icon">💣</span>
-                        Né bom!
+                        别打炸弹！· Né bom!
                     </div>
 
                 </div>
@@ -1038,7 +1172,7 @@ body.fever {
                 <button
                     class="btn"
                     onclick="prepareLevel(1)">
-                    🔨 VÀO CÔNG VIÊN!
+                    🔨 开始游戏 · BẮT ĐẦU
                 </button>
 
             </div>
@@ -1078,7 +1212,7 @@ body.fever {
                 <button
                     class="btn"
                     onclick="startLevel()">
-                    3 · 2 · 1 · GO! 🔨
+                    3 · 2 · 1 · 开始！🔨
                 </button>
 
             </div>
@@ -1108,7 +1242,7 @@ body.fever {
                     <div
                         class="mission-small"
                         id="missionLabel">
-                        TÌM PINYIN CỦA
+                        找拼音 · TÌM PINYIN
                     </div>
 
                     <div
@@ -1149,6 +1283,7 @@ body.fever {
                     <div class="hole">
                         <div class="mole">
                             <div class="mole-face">🐹</div>
+
                             <div class="mole-answer"></div>
                         </div>
                     </div>
@@ -1233,7 +1368,7 @@ body.fever {
             <div
                 class="feedback"
                 id="feedback">
-                🔨 Chuẩn bị săn đáp án...
+                🔨 准备好了吗？· Chuẩn bị săn đáp án...
             </div>
 
         </section>
@@ -1269,17 +1404,17 @@ body.fever {
                 <div class="result-grid">
 
                     <div class="result-box">
-                        Điểm
+                        分数 · Điểm
                         <strong id="resultScore">0</strong>
                     </div>
 
                     <div class="result-box">
-                        Chính xác
+                        正确率 · Chính xác
                         <strong id="resultAccuracy">0%</strong>
                     </div>
 
                     <div class="result-box">
-                        Combo cao nhất
+                        最高连击 · Combo cao nhất
                         <strong id="resultCombo">x0</strong>
                     </div>
 
@@ -1295,7 +1430,7 @@ body.fever {
                 <button
                     class="btn"
                     onclick="restartGame()">
-                    🔄 CHƠI LẠI TỪ LEVEL 1
+                    🔄 从第一关重玩 · CHƠI LẠI
                 </button>
 
             </div>
@@ -1436,7 +1571,7 @@ const bossQuestions = [
     },
 
     {
-        target: "Tan học, bạn nói với cô giáo:",
+        target: "放学时，你对老师说什么？· Tan học, bạn nói với cô giáo:",
         correct: "老师，再见！",
         wrong: [
             "老师，谢谢！",
@@ -1446,7 +1581,7 @@ const bossQuestions = [
     },
 
     {
-        target: "Cô Vương chào cả lớp:",
+        target: "王老师跟全班打招呼 · Cô Vương chào cả lớp:",
         correct: "大家好！",
         wrong: [
             "谢谢大家！",
@@ -1456,7 +1591,7 @@ const bossQuestions = [
     },
 
     {
-        target: "Nói trực tiếp với cô Vương:",
+        target: "直接跟王老师说 · Nói trực tiếp với cô Vương:",
         correct: "王老师，您好！",
         wrong: [
             "王老师，你好！",
@@ -1723,7 +1858,7 @@ function chooseNewTarget() {
         document
             .getElementById("missionLabel")
             .textContent =
-                "👾 BOSS · TÌM CÂU ĐÁP";
+                "👾 BOSS · 找回答 · TÌM CÂU ĐÁP";
 
 
         document
@@ -1747,7 +1882,7 @@ function chooseNewTarget() {
         document
             .getElementById("missionLabel")
             .textContent =
-                "🔤 TÌM PINYIN CỦA";
+                "🔤 找拼音 · TÌM PINYIN";
 
 
         document
@@ -1761,9 +1896,10 @@ function chooseNewTarget() {
     if (currentLevel === 2) {
 
         document
-            .getElementById("missionLabel")
+         
+   .getElementById("missionLabel")
             .textContent =
-                "⚡ TÌM CHỮ HÁN CỦA";
+                "⚡ 找汉字 · TÌM CHỮ HÁN";
 
 
         document
@@ -1888,18 +2024,26 @@ function spawnMole() {
         Tốc độ thay đổi theo level + combo.
     */
 
+    /*
+        PATCH: giữ chuột trên màn hình lâu hơn để người mới học
+        có thời gian đọc Trung–Việt và nhìn rõ đáp án.
+    */
     let speed =
         currentLevel === 1
-        ? 1150
+        ? 1750
         : currentLevel === 2
-        ? 900
-        : 760;
+        ? 1500
+        : 1280;
 
 
+    /*
+        Combo vẫn làm nhanh hơn một chút,
+        nhưng không tăng tốc quá gắt.
+    */
     speed -=
         Math.min(
-            combo * 25,
-            220
+            combo * 12,
+            120
         );
 
 
@@ -1953,7 +2097,7 @@ function spawnMole() {
 
             setTimeout(
                 spawnMole,
-                90
+                180
             );
 
         }, speed);
@@ -1997,7 +2141,7 @@ function configureMole(
             "💣";
 
         answer.textContent =
-            "ĐỪNG ĐẬP!";
+            "别打！· ĐỪNG ĐẬP!";
 
         mole.onclick =
             event =>
@@ -2025,7 +2169,7 @@ function configureMole(
             "🧊";
 
         answer.textContent =
-            "+ FREEZE";
+            "冰冻 · FREEZE";
 
         mole.onclick =
             event =>
@@ -2265,7 +2409,7 @@ function hitMole(
 
 
         feedback(
-            "💥 BOOM! Trúng bom rồi!",
+            "💥 炸弹！· Trúng bom rồi!",
             false
         );
 
@@ -2294,7 +2438,7 @@ function hitMole(
 
 
         feedback(
-            "🧊 FREEZE! Chuột chậm lại 3 giây!",
+            "🧊 冰冻！· Chuột chậm lại 3 giây!",
             true
         );
 
@@ -2449,7 +2593,7 @@ function hitMole(
 
 
         feedback(
-            "🙈 Không phải con này! Săn tiếp!",
+            "🙈 不对！· Sai rồi, tìm tiếp!",
             false
         );
 
@@ -2496,7 +2640,7 @@ function hitMole(
 
         spawnMole();
 
-    }, 280);
+    }, 420);
 
 }
 
@@ -2651,7 +2795,8 @@ function showCombo(number) {
 
 /* =========================================================
    FEVER
-========================================================= */
+==============================
+=========================== */
 
 function activateFever() {
 
