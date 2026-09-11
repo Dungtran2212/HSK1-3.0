@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>综合复习 01 · Secret Code</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#071018;--panel:#0d1822;--panel2:#111f2a;--line:#274050;
+  --cyan:#67e8f9;--green:#7cf7b4;--amber:#ffd166;--red:#ff6b78;
+  --text:#e9f2f7;--muted:#8ea5b3;--ink:#051015
+}
+body{
+  min-height:100vh;font-family:Inter,"Noto Sans SC","Microsoft YaHei",Arial,sans-serif;
+  color:var(--text);background:
+  radial-gradient(circle at 15% 0%,#173347 0,transparent 32%),
+  radial-gradient(circle at 100% 85%,#132b3b 0,transparent 30%),var(--bg);
+  overflow-x:hidden
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:32px 32px
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.shell{width:min(1180px,calc(100% - 24px));margin:auto;padding:18px 0 50px;position:relative;z-index:2}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.brand{font-weight:900;letter-spacing:.08em;font-size:15px;color:var(--cyan)}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat,.chip{border:1px solid var(--line);background:rgba(13,24,34,.92);padding:8px 12px;border-radius:999px;font-weight:800}
+.card{background:linear-gradient(145deg,rgba(14,27,38,.97),rgba(8,18,27,.97));border:1px solid #294251;
+  border-radius:22px;box-shadow:0 20px 80px rgba(0,0,0,.32);padding:24px}
+.center{text-align:center}
+.kicker{color:var(--cyan);font-size:12px;letter-spacing:.18em;font-weight:900;margin-bottom:10px}
+h1{font-size:clamp(34px,6vw,64px);line-height:1.02;margin-bottom:10px}
+h2{font-size:clamp(23px,3vw,34px);margin-bottom:8px}
+.sub{color:var(--muted);line-height:1.7}
+.btn{border:1px solid #37586a;background:#122433;color:var(--text);border-radius:12px;padding:11px 16px;
+  font-weight:900;transition:.16s}
+.btn:hover{transform:translateY(-2px);border-color:var(--cyan)}
+.btn.primary{background:var(--cyan);color:var(--ink);border-color:var(--cyan)}
+.btn.good{background:#123526;border-color:#286b4b;color:#a5ffd0}
+.btn.warn{background:#382711;border-color:#76501d;color:#ffe3a4}
+.btn.danger{background:#3b1720;border-color:#803143;color:#ffc1c8}
+.start-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:860px;margin:24px auto}
+.start-box{border:1px solid var(--line);background:#0d1923;border-radius:14px;padding:15px}
+.start-box strong{display:block;color:var(--cyan);font-size:18px;margin-bottom:5px}
+.agent{width:min(380px,100%);margin:20px auto 14px;display:block;background:#07131c;border:1px solid #355063;color:white;
+  border-radius:11px;padding:13px 14px;outline:none}
+.agent:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(103,232,249,.1)}
+.mission-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+.mission-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:17px;background:#0b1822;padding:20px;min-height:205px}
+.mission-card:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(103,232,249,.035);
+  right:-60px;bottom:-80px}
+.mission-card.locked{opacity:.45;filter:saturate(.4);pointer-events:none}
+.mission-card.done{border-color:#2d7b58;box-shadow:0 0 0 1px #2d7b58 inset}
+.mission-num{color:var(--muted);font-size:12px;letter-spacing:.15em;font-weight:900}
+.mission-title{font-size:24px;font-weight:950;margin:8px 0}
+.mission-desc{color:var(--muted);line-height:1.55;min-height:52px}
+.code-frag{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:1px dashed #517184;
+  border-radius:11px;margin-top:14px;font-size:26px;font-weight:1000;color:var(--amber);background:#07131c}
+.code-frag.masked{color:#49606e}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.progressbar{height:9px;border:1px solid #385365;border-radius:999px;background:#07131c;overflow:hidden;margin:14px 0 20px}
+.progressfill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green));transition:.3s}
+.question{border:1px solid var(--line);border-radius:16px;background:#0b1822;padding:19px;margin-bottom:14px}
+.qnum{color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:.13em}
+.qtitle{font-size:20px;font-weight:900;line-height:1.5;margin:7px 0 14px;white-space:pre-line}
+.answers{display:grid;gap:9px}
+.answer{width:100%;text-align:left;border:1px solid #304b5d;background:#0b151e;color:var(--text);border-radius:11px;padding:12px 14px;font-weight:750}
+.answer:hover:not(:disabled){border-color:var(--cyan);background:#102331}
+.answer.correct{background:#103524;border-color:#2e9361;color:#c6ffe0}
+.answer.wrong{background:#3a1520;border-color:#9e3b50;color:#ffd0d6}
+.answer:disabled{cursor:default}
+.feedback{margin-top:12px;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:#08141d;color:var(--muted);min-height:45px}
+.feedback.good{border-color:#286b4b;color:#a5ffd0;background:#0e281d}
+.feedback.bad{border-color:#803143;color:#ffc1c8;background:#2a1118}
+.audio-row,.action-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.audio-light{width:10px;height:10px;border-radius:50%;background:#37515f}
+.audio-light.playing{background:var(--green);box-shadow:0 0 15px var(--green);animation:pulse .65s infinite alternate}
+@keyframes pulse{to{transform:scale(1.35)}}
+.order-grid{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.order-row{display:contents}
+.order-word{border:1px solid var(--line);background:#091620;border-radius:10px;padding:11px 13px;font-weight:850}
+.order-select{width:76px;background:#07131c;color:white;border:1px solid #365466;border-radius:9px;padding:10px}
+.voice-card{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;border:1px solid var(--line);border-radius:15px;padding:17px;background:#0b1822}
+.voice-target{font-size:42px;font-weight:1000}
+.voice-pinyin{color:var(--amber);font-size:17px;margin-top:4px}
+.mic{width:86px;height:86px;border-radius:50%;border:1px solid #623748;background:#3c1822;color:white;font-size:34px}
+.mic.listening{background:#133b28;border-color:#2f8057;box-shadow:0 0 0 9px rgba(124,247,180,.08),0 0 30px rgba(124,247,180,.2);animation:mic .55s infinite alternate}
+@keyframes mic{to{transform:scale(1.07)}}
+.terminal{background:#02090e;border:1px solid #243b48;border-radius:13px;padding:14px;color:#97fbc7;
+  font-family:"Noto Sans Mono CJK SC",Consolas,monospace;line-height:1.55;min-height:72px}
+.textbox{width:100%;background:#07131c;border:1px solid #365466;color:white;border-radius:11px;padding:12px 13px;outline:none}
+textarea.textbox{min-height:110px;resize:vertical}
+.textbox:focus{border-color:var(--cyan)}
+.match-grid{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.match-left{border:1px solid var(--line);border-radius:10px;background:#0b1822;padding:11px}
+.match-select{background:#07131c;color:white;border:1px solid #355365;border-radius:9px;padding:10px;min-width:220px}
+.tf-row{display:flex;gap:8px}
+.tile-zone{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.tile{min-width:52px;border:1px solid #3a586a;background:#10202b;color:white;border-radius:10px;padding:11px 14px;font-size:24px;font-weight:1000}
+.build-box{min-height:54px;border:1px dashed #476476;border-radius:10px;background:#07131c;padding:10px 12px;font-size:28px;font-weight:1000}
+.fill-line{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fill-select{background:#07131c;color:white;border:1px solid #355365;border-radius:9px;padding:9px}
+.timer60{font-size:64px;font-weight:1000;color:var(--amber);font-variant-numeric:tabular-nums}
+.memory-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.memory-tag{border:1px solid #286b4b;background:#0d2b1f;color:#b5ffda;border-radius:999px;padding:6px 10px;font-weight:850}
+.vault{max-width:650px;margin:20px auto;border:1px solid #3b5666;background:#06121a;border-radius:18px;padding:20px}
+.vault-display{font-family:"Noto Sans Mono CJK SC",Consolas,monospace;letter-spacing:.3em;font-size:48px;font-weight:1000;color:var(--amber);
+  background:#02080c;border:1px solid #2f4857;border-radius:11px;padding:15px;margin:15px 0}
+.code-input{width:220px;max-width:100%;text-align:center;letter-spacing:.25em;font-size:28px;font-weight:1000;background:#030b10;
+  color:white;border:1px solid #476474;border-radius:11px;padding:11px}
+.glitch{animation:glitch .28s 3}
+@keyframes glitch{25%{transform:translateX(3px)}50%{transform:translateX(-4px);filter:hue-rotate(80deg)}75%{transform:translateX(2px)}}
+.stamp{display:inline-block;border:3px solid #3bd386;color:#3bd386;border-radius:8px;padding:8px 15px;font-weight:1000;
+  letter-spacing:.12em;transform:rotate(-4deg);margin:14px}
+@media(max-width:760px){
+  .start-grid,.mission-grid{grid-template-columns:1fr}
+  .card{padding:17px}
+  .voice-card{grid-template-columns:1fr;text-align:center}
+  .mic{margin:auto}
+  .match-grid{grid-template-columns:1fr}
+  .match-select{min-width:0;width:100%}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">DOSSIER ZH-01 // LANGUAGE INTELLIGENCE UNIT</div>
+    <div class="stats hidden" id="stats">
+      <div class="stat">AGENT <span id="agentStat">—</span></div>
+      <div class="stat">INTEL <span id="scoreStat">0</span></div>
+      <div class="stat" id="soundBtn" onclick="toggleSound()">AUDIO ON</div>
+    </div>
+  </div>
+ 
+  <section class="card" id="startScreen">
+    <div class="center">
+      <div class="kicker">CLASSIFIED // 综合复习 01</div>
+      <h1>SECRET CODE</h1>
+      <p class="sub">Một hồ sơ tiếng Trung đã bị mã hóa. Hoàn thành 4 nhiệm vụ Nghe - Nói - Đọc - Viết để thu thập 4 mảnh mật mã và mở két cuối.</p>
+      <input id="agentName" class="agent" placeholder="Tên / codename của học viên" />
+      <div class="start-grid">
+        <div class="start-box"><strong>01 AUDIO VAULT</strong>Nghe từ, hội thoại và chuỗi âm thanh.</div>
+        <div class="start-box"><strong>02 VOICE SCANNER</strong>Đọc và phản xạ bằng tiếng Trung.</div>
+        <div class="start-box"><strong>03 LOGIC ARCHIVE</strong>Ghép cặp, đọc hiểu, xác minh hồ sơ.</div>
+        <div class="start-box"><strong>04 CIPHER LAB</strong>Ghép chữ, điền từ, viết và memory hack.</div>
+      </div>
+      <button class="btn primary" onclick="enterHQ()">ENTER SECURE SYSTEM</button>
+    </div>
+  </section>
+ 
+  <section class="card hidden" id="hqScreen">
+    <div class="header-row">
+      <div>
+        <div class="kicker">MISSION CONTROL</div>
+        <h2>Thu thập 4 mảnh mật mã</h2>
+        <p class="sub">Mỗi khu vực sẽ mở sau khi khu vực trước được hoàn thành.</p>
+      </div>
+      <button class="btn" onclick="showFinalVault()">FINAL VAULT</button>
+    </div>
+    <div class="mission-grid">
+      <div class="mission-card" id="mcard1">
+        <div class="mission-num">MISSION 01</div><div class="mission-title">Audio Vault</div>
+        <div class="mission-desc">15 tín hiệu âm thanh. Xác định từ, hội thoại và thứ tự nghe.</div>
+        <div class="code-frag masked" id="frag1">?</div><br><br>
+        <button class="btn primary" onclick="startMission1()">BREACH AUDIO VAULT</button>
+      </div>
+      <div class="mission-card locked" id="mcard2">
+        <div class="mission-num">MISSION 02</div><div class="mission-title">Voice Scanner</div>
+        <div class="mission-desc">Đọc 5 thẻ ngẫu nhiên, phản xạ nhanh và xử lý tình huống.</div>
+        <div class="code-frag masked" id="frag2">?</div><br><br>
+        <button class="btn primary" onclick="startMission2()">ACTIVATE SCANNER</button>
+      </div>
+      <div class="mission-card locked" id="mcard3">
+        <div class="mission-num">MISSION 03</div><div class="mission-title">Logic Archive</div>
+        <div class="mission-desc">Ghép cặp giao tiếp, chọn câu đúng và xác minh hội thoại.</div>
+        <div class="code-frag masked" id="frag3">?</div><br><br>
+        <button class="btn primary" onclick="startMission3()">OPEN ARCHIVE</button>
+      </div>
+      <div class="mission-card locked" id="mcard4">
+        <div class="mission-num">MISSION 04</div><div class="mission-title">Cipher Lab</div>
+        <div class="mission-desc">Tái tạo từ, điền chỗ trống, viết câu và thử thách 60 giây.</div>
+        <div class="code-frag masked" id="frag4">?</div><br><br>
+        <button class="btn primary" onclick="startMission4()">ENTER CIPHER LAB</button>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="card hidden" id="missionScreen">
+    <div class="header-row">
+      <div><div class="kicker" id="missionKicker">MISSION</div><h2 id="missionTitle"></h2><p class="sub" id="missionSubtitle"></p></div>
+      <button class="btn" onclick="backHQ()">MISSION CONTROL</button>
+    </div>
+    <div class="progressbar"><div class="progressfill" id="missionProgress"></div></div>
+    <div id="missionContent"></div>
+  </section>
+ 
+  <section class="card hidden" id="vaultScreen">
+    <div class="center">
+      <div class="kicker">FINAL SECURITY LAYER</div>
+      <h1>THE VAULT</h1>
+      <p class="sub">Nhập 4 mảnh code theo thứ tự Mission 01 → 04.</p>
+      <div class="vault">
+        <div class="vault-display" id="vaultHint">? ? ? ?</div>
+        <input class="code-input" id="vaultInput" maxlength="4" inputmode="numeric" placeholder="••••" />
+        <div style="margin-top:14px"><button class="btn primary" onclick="unlockVault()">UNLOCK</button></div>
+        <div class="feedback" id="vaultFeedback">SECURITY STATUS: WAITING</div>
+      </div>
+      <button class="btn" onclick="backHQ()">RETURN TO HQ</button>
+    </div>
+  </section>
+</div>
+ 
+<script>
+const codeFragments=["7","3","5","9"];
+let agent="AGENT";
+let totalScore=0;
+let completed=[false,false,false,false];
+let soundOn=true;
+let currentMission=0;
+let recognition=null,isListening=false,voiceQueue=[],voiceIndex=0,voiceHits=0;
+let typedScenario=null;
+let memoryTimer=null,memorySeconds=60,memoryStarted=false;
+ 
+const listenA=[
+ {audio:"你们",opts:["你好","你们","您"],correct:1},
+ {audio:"同学",opts:["学生","老师","同学"],correct:2},
+ {audio:"大家好",opts:["大家","大家好","你好"],correct:1},
+ {audio:"不客气",opts:["谢谢","再见","不客气"],correct:2},
+ {audio:"同学们",opts:["同学","同学们","学生"],correct:1}
+];
+const listenB=[
+ {audio:["A：你好！","B：你好！"],q:"Bạn nghe thấy lời chào nào?",opts:["你好！","谢谢！","再见！"],correct:0},
+ {audio:["学生：王老师，您好！","王老师：你好！"],q:"Người nói đang chào ai?",opts:["王老师","学生们","同学"],correct:0},
+ {audio:["A：谢谢！","B：不客气！"],q:"Sau “谢谢！”, người còn lại nói gì?",opts:["你好！","不客气！","再见！"],correct:1},
+ {audio:["王老师：同学们，你们好！","学生们：老师好！"],q:"Câu nào bạn nghe được?",opts:["老师好！","大家好！","你们好！"],correct:0},
+ {audio:["A：谢谢！","B：不客气！再见！","A：再见！"],q:"Cuộc hội thoại kết thúc bằng từ nào?",opts:["好","谢谢","再见"],correct:2}
+];
+const sequenceAudio=["谢谢","老师","同学","学生","再见"];
+const sequenceWords=["老师","谢谢","学生","再见","同学"];
+const sequenceCorrect={"老师":"2","谢谢":"1","学生":"4","再见":"5","同学":"3"};
+ 
+const vocab=[
+ {h:"你好",p:"nǐ hǎo"},{h:"老师",p:"lǎoshī"},{h:"学生",p:"xuésheng"},{h:"同学",p:"tóngxué"},{h:"谢谢",p:"xièxie"},
+ {h:"不客气",p:"bú kèqi"},{h:"大家",p:"dàjiā"},{h:"您",p:"nín"},{h:"你们",p:"nǐmen"},{h:"再见",p:"zàijiàn"}
+];
+const rapid=[
+ {prompt:"GV: 你好！",sample:"你好！",accepted:["你好"]},
+ {prompt:"GV: 谢谢！",sample:"不客气！",accepted:["不客气"]},
+ {prompt:"GV: 再见！",sample:"再见！",accepted:["再见"]},
+ {prompt:"GV: 同学们，你们好！",sample:"老师好！",accepted:["老师好","王老师您好","王老师你好"]},
+ {prompt:"GV: 大家好！",sample:"大家好！",accepted:["大家好","老师好","王老师您好","王老师你好"]}
+];
+const scenarios=[
+ {name:"TÌNH HUỐNG A · Gặp giáo viên",desc:"Bạn gặp cô Vương. Hãy chào cô một cách lịch sự.",hint:"Ví dụ hợp lý: 王老师，您好！",
+  validate:t=>norm(t).includes("王老师")&&norm(t).includes("您好")},
+ {name:"TÌNH HUỐNG B · Được giúp đỡ",desc:"Một bạn vừa giúp bạn. Viết hai lượt lời: bạn cảm ơn → người kia đáp lại.",hint:"Cần có 谢谢 và 不客气.",
+  validate:t=>norm(t).includes("谢谢")&&norm(t).includes("不客气")},
+ {name:"TÌNH HUỐNG C · Tan học",desc:"Bạn gặp cô Vương trước khi về. Viết một đoạn hội thoại ngắn để chào tạm biệt.",hint:"Cần có 王老师 và 再见.",
+  validate:t=>norm(t).includes("王老师")&&norm(t).includes("再见")}
+];
+ 
+const matchItems=[
+ ["你好！","你好！"],["谢谢！","不客气！"],["再见！","再见！"],["王老师：同学们，你们好！","老师好！"],["学生们见到王老师","王老师，您好！"]
+];
+const matchOptions=["不客气！","王老师，您好！","你好！","再见！","老师好！"];
+const readMC=[
+ ["小明 gặp cô Vương. 小明 nói:",["王老师，您好！","王老师，不客气！","王老师，谢谢大家！"],0],
+ ["Cô Vương bước vào lớp và muốn chào cả lớp:",["学生，再见！","大家好！","谢谢！"],1],
+ ["Một người nói “谢谢！”. Bạn trả lời:",["你好！","再见！","不客气！"],2],
+ ["Tan học, học sinh nói với giáo viên:",["老师，再见！","老师，不客气！","老师，谢谢大家！"],0],
+ ["“同学们” chỉ:",["một bạn học","các bạn học","giáo viên"],1]
+];
+const tfItems=[
+ ["王老师是老师。",true],
+ ["“学生们” chỉ có một học sinh.",false],
+ ["学生们说：“王老师，您好！”",true],
+ ["王老师说：“谢谢！”，学生说“不客气！”。",false],
+ ["Cuối đoạn hội thoại, mọi người nói “再见”.",true]
+];
+ 
+const reorder=[
+ {chars:["好","你"],ans:"你好"},{chars:["师","老"],ans:"老师"},{chars:["生","学"],ans:"学生"},{chars:["学","同"],ans:"同学"},{chars:["见","再"],ans:"再见"}
+];
+const fill=[
+ {text:"王老师，_____好！",ans:"您"},
+ {text:"_____好！我是王老师。",ans:"大家"},
+ {text:"同学_____，你们好！",ans:"们"},
+ {text:"A：谢谢！　B：__________！",ans:"不客气"},
+ {text:"A：老师，再见！　B：__________！",ans:"再见"}
+];
+const fillBank=["您","大家","们","不客气","再见"];
+const writeExact=[
+ {q:"Viết bằng chữ Hán: “Xin chào!”",answers:["你好"]},
+ {q:"Viết bằng chữ Hán: “Cảm ơn!”",answers:["谢谢"]},
+ {q:"Viết bằng chữ Hán: “Đừng khách sáo!”",answers:["不客气"]},
+ {q:"Viết một câu để chào cô Vương một cách lịch sự.",answers:["王老师您好","王老师你好"]}
+];
+const memoryVocab=["你好","王老师","大家","好","学生","们","老师","您","你们","谢谢","不客气","同学","再见"];
+ 
+function show(id){
+ ["startScreen","hqScreen","missionScreen","vaultScreen"].forEach(x=>document.getElementById(x).classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+}
+function enterHQ(){
+ agent=document.getElementById("agentName").value.trim()||"AGENT";
+ document.getElementById("agentStat").textContent=agent.toUpperCase();
+ document.getElementById("stats").classList.remove("hidden");
+ show("hqScreen");refreshHQ();
+}
+function refreshHQ(){
+ for(let i=0;i<4;i++){
+  const card=document.getElementById("mcard"+(i+1)),frag=document.getElementById("frag"+(i+1));
+  card.classList.toggle("locked",i>0&&!completed[i-1]&&!completed[i]);
+  card.classList.toggle("done",completed[i]);
+  frag.textContent=completed[i]?codeFragments[i]:"?";
+  frag.classList.toggle("masked",!completed[i]);
+ }
+ document.getElementById("scoreStat").textContent=totalScore;
+}
+function backHQ(){stopMic();show("hqScreen");refreshHQ()}
+function setMission(n,title,subtitle){
+ currentMission=n;document.getElementById("missionKicker").textContent=`MISSION 0${n}`;
+ document.getElementById("missionTitle").textContent=title;document.getElementById("missionSubtitle").textContent=subtitle;
+ document.getElementById("missionProgress").style.width="0%";show("missionScreen");
+}
+function setProgress(p){document.getElementById("missionProgress").style.width=Math.max(0,Math.min(100,p))+"%"}
+function awardMission(index,points){
+ if(!completed[index])totalScore+=points;
+ completed[index]=true;document.getElementById("scoreStat").textContent=totalScore;
+ document.getElementById("missionContent").innerHTML=`
+ <div class="center"><div class="kicker">ACCESS GRANTED</div><h2>Nhiệm vụ hoàn thành</h2>
+ <p class="sub">Mảnh mật mã thu được:</p><div class="vault-display" style="max-width:220px;margin:18px auto">${codeFragments[index]}</div>
+ <div class="stamp">DECRYPTED</div><br><button class="btn primary" onclick="backHQ()">RETURN TO HQ</button></div>`;
+ setProgress(100);playSuccess();speak("任务完成");
+}
+ 
+function startMission1(){setMission(1,"AUDIO VAULT","Nghe 10 tín hiệu + giải thứ tự 5 từ để trích xuất mảnh code.");renderListenQuestion(0)}
+function renderListenQuestion(i){
+ if(i<5){
+  const x=listenA[i];
+  document.getElementById("missionContent").innerHTML=`
+   <div class="question"><div class="qnum">AUDIO SIGNAL ${i+1} / 15</div>
+   <div class="qtitle">Nghe và chọn từ/cụm từ bạn nghe được.</div>
+   <div class="audio-row"><button class="btn primary" onclick='speak(${JSON.stringify(x.audio)})'>PLAY SIGNAL</button><span class="audio-light"></span></div>
+   <div class="answers">${x.opts.map((o,k)=>`<button class="answer" onclick="checkListenA(${i},${k},this)">${String.fromCharCode(65+k)}. ${o}</button>`).join("")}</div>
+   <div class="feedback" id="listenFeedback">Chọn đáp án sau khi nghe.</div></div>`;
+  setProgress(i/15*100);return;
+ }
+ if(i<10){
+  const j=i-5,x=listenB[j];
+  document.getElementById("missionContent").innerHTML=`
+   <div class="question"><div class="qnum">DIALOGUE SIGNAL ${i+1} / 15</div><div class="qtitle">${x.q}</div>
+   <div class="audio-row"><button class="btn primary" onclick='speakSequence(${JSON.stringify(x.audio)})'>PLAY DIALOGUE</button><span class="audio-light"></span></div>
+   <div class="answers">${x.opts.map((o,k)=>`<button class="answer" onclick="checkListenB(${j},${k},this)">${String.fromCharCode(65+k)}. ${o}</button>`).join("")}</div>
+   <div class="feedback" id="listenFeedback">Có thể phát lại trước khi trả lời.</div></div>`;
+  setProgress(i/15*100);return;
+ }
+ renderSequence();
+}
+function lockAnswers(btn,correctIndex){
+ const arr=[...btn.parentElement.querySelectorAll(".answer")];arr.forEach((b,k)=>{b.disabled=true;b.classList.toggle("correct",k===correctIndex)});
+}
+function checkListenA(i,k,btn){
+ const ok=k===listenA[i].correct;lockAnswers(btn,listenA[i].correct);if(!ok)btn.classList.add("wrong");
+ feedback("listenFeedback",ok?"SIGNAL VERIFIED.":"Sai tín hiệu. Đáp án đúng đã được đánh dấu.",ok);
+ if(ok)totalScore+=10;updateScore();setTimeout(()=>renderListenQuestion(i+1),700);
+}
+function checkListenB(j,k,btn){
+ const ok=k===listenB[j].correct;lockAnswers(btn,listenB[j].correct);if(!ok)btn.classList.add("wrong");
+ feedback("listenFeedback",ok?"DIALOGUE VERIFIED.":"Sai. Xem đáp án đã xác minh.",ok);
+ if(ok)totalScore+=10;updateScore();setTimeout(()=>renderListenQuestion(j+6),700);
+}
+function renderSequence(){
+ document.getElementById("missionContent").innerHTML=`
+  <div class="question"><div class="qnum">SEQUENCE TRACE 11–15</div>
+  <div class="qtitle">Nghe chuỗi 5 từ. Gán số thứ tự 1–5 cho từng từ.</div>
+  <div class="audio-row"><button class="btn primary" onclick='speakSequence(${JSON.stringify(sequenceAudio)})'>PLAY FULL SEQUENCE</button></div>
+  <div class="order-grid">${sequenceWords.map(w=>`<div class="order-row"><div class="order-word">${w}</div>
+  <select class="order-select seq" data-word="${w}"><option value="">—</option>${[1,2,3,4,5].map(n=>`<option>${n}</option>`).join("")}</select></div>`).join("")}</div>
+  <div class="action-row"><button class="btn primary" onclick="checkSequence()">VERIFY SEQUENCE</button></div>
+  <div class="feedback" id="seqFeedback">Chuỗi phát: mỗi từ cách nhau một nhịp.</div></div>`;
+ setProgress(10/15*100);
+}
+function checkSequence(){
+ const selects=[...document.querySelectorAll(".seq")];let correct=0;
+ selects.forEach(s=>{if(s.value===sequenceCorrect[s.dataset.word])correct++});
+ const ok=correct===5;feedback("seqFeedback",ok?"SEQUENCE COMPLETE. 5/5 khớp.":`Khớp ${correct}/5. Hãy nghe lại và sửa trước khi mở vault.`,ok);
+ if(ok){totalScore+=50;updateScore();setTimeout(()=>awardMission(0,0),650)}
+}
+ 
+function setupRecognition(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return false;
+ recognition=new SR();recognition.lang="zh-CN";recognition.interimResults=true;recognition.continuous=true;recognition.maxAlternatives=5;
+ recognition.onstart=()=>{isListening=true;document.querySelectorAll(".mic").forEach(x=>x.classList.add("listening"))};
+ recognition.onend=()=>{isListening=false;document.querySelectorAll(".mic").forEach(x=>x.classList.remove("listening"))};
+ recognition.onerror=e=>{if(e.error!=="aborted")voiceTerminal("Mic error: "+e.error,false)};
+ recognition.onresult=e=>{
+  let t="";for(let i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;
+  t=t.trim();if(t)processVoice(t);
+ };
+ return true;
+}
+function startMission2(){
+ setMission(2,"VOICE SCANNER","Scanner dùng nhận dạng zh-CN realtime: 5 thẻ ngẫu nhiên → 5 phản xạ nhanh → 1 tình huống gõ.");
+ voiceQueue=shuffle(vocab).slice(0,5);voiceIndex=0;voiceHits=0;if(!recognition)setupRecognition();renderVoiceCard();
+}
+function renderVoiceCard(){
+ if(voiceIndex>=5){renderRapid(0);return}
+ const w=voiceQueue[voiceIndex];
+ document.getElementById("missionContent").innerHTML=`
+ <div class="voice-card"><div><div class="qnum">VOICE ID ${voiceIndex+1}/5</div><div class="voice-target">${w.h}</div><div class="voice-pinyin">${w.p}</div>
+ <div class="action-row"><button class="btn" onclick='speak(${JSON.stringify(w.h)})'>LISTEN SAMPLE</button></div></div>
+ <button class="mic" onclick="startMic()">🎙</button></div>
+ <div class="terminal" id="voiceTerminal">&gt; Nhấn mic và đọc từ. Scanner sẽ chấp nhận ngay khi nhận diện trúng.</div>`;
+ setProgress(voiceIndex/11*100);window.voiceMode="cards";
+}
+function startMic(){
+ if(!recognition&&!setupRecognition()){voiceTerminal("Trình duyệt không hỗ trợ SpeechRecognition. Dùng Chrome/Edge.",false);return}
+ if(isListening){stopMic();return}
+ try{recognition.start()}catch(e){}
+}
+function stopMic(){if(recognition&&isListening){try{recognition.stop()}catch(e){}}}
+function processVoice(t){
+ voiceTerminal("> heard: "+t,true,true);
+ if(window.voiceMode==="cards"){
+  const target=voiceQueue[voiceIndex].h;if(norm(t).includes(norm(target))){
+   stopMic();voiceHits++;totalScore+=15;updateScore();voiceTerminal("ACCESS MATCH // "+target,true);
+   setTimeout(()=>{voiceIndex++;renderVoiceCard()},600);
+  }
+ }else if(window.voiceMode==="rapid"){
+  const r=rapid[voiceIndex];if(r.accepted.some(a=>norm(t).includes(norm(a)))){
+   stopMic();voiceHits++;totalScore+=15;updateScore();voiceTerminal("RESPONSE ACCEPTED",true);
+   setTimeout(()=>{voiceIndex++;renderRapid(voiceIndex)},600);
+  }
+ }
+}
+function voiceTerminal(t,good=false,append=false){
+ const el=document.getElementById("voiceTerminal");if(!el)return;
+ if(append)el.textContent=t;else el.textContent=t;el.style.color=good?"#97fbc7":"#ffb4bd";
+}
+function renderRapid(i){
+ voiceIndex=i;if(i>=rapid.length){renderScenario();return}
+ window.voiceMode="rapid";const r=rapid[i];
+ document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">QUICK RESPONSE ${i+1}/5</div><div class="qtitle">${r.prompt}</div>
+ <p class="sub">Phản xạ ngay bằng tiếng Trung. Nút “gợi ý âm thanh” chỉ dùng khi bí.</p>
+ <div class="action-row"><button class="btn" onclick='speak(${JSON.stringify(r.sample)})'>AUDIO HINT</button><button class="mic" onclick="startMic()">🎙</button></div>
+ <div class="terminal" id="voiceTerminal">&gt; scanner_ready</div></div>`;
+ setProgress((5+i)/11*100);
+}
+function renderScenario(){
+ window.voiceMode="none";stopMic();typedScenario=randomItem(scenarios);
+ document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">FIELD SCENARIO</div><div class="qtitle">${typedScenario.name}</div>
+ <p class="sub">${typedScenario.desc}</p><textarea class="textbox" id="scenarioAnswer" placeholder="Gõ câu/đoạn hội thoại bằng chữ Hán..."></textarea>
+ <div class="action-row"><button class="btn primary" onclick="checkScenario()">SUBMIT FIELD RESPONSE</button></div>
+ <div class="feedback" id="scenarioFeedback">Đáp án mở: hệ thống kiểm tra các từ khóa giao tiếp cốt lõi.</div></div>`;
+ setProgress(10/11*100);
+}
+function checkScenario(){
+ const t=document.getElementById("scenarioAnswer").value;const ok=typedScenario.validate(t);
+ feedback("scenarioFeedback",ok?"FIELD RESPONSE ACCEPTED.":`Chưa đủ dữ kiện. ${typedScenario.hint}`,ok);
+ if(ok){totalScore+=25;updateScore();setTimeout(()=>awardMission(1,0),650)}
+}
+ 
+function startMission3(){setMission(3,"LOGIC ARCHIVE","Giải 5 cặp giao tiếp + 5 câu tình huống + 5 xác minh đúng/sai.");renderMatching()}
+function renderMatching(){
+ document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">ARCHIVE A · 找朋友</div><div class="qtitle">Ghép hai phần để tạo cặp giao tiếp tự nhiên.</div>
+ <div class="match-grid">${matchItems.map((x,i)=>`<div class="match-left">${i+1}. ${x[0]}</div><select class="match-select match" data-i="${i}">
+ <option value="">-- chọn --</option>${matchOptions.map(o=>`<option>${o}</option>`).join("")}</select>`).join("")}</div>
+ <div class="action-row"><button class="btn primary" onclick="checkMatching()">VERIFY LINKS</button></div><div class="feedback" id="matchFeedback"></div></div>`;
+ setProgress(0);
+}
+function checkMatching(){
+ const arr=[...document.querySelectorAll(".match")];let n=0;arr.forEach(s=>{if(s.value===matchItems[+s.dataset.i][1])n++});
+ const ok=n===5;feedback("matchFeedback",ok?"5/5 links verified.":`${n}/5 đúng. Sửa các liên kết trước khi tiếp tục.`,ok);
+ if(ok){totalScore+=50;updateScore();setTimeout(()=>renderReadMC(0),600)}
+}
+function renderReadMC(i){
+ if(i>=5){renderDialogueTF();return}
+ const x=readMC[i];
+ document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">ARCHIVE B · CASE ${i+6}/10</div><div class="qtitle">${x[0]}</div>
+ <div class="answers">${x[1].map((o,k)=>`<button class="answer" onclick="checkReadMC(${i},${k},this)">${String.fromCharCode(65+k)}. ${o}</button>`).join("")}</div>
+ <div class="feedback" id="readFeedback"></div></div>`;
+ setProgress((5+i)/15*100);
+}
+function checkReadMC(i,k,btn){
+ const x=readMC[i],ok=k===x[2];lockAnswers(btn,x[2]);if(!ok)btn.classList.add("wrong");
+ feedback("readFeedback",ok?"CASE VERIFIED.":"Không khớp hồ sơ.",ok);if(ok){totalScore+=10;updateScore()}setTimeout(()=>renderReadMC(i+1),600);
+}
+function renderDialogueTF(){
+ const dialogue=`王老师：大家好！\n学生们：王老师，您好！\n王老师：同学们，你们好！\n学生们：老师好！\n⋯⋯\n学生们：王老师，谢谢！\n王老师：不客气！\n学生们：王老师，再见！\n王老师：再见！`;
+ document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">ARCHIVE C · DIALOGUE VERIFICATION</div><div class="terminal" style="white-space:pre-line">${dialogue}</div>
+ <div style="margin-top:15px">${tfItems.map((x,i)=>`<div class="question" style="margin-bottom:8px"><div class="qtitle" style="font-size:16px">${i+11}. ${x[0]}</div>
+ <div class="tf-row"><button class="btn" onclick="pickTF(${i},true,this)">✓ ĐÚNG</button><button class="btn" onclick="pickTF(${i},false,this)">✗ SAI</button></div></div>`).join("")}</div>
+ <div class="feedback" id="tfFeedback">Xác minh đủ 5 nhận định.</div></div>`;
+ window.tfAnswers={};setProgress(10/15*100);
+}
+function pickTF(i,v,btn){
+ window.tfAnswers[i]=v;btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("good"));btn.classList.add("good");
+ if(Object.keys(window.tfAnswers).length===5){
+  let n=0;tfItems.forEach((x,k)=>{if(window.tfAnswers[k]===x[1])n++});
+  const ok=n===5;feedback("tfFeedback",ok?"ALL RECORDS VERIFIED.":`${n}/5 đúng. Điều chỉnh những nhận định sai.`,ok);
+  if(ok){totalScore+=50;updateScore();setTimeout(()=>awardMission(2,0),650)}
+ }
+}
+ 
+function startMission4(){
+ setMission(4,"CIPHER LAB","Tái tạo từ → điền từ → viết câu → 60-second Memory Hack.");
+ window.reorderIndex=0;renderReorder(0);
+}
+function renderReorder(i){
+ if(i>=reorder.length){renderFill();return}
+ window.reorderIndex=i;const x=reorder[i],chars=shuffle(x.chars);
+ document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">CIPHER A · 拼一拼 ${i+1}/5</div><div class="qtitle">Sắp xếp các chữ để tạo thành từ đúng.</div>
+ <div class="build-box" id="buildBox"></div><div class="tile-zone">${chars.map(c=>`<button class="tile" onclick="addTile(this,'${c}')">${c}</button>`).join("")}</div>
+ <div class="action-row"><button class="btn" onclick="clearBuild()">RESET</button><button class="btn primary" onclick="checkBuild()">VERIFY</button></div>
+ <div class="feedback" id="buildFeedback"></div></div>`;
+ window.built="";setProgress(i/15*100);
+}
+function addTile(btn,c){window.built+=c;btn.disabled=true;document.getElementById("buildBox").textContent=window.built}
+function clearBuild(){renderReorder(window.reorderIndex)}
+function checkBuild(){
+ const ok=window.built===reorder[window.reorderIndex].ans;feedback("buildFeedback",ok?"CIPHER RESTORED.":"Thứ tự chưa đúng.",ok);
+ if(ok){totalScore+=10;updateScore();setTimeout(()=>renderReorder(window.reorderIndex+1),500)}
+}
+function renderFill(){
+ document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">CIPHER B · 选词填空</div><div class="qtitle">Chọn từ để khôi phục 5 dòng dữ liệu.</div>
+ ${fill.map((x,i)=>`<div class="fill-line" style="margin:9px 0"><strong>${i+6}.</strong><span>${x.text}</span>
+ <select class="fill-select fill" data-i="${i}"><option value="">--</option>${fillBank.map(w=>`<option>${w}</option>`).join("")}</select></div>`).join("")}
+ <div class="action-row"><button class="btn primary" onclick="checkFill()">VERIFY DATA</button></div><div class="feedback" id="fillFeedback"></div></div>`;
+ setProgress(5/15*100);
+}
+function checkFill(){
+ let n=0;[...document.querySelectorAll(".fill")].forEach(s=>{if(s.value===fill[+s.dataset.i].ans)n++});
+ const ok=n===5;feedback("fillFeedback",ok?"5/5 data lines restored.":`${n}/5 đúng.`,ok);
+ if(ok){totalScore+=50;updateScore();setTimeout(()=>renderWriting(0),600)}
+}
+function renderWriting(i){
+ if(i>=writeExact.length){renderDialogueWrite();return}
+ const x=writeExact[i];document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">CIPHER C · WRITE ${i+11}/15</div><div class="qtitle">${x.q}</div>
+ <input class="textbox" id="writeAnswer" placeholder="Nhập chữ Hán..." />
+ <div class="action-row"><button class="btn primary" onclick="checkWriting(${i})">VERIFY</button></div><div class="feedback" id="writeFeedback"></div></div>`;
+ setProgress((10+i)/15*100);
+}
+function checkWriting(i){
+ const t=norm(document.getElementById("writeAnswer").value),ok=writeExact[i].answers.some(a=>norm(a)===t);
+ feedback("writeFeedback",ok?"TEXT VERIFIED.":"Chưa khớp đáp án mục tiêu. Kiểm tra chữ Hán và cách dùng.",ok);
+ if(ok){totalScore+=15;updateScore();setTimeout(()=>renderWriting(i+1),500)}
+}
+function renderDialogueWrite(){
+ document.getElementById("missionContent").innerHTML=`
+ <div class="question"><div class="qnum">CIPHER C · FINAL WRITING</div><div class="qtitle">Viết đoạn hội thoại 3 lượt lời, sử dụng ít nhất 3 từ:
+ 你好 / 谢谢 / 不客气 / 老师 / 同学 / 再见</div>
+ <textarea class="textbox" id="dialogueWrite" placeholder="A：...\nB：...\nA：..."></textarea>
+ <div class="action-row"><button class="btn primary" onclick="checkDialogueWrite()">SCAN DIALOGUE</button></div><div class="feedback" id="dialogueFeedback"></div></div>`;
+ setProgress(14/15*100);
+}
+function checkDialogueWrite(){
+ const t=document.getElementById("dialogueWrite").value;const used=["你好","谢谢","不客气","老师","同学","再见"].filter(w=>t.includes(w));
+ const lines=t.split(/\n+/).filter(x=>x.trim()).length;const ok=used.length>=3&&lines>=3;
+ feedback("dialogueFeedback",ok?`DIALOGUE ACCEPTED · ${used.length} từ khóa.`:"Cần tối thiểu 3 lượt lời và ít nhất 3 từ trong danh sách.",ok);
+ if(ok){totalScore+=30;updateScore();setTimeout(renderMemoryHack,650)}
+}
+function renderMemoryHack(){
+ memorySeconds=60;memoryStarted=false;
+ document.getElementById("missionContent").innerHTML=`
+ <div class="center"><div class="kicker">OPTIONAL BONUS · MEMORY HACK</div><h2>60-SECOND RECALL</h2>
+ <p class="sub">Không nhìn danh sách từ vựng. Trong 60 giây, nhập tất cả từ tiếng Trung bạn nhớ. Có thể cách nhau bằng dấu cách, dấu phẩy hoặc xuống dòng.</p>
+ <div class="timer60" id="memoryClock">60</div><textarea class="textbox" id="memoryInput" placeholder="你好  谢谢  ..." disabled></textarea>
+ <div class="action-row" style="justify-content:center"><button class="btn primary" id="memoryStart" onclick="startMemory()">START 60s</button>
+ <button class="btn hidden" id="memoryFinish" onclick="finishMemory()">FINISH NOW</button></div>
+ <div class="memory-tags" id="memoryTags"></div><div class="feedback" id="memoryFeedback">Bonus không ảnh hưởng việc mở khóa nhiệm vụ.</div></div>`;
+ setProgress(96);
+}
+function startMemory(){
+ if(memoryStarted)return;memoryStarted=true;document.getElementById("memoryInput").disabled=false;document.getElementById("memoryInput").focus();
+ document.getElementById("memoryStart").classList.add("hidden");document.getElementById("memoryFinish").classList.remove("hidden");
+ memoryTimer=setInterval(()=>{memorySeconds--;document.getElementById("memoryClock").textContent=memorySeconds;if(memorySeconds<=0)finishMemory()},1000);
+}
+function finishMemory(){
+ clearInterval(memoryTimer);const t=document.getElementById("memoryInput").value;
+ const found=memoryVocab.filter(w=>t.includes(w));const unique=[...new Set(found)];
+ document.getElementById("memoryTags").innerHTML=unique.map(w=>`<span class="memory-tag">${w}</span>`).join("");
+ feedback("memoryFeedback",`我记得 ${unique.length} 个词！ Bonus +${unique.length*5} INTEL.`,true);
+ totalScore+=unique.length*5;updateScore();document.getElementById("memoryFinish").classList.add("hidden");
+ setTimeout(()=>awardMission(3,0),1200);
+}
+ 
+function showFinalVault(){
+ show("vaultScreen");document.getElementById("vaultHint").textContent=completed.map((x,i)=>x?codeFragments[i]:"?").join(" ");
+ document.getElementById("vaultFeedback").className="feedback";document.getElementById("vaultFeedback").textContent=
+ completed.every(Boolean)?"ALL FRAGMENTS ACQUIRED. ENTER CODE.":"LOCKED: Complete all four missions first.";
+}
+function unlockVault(){
+ const fb=document.getElementById("vaultFeedback");if(!completed.every(Boolean)){feedback("vaultFeedback","Không đủ 4 mảnh mật mã.",false);return}
+ const ok=document.getElementById("vaultInput").value===codeFragments.join("");
+ if(ok){
+  fb.className="feedback good";fb.innerHTML=`ACCESS GRANTED // ${agent.toUpperCase()}<br><span class="stamp">DOSSIER DECRYPTED</span><br>Tổng INTEL: ${totalScore}`;
+  document.querySelector(".vault").classList.add("glitch");playSuccess();speak("恭喜你，任务完成");
+ }else{feedback("vaultFeedback","ACCESS DENIED. Kiểm tra thứ tự 4 mảnh code.",false);playError()}
+}
+ 
+function feedback(id,text,good){const e=document.getElementById(id);if(!e)return;e.textContent=text;e.className="feedback "+(good?"good":"bad");if(good)playSuccess();else playError()}
+function updateScore(){document.getElementById("scoreStat").textContent=totalScore}
+function norm(t){return String(t).replace(/[\s，。！？、,.!?：:；;]/g,"").trim()}
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function randomItem(a){return a[Math.floor(Math.random()*a.length)]}
+function speak(text){
+ if(!soundOn||!("speechSynthesis"in window))return;speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text);u.lang="zh-CN";u.rate=.88;u.pitch=1;
+ const v=speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith("zh"));if(v)u.voice=v;speechSynthesis.speak(u);
+}
+function speakSequence(lines){
+ if(!soundOn||!("speechSynthesis"in window))return;speechSynthesis.cancel();
+ let i=0;function next(){if(i>=lines.length)return;const u=new SpeechSynthesisUtterance(lines[i++]);u.lang="zh-CN";u.rate=.84;
+ const v=speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith("zh"));if(v)u.voice=v;u.onend=()=>setTimeout(next,360);speechSynthesis.speak(u)}next();
+}
+let audioCtx=null;
+function tone(f,d,type="sine",vol=.035,delay=0){
+ if(!soundOn)return;audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume();
+ const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=f;o.connect(g);g.connect(audioCtx.destination);
+ const t=audioCtx.currentTime+delay;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.start(t);o.stop(t+d)
+}
+function playSuccess(){tone(620,.08,"sine",.035);tone(820,.1,"sine",.035,.07);tone(1040,.14,"sine",.03,.14)}
+function playError(){tone(190,.11,"sawtooth",.025);tone(135,.16,"sawtooth",.02,.08)}
+function toggleSound(){soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"AUDIO ON":"AUDIO OFF";if(!soundOn&&"speechSynthesis"in window)speechSynthesis.cancel()}
+</script>
+</body>
+</html>
