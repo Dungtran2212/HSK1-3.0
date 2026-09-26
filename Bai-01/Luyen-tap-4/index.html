@@ -2,4757 +2,3922 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-  name="viewport"
-  content="
-    width=device-width,
-    initial-scale=1,
-    maximum-scale=1,
-    user-scalable=no
-  "
->
-
-<title>发音跑酷 </title>
+<title>Khu vườn ngữ âm</title>
 
 <style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html,
+:root{
+    --green:#4f8264;
+    --dark-green:#37664d;
+    --soft-green:#eaf6e8;
+    --cream:#fffaf0;
+    --brown:#8c5e3c;
+    --light-brown:#d79a58;
+}
+
 body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
+    min-height:100vh;
+    font-family:
+        "Segoe UI",
+        "Microsoft YaHei",
+        "PingFang SC",
+        Arial,
+        sans-serif;
+
+    color:#46695a;
+
+    background:
+        linear-gradient(
+            180deg,
+            #e6f8fb 0%,
+            #f4fbef 100%
+        );
 }
 
-body{
-  font-family:
-    "Inter",
-    "Noto Sans SC",
-    "Microsoft YaHei",
-    Arial,
-    sans-serif;
-
-  background:#071421;
-  color:#16212b;
+button{
+    font-family:inherit;
 }
-
 
 /* =========================================================
-   VIEWPORT
-
-   CẢ GAME LUÔN GIỮ TỈ LỆ 16:9
-   KHÔNG SCROLL
+   KHUNG TRANG
 ========================================================= */
 
-.viewport{
-  position:fixed;
-  inset:0;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  overflow:hidden;
-
-  background:
-    radial-gradient(
-      circle at 50% 20%,
-      #244d73,
-      #081522 75%
-    );
+.page{
+    width:min(1180px,96%);
+    margin:auto;
+    padding:22px 0 50px;
 }
-
-
-/*
-  Đây là "slide PPT"
-  kích thước logic 1600 x 900
-*/
-
-.game{
-  width:1600px;
-  height:900px;
-
-  position:absolute;
-
-  transform-origin:center center;
-
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      to bottom,
-      #14355f 0%,
-      #27688c 36%,
-      #81bed1 36%,
-      #a9d995 62%,
-      #5ca15e 62%,
-      #397d4c 100%
-    );
-}
-
 
 /* =========================================================
-   BACKGROUND
+   HEADER
 ========================================================= */
 
-.skyGlow{
-  position:absolute;
+.hero{
+    background:rgba(255,255,255,.94);
+    border-radius:28px;
+    padding:24px 28px;
+    margin-bottom:18px;
 
-  width:900px;
-  height:500px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,.12),
-      transparent 70%
-    );
-
-  left:350px;
-  top:-200px;
+    box-shadow:
+        0 15px 35px
+        rgba(64,101,82,.11);
 }
 
+.home-link{
+    display:inline-block;
+    margin-bottom:10px;
 
-.moon{
-  position:absolute;
+    text-decoration:none;
+    color:#668777;
 
-  width:145px;
-  height:145px;
-
-  border-radius:50%;
-
-  right:110px;
-  top:72px;
-
-  background:#fff0b6;
-
-  box-shadow:
-    0 0 40px rgba(255,240,182,.75),
-    0 0 110px rgba(255,240,182,.3);
+    font-size:14px;
+    font-weight:800;
 }
 
-
-.star{
-  position:absolute;
-  color:white;
-
-  font-size:22px;
-
-  opacity:.8;
-
-  animation:
-    starBlink 1.5s
-    infinite alternate;
+.hero-content{
+    text-align:center;
 }
 
-.s1{left:100px;top:80px}
-.s2{left:290px;top:150px}
-.s3{left:530px;top:70px}
-.s4{right:400px;top:140px}
-.s5{right:230px;top:230px}
+.badge{
+    display:inline-block;
 
-@keyframes starBlink{
+    padding:7px 15px;
+    margin-bottom:7px;
 
-  from{
-    opacity:.2;
-    transform:scale(.8);
-  }
+    border-radius:999px;
 
-  to{
-    opacity:1;
-    transform:scale(1.3);
-  }
+    background:#fff1c9;
+    color:#a2713f;
 
+    font-size:13px;
+    font-weight:900;
 }
 
+.hero h1{
+    font-size:clamp(32px,5vw,50px);
+    color:#47755c;
+}
 
-/* clouds */
+.hero p{
+    margin-top:7px;
+    line-height:1.6;
+    color:#748f82;
+}
+
+/* =========================================================
+   TAB GAME
+========================================================= */
+
+.game-tabs{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+
+    margin-bottom:18px;
+}
+
+.game-tab{
+    border:0;
+    border-radius:16px;
+
+    padding:13px 20px;
+
+    background:#fff;
+    color:#658676;
+
+    font-size:15px;
+    font-weight:900;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(70,100,85,.09);
+
+    transition:.2s;
+}
+
+.game-tab:hover{
+    transform:translateY(-2px);
+}
+
+.game-tab.active{
+    background:#578c6a;
+    color:#fff;
+}
+
+.game-panel{
+    display:none;
+}
+
+.game-panel.active{
+    display:block;
+}
+
+.game-card{
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:28px;
+
+    background:#fff;
+
+    box-shadow:
+        0 15px 40px
+        rgba(66,102,83,.12);
+}
+
+/* =========================================================
+   GAME 1 - THANH CÔNG CỤ
+========================================================= */
+
+.game-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+
+    gap:14px;
+
+    padding:17px 20px;
+
+    border-bottom:
+        1px solid #e5eee8;
+}
+
+.sound-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.sound-tab{
+    border:
+        1px solid #d5e7db;
+
+    border-radius:13px;
+
+    padding:10px 15px;
+
+    background:#fff;
+    color:#658576;
+
+    font-weight:900;
+    cursor:pointer;
+}
+
+.sound-tab.active{
+    background:#e4f3e6;
+    color:#397051;
+    border-color:#add0b4;
+}
+
+.stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.stat{
+    padding:9px 13px;
+
+    border-radius:999px;
+
+    background:#fff7e4;
+    color:#8b7049;
+
+    font-size:13px;
+    font-weight:900;
+}
+
+/* =========================================================
+   KHU VƯỜN
+========================================================= */
+
+.garden{
+    position:relative;
+
+    min-height:720px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #bde8f4 0%,
+            #dcf3f5 58%,
+            #9bd378 58%,
+            #78b95d 100%
+        );
+}
+
+/* mặt đất */
+
+.ground-line{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:130px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #82c362 0%,
+            #69ad53 100%
+        );
+}
+
+/* mặt cỏ */
+
+.grass{
+    position:absolute;
+
+    z-index:4;
+
+    left:0;
+    right:0;
+
+    bottom:115px;
+
+    height:25px;
+
+    background:
+        repeating-linear-gradient(
+            110deg,
+            transparent 0 8px,
+            rgba(57,128,60,.22) 9px 12px,
+            transparent 13px 22px
+        );
+}
+
+/* mặt trời */
+
+.sun{
+    position:absolute;
+
+    right:65px;
+    top:45px;
+
+    width:76px;
+    height:76px;
+
+    border-radius:50%;
+
+    background:#ffe38b;
+
+    box-shadow:
+        0 0 0 13px
+        rgba(255,226,137,.22);
+}
+
+/* mây */
 
 .cloud{
-  position:absolute;
-  font-size:90px;
-  opacity:.4;
+    position:absolute;
 
-  animation:
-    cloudMove 24s
-    linear infinite;
+    width:110px;
+    height:35px;
+
+    border-radius:999px;
+
+    background:
+        rgba(255,255,255,.84);
+}
+
+.cloud::before,
+.cloud::after{
+    content:"";
+
+    position:absolute;
+
+    border-radius:50%;
+
+    background:inherit;
+}
+
+.cloud::before{
+    width:55px;
+    height:55px;
+
+    left:15px;
+    top:-28px;
+}
+
+.cloud::after{
+    width:65px;
+    height:65px;
+
+    right:7px;
+    top:-35px;
 }
 
 .cloud1{
-  top:145px;
-  left:-160px;
+    left:130px;
+    top:75px;
 }
 
 .cloud2{
-  top:250px;
-  left:-300px;
+    right:190px;
+    top:135px;
 
-  animation-duration:38s;
-  animation-delay:-15s;
+    transform:scale(.72);
 }
 
-@keyframes cloudMove{
+/* đồi */
 
-  from{
-    transform:translateX(0);
-  }
+.hill{
+    position:absolute;
 
-  to{
-    transform:translateX(2000px);
-  }
-
+    border-radius:50%;
 }
 
+.hill1{
+    width:620px;
+    height:180px;
 
-/* mountains */
+    left:-220px;
+    bottom:55px;
 
-.mountains{
-  position:absolute;
-
-  width:100%;
-
-  top:255px;
-
-  text-align:center;
-
-  font-size:115px;
-
-  opacity:.42;
-
-  letter-spacing:45px;
-
-  pointer-events:none;
+    background:#94ce76;
 }
 
+.hill2{
+    width:690px;
+    height:190px;
 
-/* bamboo */
+    right:-270px;
+    bottom:45px;
 
-.bamboo{
-  position:absolute;
-
-  bottom:0;
-
-  font-size:150px;
-
-  opacity:.88;
-
-  filter:
-    drop-shadow(
-      7px 8px 0
-      rgba(0,0,0,.15)
-    );
+    background:#87c66d;
 }
-
-.bambooLeft{
-  left:5px;
-}
-
-.bambooRight{
-  right:5px;
-}
-
-
-/* lantern */
-
-.lantern{
-  position:absolute;
-
-  font-size:55px;
-
-  transform-origin:top center;
-
-  animation:
-    lanternSwing 2s
-    ease-in-out infinite alternate;
-}
-
-.lantern1{
-  left:85px;
-  top:245px;
-}
-
-.lantern2{
-  right:85px;
-  top:280px;
-}
-
-@keyframes lanternSwing{
-
-  from{
-    transform:rotate(-5deg);
-  }
-
-  to{
-    transform:rotate(6deg);
-  }
-
-}
-
-
-/* fireflies */
-
-.firefly{
-  position:absolute;
-
-  width:9px;
-  height:9px;
-
-  border-radius:50%;
-
-  background:#ffe45d;
-
-  box-shadow:
-    0 0 15px #ffe45d;
-
-  animation:
-    firefly 4s
-    infinite ease-in-out;
-}
-
-.f1{
-  left:260px;
-  bottom:120px;
-}
-
-.f2{
-  left:720px;
-  bottom:180px;
-  animation-delay:1s;
-}
-
-.f3{
-  right:250px;
-  bottom:120px;
-  animation-delay:2s;
-}
-
-@keyframes firefly{
-
-  0%,
-  100%{
-    transform:translate(0,0);
-    opacity:.2;
-  }
-
-  50%{
-    transform:
-      translate(30px,-50px);
-
-    opacity:1;
-  }
-
-}
-
 
 /* =========================================================
-   TOP BAR
+   LOA
 ========================================================= */
 
-.topbar{
-  position:absolute;
+.speaker-zone{
+    position:absolute;
 
-  left:35px;
-  right:35px;
-  top:24px;
+    z-index:40;
 
-  height:70px;
+    left:28px;
+    top:190px;
 
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+    width:175px;
 
-  z-index:20;
+    text-align:center;
 }
 
+.rabbit{
+    font-size:72px;
 
-.logo{
-  height:58px;
-
-  display:flex;
-  align-items:center;
-
-  padding:0 23px;
-
-  border:4px solid #15212b;
-  border-radius:18px;
-
-  background:#fff9e8;
-
-  font-weight:1000;
-  font-size:22px;
-
-  box-shadow:
-    6px 6px 0 #15212b;
-}
-
-
-.stats{
-  display:flex;
-  gap:12px;
-}
-
-
-.stat{
-  min-width:105px;
-  height:58px;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  gap:8px;
-
-  padding:0 17px;
-
-  border:
-    4px solid #15212b;
-
-  border-radius:999px;
-
-  background:white;
-
-  font-size:20px;
-  font-weight:1000;
-
-  box-shadow:
-    5px 5px 0 #15212b;
-}
-
-
-.soundButton{
-  cursor:pointer;
-}
-
-
-/* =========================================================
-   MAIN CARD
-========================================================= */
-
-.mainCard{
-  position:absolute;
-
-  left:34px;
-  right:34px;
-
-  top:115px;
-  bottom:28px;
-
-  z-index:10;
-
-  border:
-    5px solid #15212b;
-
-  border-radius:35px;
-
-  background:
-    rgba(
-      255,
-      250,
-      230,
-      .96
-    );
-
-  box-shadow:
-    11px 11px 0
-    rgba(21,33,43,.9);
-
-  overflow:hidden;
-}
-
-
-/* =========================================================
-   START SCREEN
-========================================================= */
-
-.startScreen{
-  position:absolute;
-  inset:0;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  text-align:center;
-}
-
-
-.startContent{
-  width:980px;
-}
-
-
-.bigPanda{
-  font-size:105px;
-
-  animation:
-    pandaFloat
-    1.6s
-    ease-in-out infinite;
-}
-
-
-@keyframes pandaFloat{
-
-  50%{
-    transform:
-      translateY(-10px)
-      rotate(3deg);
-  }
-
-}
-
-
-.startTitle{
-  margin-top:8px;
-
-  font-size:67px;
-  line-height:1;
-
-  font-weight:1000;
-}
-
-
-.chineseTitle{
-  margin-top:14px;
-
-  font-size:30px;
-
-  font-weight:900;
-}
-
-
-.startText{
-  margin-top:15px;
-
-  font-size:20px;
-  line-height:1.65;
-
-  color:#5c6770;
-}
-
-
-.startFeatures{
-  margin:
-    28px auto 30px;
-
-  width:900px;
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
-  gap:14px;
-}
-
-
-.feature{
-  padding:18px 10px;
-
-  border:
-    3px solid #15212b;
-
-  border-radius:17px;
-
-  background:white;
-
-  font-size:17px;
-  font-weight:900;
-}
-
-
-.featureEmoji{
-  display:block;
-
-  font-size:43px;
-
-  margin-bottom:6px;
-}
-
-
-/* buttons */
-
-.btn{
-  border:
-    3px solid #15212b;
-
-  border-radius:15px;
-
-  padding:14px 24px;
-
-  background:white;
-
-  color:#15212b;
-
-  font-weight:1000;
-
-  font-size:18px;
-
-  cursor:pointer;
-
-  box-shadow:
-    5px 5px 0 #15212b;
-
-  transition:.13s;
-}
-
-
-.btn:hover{
-  transform:
-    translate(-2px,-2px);
-
-  box-shadow:
-    7px 7px 0 #15212b;
-}
-
-
-.btnPrimary{
-  background:#ffd84d;
-}
-
-
-.btnBlue{
-  background:#bcefff;
-}
-
-
-/* =========================================================
-   GAME SCREEN
-========================================================= */
-
-.gameScreen{
-  position:absolute;
-  inset:0;
-
-  display:grid;
-
-  grid-template-columns:
-    63% 37%;
-}
-
-
-/* =========================================================
-   LEFT RUNNER WORLD
-========================================================= */
-
-.runnerArea{
-  position:relative;
-
-  overflow:hidden;
-
-  border-right:
-    4px solid #15212b;
-
-  background:
-    linear-gradient(
-      to bottom,
-      #75c2dd 0%,
-      #a7dbe0 45%,
-      #68ad66 45%,
-      #448b50 100%
-    );
-}
-
-
-/* background scenery */
-
-.runnerArea::before{
-  content:
-    "⛰️　　🏯　　⛰️";
-
-  position:absolute;
-
-  top:20px;
-
-  left:0;
-
-  width:100%;
-
-  text-align:center;
-
-  font-size:75px;
-
-  opacity:.5;
-}
-
-
-/* road */
-
-.road{
-  position:absolute;
-
-  left:50%;
-
-  bottom:-5px;
-
-  width:88%;
-  height:720px;
-
-  transform:
-    translateX(-50%);
-
-  clip-path:
-    polygon(
-      42% 0,
-      58% 0,
-      100% 100%,
-      0 100%
-    );
-
-  background:
-    linear-gradient(
-      90deg,
-
-      transparent 0 8%,
-
-      #fff 8% 11%,
-
-      #e44747 11% 15%,
-
-      #475870 15% 85%,
-
-      #e44747 85% 89%,
-
-      #fff 89% 92%,
-
-      transparent 92%
-    );
-
-  filter:
-    drop-shadow(
-      0 12px 0
-      rgba(0,0,0,.13)
-    );
-}
-
-
-/* middle lane */
-
-.road::after{
-  content:"";
-
-  position:absolute;
-
-  left:49.3%;
-
-  width:1.4%;
-  height:100%;
-
-  background:
-    repeating-linear-gradient(
-      to bottom,
-
-      rgba(255,255,255,.72)
-      0 34px,
-
-      transparent
-      34px 67px
-    );
-}
-
-
-/* =========================================================
-   GATE
-========================================================= */
-
-.gateWrap{
-  position:absolute;
-
-  width:330px;
-  height:235px;
-
-  left:50%;
-
-  transform:
-    translateX(-50%)
-    scale(.92);
-
-  bottom:385px;
-
-  z-index:6;
-
-  filter:
-    drop-shadow(
-      0 0 22px
-      rgba(255,220,72,.45)
-    );
-}
-
-
-.gate{
-  position:absolute;
-  inset:0;
-}
-
-
-.gatePost{
-  position:absolute;
-
-  bottom:0;
-
-  width:45px;
-  height:170px;
-
-  border:
-    4px solid #15212b;
-
-  border-radius:7px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #925926,
-      #dc9b55,
-      #9f642f
-    );
-}
-
-
-.gatePost.left{
-  left:16px;
-}
-
-
-.gatePost.right{
-  right:16px;
-}
-
-
-/* sign */
-
-.gateSign{
-  position:absolute;
-
-  top:0;
-  left:50%;
-
-  width:285px;
-  height:105px;
-
-  transform:
-    translateX(-50%);
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  border:
-    4px solid #15212b;
-
-  border-radius:14px;
-
-  background:
-    linear-gradient(
-      #f5c983,
-      #dd9e59
-    );
-
-  box-shadow:
-    5px 5px 0
-    rgba(21,33,43,.35);
-}
-
-
-.gateEmoji{
-  font-size:30px;
-}
-
-
-.gateWord{
-  font-size:36px;
-  line-height:1;
-
-  font-weight:1000;
-}
-
-
-.gatePinyin{
-  margin-top:4px;
-
-  font-size:17px;
-
-  font-weight:900;
-
-  color:#4f5960;
-}
-
-
-/* doors */
-
-.gateDoors{
-  position:absolute;
-
-  width:205px;
-  height:125px;
-
-  left:50%;
-  bottom:0;
-
-  transform:
-    translateX(-50%);
-
-  overflow:hidden;
-}
-
-
-.door{
-  position:absolute;
-
-  width:50%;
-  height:100%;
-
-  top:0;
-
-  border:
-    4px solid #15212b;
-
-  background:
-    linear-gradient(
-      #d8a05a,
-      #aa6c36
-    );
-
-  transition:
-    transform .45s
-    cubic-bezier(.3,1.2,.5,1);
-}
-
-
-.door.left{
-  left:0;
-
-  border-radius:
-    12px 0 0 12px;
-
-  transform-origin:
-    left center;
-}
-
-
-.door.right{
-  right:0;
-
-  border-radius:
-    0 12px 12px 0;
-
-  transform-origin:
-    right center;
-}
-
-
-.gate.open
-.door.left{
-  transform:
-    rotateY(83deg);
-}
-
-
-.gate.open
-.door.right{
-  transform:
-    rotateY(-83deg);
-}
-
-
-.gate.fail{
-  animation:
-    gateFail .38s;
-}
-
-
-@keyframes gateFail{
-
-  0%,
-  100%{
-    transform:
-      translateX(0);
-  }
-
-  25%{
-    transform:
-      translateX(-9px);
-  }
-
-  75%{
-    transform:
-      translateX(9px);
-  }
-
-}
-
-
-/* =========================================================
-   FAR GATES
-========================================================= */
-
-.futureGate{
-  position:absolute;
-
-  left:50%;
-
-  transform:
-    translateX(-50%);
-
-  border:
-    4px solid #15212b;
-
-  background:#dca05d;
-
-  border-radius:9px;
-
-  opacity:.65;
-}
-
-
-.futureGate.one{
-  width:160px;
-  height:100px;
-
-  bottom:545px;
-}
-
-
-.futureGate.two{
-  width:105px;
-  height:65px;
-
-  bottom:620px;
-
-  opacity:.4;
-}
-
-
-/* =========================================================
-   PANDA
-========================================================= */
-
-.panda{
-  position:absolute;
-
-  left:50%;
-
-  bottom:55px;
-
-  z-index:12;
-
-  transform:
-    translateX(-50%);
-
-  font-size:88px;
-
-  filter:
-    drop-shadow(
-      7px 8px 0
-      rgba(0,0,0,.2)
-    );
-
-  transition:
-    bottom .8s
-    cubic-bezier(.3,1.25,.5,1);
-}
-
-
-.panda.running{
-  animation:
-    pandaRun
-    .25s
-    infinite alternate;
-}
-
-
-@keyframes pandaRun{
-
-  from{
-    transform:
-      translateX(-50%)
-      translateY(0)
-      rotate(-4deg);
-  }
-
-  to{
-    transform:
-      translateX(-50%)
-      translateY(-10px)
-      rotate(4deg);
-  }
-
-}
-
-
-.panda.success{
-  animation:
-    pandaSuccess
-    .7s;
-}
-
-
-@keyframes pandaSuccess{
-
-  35%{
-    transform:
-      translateX(-50%)
-      translateY(-38px)
-      rotate(-8deg)
-      scale(1.12);
-  }
-
-  70%{
-    transform:
-      translateX(-50%)
-      rotate(8deg);
-  }
-
-}
-
-
-.panda.fail{
-  animation:
-    pandaFail
-    .4s;
-}
-
-
-@keyframes pandaFail{
-
-  25%{
-    transform:
-      translateX(calc(-50% - 12px))
-      rotate(-7deg);
-  }
-
-  50%{
-    transform:
-      translateX(calc(-50% + 12px))
-      rotate(7deg);
-  }
-
-}
-
-
-/* =========================================================
-   RIGHT CONTROL PANEL
-========================================================= */
-
-.controlArea{
-  background:#fffaf0;
-
-  padding:25px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  justify-content:center;
-
-  position:relative;
-}
-
-
-.checkpointTag{
-  align-self:center;
-
-  padding:9px 18px;
-
-  border:
-    3px solid #15212b;
-
-  border-radius:999px;
-
-  background:#dff4ff;
-
-  font-size:16px;
-
-  font-weight:1000;
-
-  margin-bottom:14px;
-}
-
-
-/* word card */
-
-.wordCard{
-  width:100%;
-
-  padding:22px 15px;
-
-  border:
-    4px solid #15212b;
-
-  border-radius:23px;
-
-  background:
-    linear-gradient(
-      #fff1b7,
-      #ffe99b
-    );
-
-  text-align:center;
-}
-
-
-.wordPic{
-  font-size:58px;
-}
-
-
-.wordHanzi{
-  margin-top:2px;
-
-  font-size:69px;
-
-  line-height:1;
-
-  font-weight:1000;
-}
-
-
-.wordPinyin{
-  margin-top:7px;
-
-  font-size:27px;
-
-  font-weight:1000;
-
-  color:#59636d;
-}
-
-
-.wordMeaning{
-  margin-top:4px;
-
-  font-size:17px;
-
-  color:#6e777e;
-}
-
-
-/* controls */
-
-.controlButtons{
-  display:flex;
-
-  gap:10px;
-
-  margin-top:13px;
-}
-
-
-.controlButtons
-.btn{
-  flex:1;
-}
-
-
-/* =========================================================
-   ALWAYS ON MIC
-========================================================= */
-
-.micPanel{
-  margin-top:16px;
-
-  border:
-    3px solid #15212b;
-
-  border-radius:20px;
-
-  padding:16px;
-
-  background:white;
-
-  text-align:center;
-}
-
-
-.micStatusRow{
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  gap:11px;
-}
-
-
-.micOrb{
-  width:58px;
-  height:58px;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  border:
-    3px solid #15212b;
-
-  border-radius:50%;
-
-  background:#ff7787;
-
-  font-size:28px;
-
-  transition:.2s;
+    filter:
+        drop-shadow(
+            0 5px 4px
+            rgba(0,0,0,.1)
+        );
 }
 
+.listen-button{
+    width:100%;
 
-.micOrb.active{
-  background:#69da80;
+    border:0;
+    border-radius:20px;
 
-  animation:
-    micPulse .55s
-    infinite alternate;
-}
+    padding:13px 8px;
 
+    background:#fff;
+    color:#47735c;
 
-@keyframes micPulse{
+    font-size:15px;
+    font-weight:1000;
 
-  to{
-    transform:scale(1.1);
+    cursor:pointer;
 
     box-shadow:
-      0 0 0 10px
-      rgba(105,218,128,.17);
-  }
-
+        0 9px 22px
+        rgba(65,91,77,.16);
 }
 
-
-.micTitle{
-  text-align:left;
-
-  font-size:18px;
-
-  font-weight:1000;
+.listen-button:hover{
+    transform:translateY(-2px);
 }
 
-
-.micSubtitle{
-  margin-top:2px;
-
-  text-align:left;
-
-  color:#6f7980;
-
-  font-size:13px;
+.listen-button.playing{
+    animation:
+        speakerPulse
+        .55s
+        infinite
+        alternate;
 }
 
+@keyframes speakerPulse{
+    from{
+        transform:scale(1);
+    }
 
-.voiceWave{
-  height:26px;
-
-  margin:10px 0 3px;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  gap:5px;
+    to{
+        transform:scale(1.06);
+    }
 }
 
+.listen-note{
+    margin-top:9px;
 
-.waveBar{
-  width:6px;
-  height:8px;
+    padding:8px;
 
-  border-radius:999px;
+    border-radius:13px;
 
-  background:#6ed981;
+    background:
+        rgba(255,255,255,.91);
+
+    color:#789083;
+
+    font-size:12px;
+    font-weight:800;
+
+    line-height:1.4;
 }
-
-
-.micOrb.active
-~ div
-.voiceWave
-.waveBar{
-  animation:
-    wave .65s
-    infinite alternate;
-}
-
-
-.waveBar:nth-child(2){
-  animation-delay:.1s!important;
-}
-
-.waveBar:nth-child(3){
-  animation-delay:.2s!important;
-}
-
-.waveBar:nth-child(4){
-  animation-delay:.3s!important;
-}
-
-.waveBar:nth-child(5){
-  animation-delay:.4s!important;
-}
-
-
-@keyframes wave{
-
-  from{
-    height:7px;
-  }
-
-  to{
-    height:25px;
-  }
-
-}
-
-
-/* heard transcript */
-
-.heardBox{
-  margin-top:8px;
-
-  min-height:68px;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  padding:10px;
-
-  border:
-    2px dashed #526672;
-
-  border-radius:13px;
-
-  background:#f5f7f8;
-
-  font-weight:900;
-
-  line-height:1.35;
-
-  color:#55636d;
-
-  transition:.2s;
-}
-
-
-.heardBox.good{
-  border-color:#3a8f5b;
-
-  background:#dcf8e3;
-
-  color:#08713c;
-}
-
-
-.heardBox.bad{
-  border-color:#be5362;
-
-  background:#ffe0e4;
-
-  color:#b1293c;
-}
-
-
-.progressText{
-  margin-top:12px;
-
-  text-align:center;
-
-  font-size:16px;
-
-  font-weight:1000;
-
-  color:#59646c;
-}
-
 
 /* =========================================================
-   BOSS BOX
+   CÂY
 ========================================================= */
 
-.bossBox{
-  position:absolute;
+.tree{
+    position:absolute;
 
-  inset:
-    12px 12px auto 12px;
+    z-index:10;
 
-  z-index:30;
+    width:700px;
+    height:555px;
 
-  border:
-    3px solid #15212b;
+    left:59%;
+    bottom:92px;
 
-  border-radius:16px;
-
-  background:#ffe2eb;
-
-  padding:13px;
-
-  text-align:center;
-
-  font-weight:900;
+    transform:
+        translateX(-50%);
 }
 
+/* thân */
+
+.trunk{
+    position:absolute;
+
+    z-index:3;
+
+    left:50%;
+    bottom:0;
+
+    width:112px;
+    height:300px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        48px 48px 25px 25px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #714934 0%,
+            #9d6a48 28%,
+            #ad7954 50%,
+            #916043 73%,
+            #69432f 100%
+        );
+
+    box-shadow:
+        inset 10px 0
+        rgba(255,255,255,.05);
+}
+
+.trunk::before{
+    content:"";
+
+    position:absolute;
+
+    left:25px;
+    top:72px;
+
+    width:15px;
+    height:145px;
+
+    border-radius:50%;
+
+    background:
+        rgba(90,52,33,.17);
+
+    transform:rotate(4deg);
+}
+
+.trunk::after{
+    content:"";
+
+    position:absolute;
+
+    right:24px;
+    top:130px;
+
+    width:12px;
+    height:100px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+    transform:rotate(-5deg);
+}
+
+/* rễ */
+
+.root{
+    position:absolute;
+
+    z-index:2;
+
+    bottom:3px;
+
+    width:125px;
+    height:35px;
+
+    border-radius:50%;
+
+    background:#7c5138;
+}
+
+.root-left{
+    left:245px;
+
+    transform:
+        rotate(-15deg);
+}
+
+.root-right{
+    right:245px;
+
+    transform:
+        rotate(15deg);
+}
+
+/* cành */
+
+.branch{
+    position:absolute;
+
+    z-index:2;
+
+    height:32px;
+
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            #976346,
+            #774b35
+        );
+}
+
+.branch-left{
+    width:220px;
+
+    left:165px;
+    top:310px;
+
+    transform:
+        rotate(-32deg);
+}
+
+.branch-right{
+    width:225px;
+
+    right:160px;
+    top:305px;
+
+    transform:
+        rotate(32deg);
+}
+
+.branch-top-left{
+    width:175px;
+
+    left:255px;
+    top:230px;
+
+    transform:
+        rotate(-65deg);
+}
+
+.branch-top-right{
+    width:170px;
+
+    right:250px;
+    top:225px;
+
+    transform:
+        rotate(64deg);
+}
 
 /* =========================================================
-   RESULT SCREEN
+   TÁN CÂY
 ========================================================= */
 
-.resultScreen{
-  position:absolute;
-  inset:0;
+.crown{
+    position:absolute;
 
-  display:flex;
+    z-index:5;
 
-  justify-content:center;
-  align-items:center;
+    border-radius:
+        48% 52% 45% 55%;
 
-  text-align:center;
+    box-shadow:
+        inset -18px -18px
+        rgba(37,103,47,.08),
+        0 7px 13px
+        rgba(52,100,53,.06);
 }
 
+.crown1{
+    width:235px;
+    height:210px;
 
-.resultContent{
-  width:950px;
+    left:35px;
+    top:175px;
+
+    background:#64ac5b;
 }
 
+.crown2{
+    width:245px;
+    height:220px;
 
-.resultEmoji{
-  font-size:105px;
+    left:125px;
+    top:75px;
+
+    background:#78bd68;
 }
 
+.crown3{
+    width:245px;
+    height:220px;
 
-.resultTitle{
-  font-size:62px;
+    left:235px;
+    top:20px;
 
-  font-weight:1000;
+    background:#84c874;
 }
 
+.crown4{
+    width:245px;
+    height:220px;
 
-.resultGrid{
-  margin:
-    27px auto;
+    right:125px;
+    top:75px;
 
-  width:760px;
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:15px;
+    background:#78bd68;
 }
 
+.crown5{
+    width:235px;
+    height:210px;
 
-.resultBox{
-  padding:20px;
+    right:35px;
+    top:175px;
 
-  border:
-    3px solid #15212b;
-
-  border-radius:17px;
-
-  background:white;
-
-  font-size:16px;
-
-  font-weight:900;
+    background:#62aa59;
 }
 
+.crown6{
+    width:330px;
+    height:225px;
 
-.resultBox strong{
-  display:block;
+    left:185px;
+    top:185px;
 
-  margin-top:5px;
-
-  font-size:32px;
+    background:#70b961;
 }
 
+.crown7{
+    width:220px;
+    height:175px;
 
-.resultMessage{
-  width:760px;
+    left:240px;
+    top:120px;
 
-  margin:
-    0 auto 24px;
-
-  border:
-    3px dashed #15212b;
-
-  border-radius:17px;
-
-  background:#fff0b4;
-
-  padding:17px;
-
-  font-size:18px;
-
-  font-weight:850;
+    background:#88cc77;
 }
 
+/* điểm sáng lá */
+
+.leaf-dot{
+    position:absolute;
+
+    z-index:6;
+
+    width:24px;
+    height:12px;
+
+    border-radius:
+        100% 0 100% 0;
+
+    background:
+        rgba(210,239,177,.42);
+}
+
+.leaf-dot1{
+    left:180px;
+    top:125px;
+
+    transform:rotate(-30deg);
+}
+
+.leaf-dot2{
+    left:310px;
+    top:65px;
+
+    transform:rotate(20deg);
+}
+
+.leaf-dot3{
+    right:160px;
+    top:160px;
+
+    transform:rotate(-20deg);
+}
+
+.leaf-dot4{
+    left:120px;
+    top:255px;
+
+    transform:rotate(15deg);
+}
 
 /* =========================================================
-   ORIENTATION MESSAGE
+   QUẢ TRÊN CÂY
 ========================================================= */
 
-.rotateHint{
-  position:fixed;
+#fruitContainer{
+    position:absolute;
 
-  z-index:10000;
+    z-index:15;
 
-  left:50%;
-
-  bottom:10px;
-
-  transform:
-    translateX(-50%);
-
-  padding:8px 13px;
-
-  border-radius:999px;
-
-  background:
-    rgba(0,0,0,.75);
-
-  color:white;
-
-  font-size:12px;
-
-  font-weight:850;
-
-  pointer-events:none;
-
-  display:none;
+    inset:0;
 }
 
+.fruit{
+    position:absolute;
 
-@media(
-  orientation:portrait
-){
+    width:66px;
+    height:66px;
 
-  .rotateHint{
+    border:0;
+
+    border-radius:
+        48% 52% 50% 50%;
+
+    color:#fff;
+
+    font-size:19px;
+    font-weight:1000;
+
+    cursor:pointer;
+
+    text-shadow:
+        0 1px 2px
+        rgba(0,0,0,.15);
+
+    box-shadow:
+        inset -7px -8px
+        rgba(0,0,0,.08),
+        0 6px 10px
+        rgba(54,80,59,.18);
+
+    transition:
+        transform .17s;
+}
+
+.fruit::before{
+    content:"";
+
+    position:absolute;
+
+    left:34px;
+    top:-7px;
+
+    width:19px;
+    height:11px;
+
+    border-radius:
+        100% 0 100% 0;
+
+    background:#3d8d4b;
+
+    transform:
+        rotate(-28deg);
+}
+
+.fruit:hover{
+    transform:
+        scale(1.12);
+}
+
+.apple{
+    background:#ed6f70;
+}
+
+.orange{
+    background:#efa04b;
+}
+
+.peach{
+    background:#ee8fa0;
+}
+
+.pear{
+    background:#a6ba59;
+}
+
+.plum{
+    background:#9676b8;
+}
+
+/* chọn sai */
+
+.fruit.wrong{
+    animation:
+        shake .34s;
+}
+
+@keyframes shake{
+    0%,100%{
+        transform:
+            translateX(0);
+    }
+
+    25%{
+        transform:
+            translateX(-9px)
+            rotate(-5deg);
+    }
+
+    75%{
+        transform:
+            translateX(9px)
+            rotate(5deg);
+    }
+}
+
+/* =========================================================
+   ANIMATION QUẢ RƠI
+========================================================= */
+
+.falling-copy{
+    position:fixed;
+
+    z-index:9999;
+
+    width:66px;
+    height:66px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    color:#fff;
+
+    font-size:18px;
+    font-weight:1000;
+
+    pointer-events:none;
+
+    box-shadow:
+        inset -7px -8px
+        rgba(0,0,0,.08),
+        0 6px 10px
+        rgba(54,80,59,.18);
+
+    transition:
+        left .72s
+        cubic-bezier(.35,.75,.45,1),
+        top .72s
+        cubic-bezier(.55,.05,.85,.45),
+        transform .72s ease;
+}
+
+.falling-copy::before{
+    content:"🍃";
+
+    position:absolute;
+
+    right:-3px;
+    top:-15px;
+
+    font-size:17px;
+}
+
+/* =========================================================
+   QUẢ NẰM TRÊN ĐẤT
+========================================================= */
+
+.ground-fruits{
+    position:absolute;
+
+    z-index:30;
+
+    left:250px;
+    right:70px;
+    bottom:25px;
+
+    height:110px;
+
+    pointer-events:none;
+}
+
+.ground-fruit{
+    position:absolute;
+
+    width:56px;
+    height:56px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    color:#fff;
+
+    font-size:15px;
+    font-weight:1000;
+
+    box-shadow:
+        inset -6px -6px
+        rgba(0,0,0,.08),
+        0 5px 8px
+        rgba(57,77,59,.18);
+
+    animation:
+        landFruit .35s ease-out;
+}
+
+.ground-fruit::before{
+    content:"🍃";
+
+    position:absolute;
+
+    top:-14px;
+    right:-3px;
+
+    font-size:15px;
+}
+
+@keyframes landFruit{
+    from{
+        opacity:0;
+        transform:
+            translateY(-25px)
+            scale(.75);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+/* hoa */
+
+.flowers{
+    position:absolute;
+
+    z-index:22;
+
+    left:18px;
+    bottom:15px;
+
+    font-size:28px;
+
+    letter-spacing:5px;
+}
+
+/* =========================================================
+   THÔNG BÁO
+========================================================= */
+
+.feedback{
+    position:absolute;
+
+    z-index:100;
+
+    left:50%;
+    top:65px;
+
+    transform:
+        translateX(-50%);
+
+    padding:12px 20px;
+
+    border-radius:999px;
+
+    background:#fff;
+
+    font-weight:1000;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.12);
+
+    opacity:0;
+
+    pointer-events:none;
+}
+
+.feedback.show{
+    animation:
+        feedbackAnimation
+        .9s;
+}
+
+@keyframes feedbackAnimation{
+    0%{
+        opacity:0;
+
+        transform:
+            translate(-50%,15px)
+            scale(.85);
+    }
+
+    25%{
+        opacity:1;
+
+        transform:
+            translate(-50%,0)
+            scale(1);
+    }
+
+    75%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            translate(-50%,-15px);
+    }
+}
+
+/* =========================================================
+   HOÀN THÀNH
+========================================================= */
+
+.complete-overlay{
+    display:none;
+
+    position:absolute;
+
+    z-index:500;
+
+    inset:0;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:25px;
+
+    background:
+        rgba(255,255,255,.94);
+
+    text-align:center;
+}
+
+.complete-overlay.show{
+    display:flex;
+}
+
+.complete-content{
+    max-width:430px;
+}
+
+.complete-icon{
+    font-size:72px;
+}
+
+.complete-content h2{
+    margin:7px 0;
+
+    font-size:31px;
+
+    color:#47755d;
+}
+
+.complete-content p{
+    line-height:1.7;
+
+    color:#728b80;
+}
+
+.restart-button{
+    margin-top:16px;
+
+    border:0;
+
+    border-radius:15px;
+
+    padding:12px 20px;
+
+    background:#5e956f;
+
+    color:#fff;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+/* =========================================================
+   GAME 2
+========================================================= */
+
+.sort-game{
+    position:relative;
+
+    min-height:700px;
+
+    padding:28px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #d3eef5 0%,
+            #e7f7ee 55%,
+            #a8d987 55%,
+            #8bc66e 100%
+        );
+}
+
+.sort-game h2{
+    text-align:center;
+
+    color:#47755d;
+
+    font-size:29px;
+}
+
+.sort-description{
+    margin-top:5px;
+
+    text-align:center;
+
+    color:#748d82;
+
+    line-height:1.5;
+}
+
+.sort-score{
+    width:max-content;
+    max-width:100%;
+
+    margin:
+        15px auto 0;
+
+    padding:
+        9px 17px;
+
+    border-radius:999px;
+
+    background:#fff;
+
+    font-weight:900;
+
+    box-shadow:
+        0 5px 15px
+        rgba(65,90,75,.08);
+}
+
+/* quả chờ phân loại */
+
+.sort-fruit-area{
+    min-height:185px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.sort-fruit{
+    position:relative;
+
+    z-index:50;
+
+    width:115px;
+    height:115px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#ed7070;
+
+    color:#fff;
+
+    font-size:31px;
+    font-weight:1000;
+
+    box-shadow:
+        inset -10px -10px
+        rgba(0,0,0,.07),
+        0 14px 24px
+        rgba(73,93,77,.17);
+
+    animation:
+        fruitFloat
+        2s ease-in-out infinite;
+}
+
+.sort-fruit::before{
+    content:"🍃";
+
+    position:absolute;
+
+    top:-27px;
+    right:15px;
+
+    font-size:29px;
+}
+
+@keyframes fruitFloat{
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50%{
+        transform:
+            translateY(-10px)
+            rotate(2deg);
+    }
+}
+
+.sort-fruit.wrong{
+    animation:
+        sortShake
+        .35s;
+}
+
+@keyframes sortShake{
+    0%,100%{
+        transform:translateX(0);
+    }
+
+    25%{
+        transform:
+            translateX(-10px);
+    }
+
+    75%{
+        transform:
+            translateX(10px);
+    }
+}
+
+/* =========================================================
+   GIỎ
+========================================================= */
+
+.baskets{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:40px;
+
+    width:min(870px,100%);
+
+    margin:auto;
+}
+
+.basket{
+    position:relative;
+
+    min-height:285px;
+
+    text-align:center;
+
+    cursor:pointer;
+}
+
+.basket-label{
+    position:relative;
+
+    z-index:20;
+
+    display:inline-block;
+
+    padding:
+        8px 20px;
+
+    border-radius:999px;
+
+    background:#fff;
+
+    color:#74553b;
+
+    font-size:21px;
+    font-weight:1000;
+
+    box-shadow:
+        0 5px 13px
+        rgba(70,60,43,.08);
+}
+
+.basket-label small{
     display:block;
-  }
 
+    margin-top:2px;
+
+    color:#708b78;
+
+    font-size:12px;
 }
 
+/* quai */
+
+.basket-handle{
+    position:absolute;
+
+    z-index:4;
+
+    left:50%;
+    bottom:78px;
+
+    width:245px;
+    height:150px;
+
+    transform:
+        translateX(-50%);
+
+    border:
+        13px solid #a66d3a;
+
+    border-bottom:0;
+
+    border-radius:
+        150px 150px 0 0;
+}
+
+/* thân rổ */
+
+.basket-body{
+    position:absolute;
+
+    z-index:10;
+
+    left:50%;
+    bottom:0;
+
+    width:345px;
+    max-width:96%;
+    height:175px;
+
+    transform:
+        translateX(-50%);
+
+    overflow:hidden;
+
+    border:
+        8px solid #a56b38;
+
+    border-radius:
+        18px 18px 60px 60px;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            #e5b26d 0px,
+            #e5b26d 13px,
+            #ca8e4e 14px,
+            #ca8e4e 18px
+        );
+
+    box-shadow:
+        inset 0 10px
+        rgba(255,255,255,.16),
+        0 10px 20px
+        rgba(87,68,44,.13);
+}
+
+/* viền trên rổ */
+
+.basket-body::before{
+    content:"";
+
+    position:absolute;
+
+    z-index:30;
+
+    left:-5px;
+    right:-5px;
+    top:0;
+
+    height:22px;
+
+    background:#bd7f43;
+
+    border-bottom:
+        4px solid #9f6735;
+}
+
+/* nơi chứa quả */
+
+.basket-content{
+    position:absolute;
+
+    z-index:20;
+
+    left:10px;
+    right:10px;
+    bottom:9px;
+
+    height:135px;
+
+    display:flex;
+    flex-wrap:wrap-reverse;
+
+    justify-content:center;
+    align-content:flex-start;
+
+    gap:3px;
+
+    padding:
+        13px 4px 3px;
+}
+
+/* quả nằm trong rổ */
+
+.basket-fruit{
+    position:relative;
+
+    width:46px;
+    height:46px;
+
+    flex:
+        0 0 46px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    color:#fff;
+
+    font-size:13px;
+    font-weight:1000;
+
+    box-shadow:
+        inset -5px -5px
+        rgba(0,0,0,.08),
+        0 3px 5px
+        rgba(0,0,0,.12);
+
+    animation:
+        basketFruitLand
+        .35s ease-out;
+}
+
+.basket-fruit::before{
+    content:"";
+
+    position:absolute;
+
+    right:5px;
+    top:-3px;
+
+    width:10px;
+    height:6px;
+
+    border-radius:
+        100% 0 100% 0;
+
+    background:#39874a;
+}
+
+@keyframes basketFruitLand{
+    from{
+        opacity:0;
+
+        transform:
+            translateY(-25px)
+            scale(.7);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+/* quả đang bay */
+
+.flying-sort-fruit{
+    position:fixed;
+
+    z-index:9999;
+
+    width:75px;
+    height:75px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    color:#fff;
+
+    font-size:20px;
+    font-weight:1000;
+
+    pointer-events:none;
+
+    box-shadow:
+        inset -7px -7px
+        rgba(0,0,0,.08),
+        0 7px 12px
+        rgba(0,0,0,.15);
+
+    transition:
+        left .7s
+        cubic-bezier(.25,.8,.35,1),
+        top .7s
+        cubic-bezier(.25,.8,.35,1),
+        transform .7s ease;
+}
+
+.flying-sort-fruit::before{
+    content:"🍃";
+
+    position:absolute;
+
+    top:-17px;
+    right:-4px;
+
+    font-size:18px;
+}
+
+.sort-message{
+    height:48px;
+
+    padding-top:16px;
+
+    text-align:center;
+
+    font-weight:900;
+}
 
 /* =========================================================
-   FLASH EFFECT
+   MOBILE
 ========================================================= */
 
-.flash{
-  position:fixed;
+@media(max-width:850px){
 
-  inset:0;
+    .garden{
+        min-height:800px;
+    }
 
-  z-index:9000;
+    .speaker-zone{
+        left:15px;
+        top:105px;
 
-  opacity:0;
+        width:145px;
+    }
 
-  pointer-events:none;
+    .rabbit{
+        font-size:55px;
+    }
+
+    .tree{
+        left:57%;
+        bottom:105px;
+
+        transform:
+            translateX(-50%)
+            scale(.82);
+
+        transform-origin:
+            bottom center;
+    }
+
+    .ground-fruits{
+        left:150px;
+        right:20px;
+    }
 }
 
+@media(max-width:650px){
 
-.flash.good{
-  background:
-    rgba(83,255,137,.22);
+    .page{
+        width:98%;
+    }
 
-  animation:
-    flashEffect .3s;
-}
+    .hero{
+        border-radius:20px;
 
+        padding:19px;
+    }
 
-.flash.bad{
-  background:
-    rgba(255,58,80,.2);
+    .game-card{
+        border-radius:20px;
+    }
 
-  animation:
-    flashEffect .3s;
-}
+    .game-toolbar{
+        justify-content:center;
+    }
 
+    .garden{
+        min-height:790px;
+    }
 
-@keyframes flashEffect{
+    .speaker-zone{
+        top:35px;
+        left:14px;
 
-  50%{
-    opacity:1;
-  }
+        width:135px;
+    }
 
-}
+    .tree{
+        left:50%;
+        bottom:120px;
 
+        transform:
+            translateX(-50%)
+            scale(.68);
+    }
 
-/* =========================================================
-   UTILITIES
-========================================================= */
+    .ground-fruits{
+        left:25px;
+        right:25px;
 
-.hidden{
-  display:none!important;
+        bottom:25px;
+    }
+
+    .ground-fruit{
+        width:46px;
+        height:46px;
+
+        font-size:12px;
+    }
+
+    .baskets{
+        grid-template-columns:1fr;
+
+        gap:60px;
+    }
+
+    .sort-game{
+        min-height:1050px;
+
+        padding:
+            22px 10px;
+    }
+
+    .basket{
+        min-height:270px;
+    }
 }
 
 </style>
 </head>
 
-
 <body>
 
-<div class="viewport">
+<div class="page">
 
-<div
-  class="game"
-  id="game"
->
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
-  <!-- background -->
+<header class="hero">
 
-  <div class="skyGlow"></div>
+    <a
+        class="home-link"
+        href="../../index.html">
 
-  <div class="moon"></div>
+        ← 🏠 Về trang chủ
 
-  <div class="star s1">✦</div>
-  <div class="star s2">✦</div>
-  <div class="star s3">✦</div>
-  <div class="star s4">✦</div>
-  <div class="star s5">✦</div>
+    </a>
 
-  <div class="cloud cloud1">☁️</div>
-  <div class="cloud cloud2">☁️</div>
+    <div class="hero-content">
 
-  <div class="mountains">
-    ⛰️　⛰️　⛰️　⛰️
-  </div>
+        <div class="badge">
+            🌱 语音复习 · Ôn tập ngữ âm
+        </div>
 
-  <div class="bamboo bambooLeft">
-    🎋
-  </div>
+        <h1>
+            🍎 Khu vườn ngữ âm
+        </h1>
 
-  <div class="bamboo bambooRight">
-    🎋
-  </div>
+        <p>
+            Nghe thật kỹ, hái đúng trái cây
+            và cùng thu hoạch khu vườn nhé!
+        </p>
 
-  <div class="lantern lantern1">
-    🏮
-  </div>
+    </div>
 
-  <div class="lantern lantern2">
-    🏮
-  </div>
-
-  <div class="firefly f1"></div>
-  <div class="firefly f2"></div>
-  <div class="firefly f3"></div>
+</header>
 
 
-  <!-- =====================================================
-       TOP BAR
-  ====================================================== -->
+<!-- =========================================================
+     CHỌN GAME
+========================================================= -->
 
-  <div class="topbar">
+<div class="game-tabs">
 
-    <div class="logo">
-      🐼 发音跑酷
+    <button
+        class="game-tab active"
+        onclick="showGame('listenGame',this)">
+
+        🔊 Nghe âm – Hái quả
+
+    </button>
+
+    <button
+        class="game-tab"
+        onclick="showGame('sortGame',this)">
+
+        🧺 Phân loại vào giỏ
+
+    </button>
+
+</div>
+
+
+<!-- =========================================================
+     SHEET 1
+========================================================= -->
+
+<section
+    id="listenGame"
+    class="game-panel active">
+
+<div class="game-card">
+
+    <div class="game-toolbar">
+
+        <div class="sound-tabs">
+
+            <button
+                id="initialTab"
+                class="sound-tab active"
+                onclick="changeListenMode('initial')">
+
+                🌿 声母 · Thanh mẫu
+
+            </button>
+
+            <button
+                id="finalTab"
+                class="sound-tab"
+                onclick="changeListenMode('final')">
+
+                🌸 韵母 · Vận mẫu
+
+            </button>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="stat">
+                ⭐ Điểm:
+                <span id="score">0</span>
+            </div>
+
+            <div class="stat">
+                🔥 Chuỗi:
+                <span id="streak">0</span>
+            </div>
+
+            <div class="stat">
+                🍎 Đã hái:
+                <span id="progress">0/11</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="garden">
+
+        <div class="sun"></div>
+
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+
+        <div class="hill hill1"></div>
+        <div class="hill hill2"></div>
+
+        <div class="ground-line"></div>
+        <div class="grass"></div>
+
+
+        <div
+            id="feedback"
+            class="feedback">
+
+            Chính xác! 🌟
+
+        </div>
+
+
+        <!-- LOA -->
+
+        <div class="speaker-zone">
+
+            <div class="rabbit">
+                🐰
+            </div>
+
+            <button
+                id="listenButton"
+                class="listen-button"
+                onclick="playQuestion()">
+
+                🔊 NGHE ÂM
+
+            </button>
+
+            <div class="listen-note">
+
+                Nghe âm rồi hái
+                đúng trái cây nha!
+
+            </div>
+
+        </div>
+
+
+        <!-- CÂY -->
+
+        <div class="tree">
+
+            <div class="root root-left"></div>
+            <div class="root root-right"></div>
+
+            <div class="branch branch-left"></div>
+            <div class="branch branch-right"></div>
+            <div class="branch branch-top-left"></div>
+            <div class="branch branch-top-right"></div>
+
+            <div class="trunk"></div>
+
+            <div class="crown crown1"></div>
+            <div class="crown crown2"></div>
+            <div class="crown crown3"></div>
+            <div class="crown crown4"></div>
+            <div class="crown crown5"></div>
+            <div class="crown crown6"></div>
+            <div class="crown crown7"></div>
+
+            <div class="leaf-dot leaf-dot1"></div>
+            <div class="leaf-dot leaf-dot2"></div>
+            <div class="leaf-dot leaf-dot3"></div>
+            <div class="leaf-dot leaf-dot4"></div>
+
+            <div id="fruitContainer"></div>
+
+        </div>
+
+
+        <!-- QUẢ ĐÃ RƠI -->
+
+        <div
+            id="groundFruits"
+            class="ground-fruits">
+        </div>
+
+
+        <div class="flowers">
+            🌼 🌷 🌸 🍄 🌻 🌼
+        </div>
+
+
+        <!-- HOÀN THÀNH -->
+
+        <div
+            id="listenComplete"
+            class="complete-overlay">
+
+            <div class="complete-content">
+
+                <div class="complete-icon">
+                    🎉🍎🍐
+                </div>
+
+                <h2>
+                    Thu hoạch hoàn tất!
+                </h2>
+
+                <p id="listenCompleteText"></p>
+
+                <button
+                    class="restart-button"
+                    onclick="restartListenGame()">
+
+                    🔄 Chơi lại
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SHEET 2
+========================================================= -->
+
+<section
+    id="sortGame"
+    class="game-panel">
+
+<div class="game-card">
+
+<div class="sort-game">
+
+    <h2>
+        🧺 Phân loại vào giỏ
+    </h2>
+
+    <p class="sort-description">
+
+        Nhìn âm trên trái cây và chọn đúng:
+        <b>声母 · Thanh mẫu</b>
+        hoặc
+        <b>韵母 · Vận mẫu</b>.
+
+    </p>
+
+
+    <div class="sort-score">
+
+        ⭐ Điểm:
+        <span id="sortScore">0</span>
+
+        &nbsp; · &nbsp;
+
+        🍎 Đã phân loại:
+        <span id="sortProgress">0/26</span>
+
+    </div>
+
+
+    <!-- QUẢ HIỆN TẠI -->
+
+    <div class="sort-fruit-area">
+
+        <button
+            id="sortFruit"
+            class="sort-fruit">
+
+            b
+
+        </button>
+
+    </div>
+
+
+    <!-- HAI GIỎ -->
+
+    <div class="baskets">
+
+
+        <!-- THANH MẪU -->
+
+        <div
+            id="initialBasket"
+            class="basket"
+            onclick="chooseBasket('initial')">
+
+            <div class="basket-label">
+
+                声母
+
+                <small>
+                    Thanh mẫu
+                </small>
+
+            </div>
+
+            <div class="basket-handle"></div>
+
+            <div class="basket-body">
+
+                <div
+                    id="initialBasketContent"
+                    class="basket-content">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- VẬN MẪU -->
+
+        <div
+            id="finalBasket"
+            class="basket"
+            onclick="chooseBasket('final')">
+
+            <div class="basket-label">
+
+                韵母
+
+                <small>
+                    Vận mẫu
+                </small>
+
+            </div>
+
+            <div class="basket-handle"></div>
+
+            <div class="basket-body">
+
+                <div
+                    id="finalBasketContent"
+                    class="basket-content">
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 
     <div
-      class="stats hidden"
-      id="stats"
-    >
-
-      <div class="stat">
-        🚪
-        <span id="gateStat">
-          1
-        </span>
-        /8
-      </div>
+        id="sortMessage"
+        class="sort-message">
+    </div>
 
 
-      <div class="stat">
-        ⭐
-        <span id="scoreStat">
-          0
-        </span>
-      </div>
+    <!-- HOÀN THÀNH -->
 
+    <div
+        id="sortComplete"
+        class="complete-overlay">
 
-      <div class="stat">
-        🎙️
-        <span id="attemptStat">
-          0
-        </span>
-      </div>
+        <div class="complete-content">
 
+            <div class="complete-icon">
+                🌟🧺🍎
+            </div>
 
-      <div
-        class="stat soundButton"
-        id="soundButton"
-        onclick="toggleSound()"
-      >
-        🔊
-      </div>
+            <h2>
+                Phân loại hoàn tất!
+            </h2>
+
+            <p id="sortCompleteText"></p>
+
+            <button
+                class="restart-button"
+                onclick="restartSortGame()">
+
+                🔄 Chơi lại
+
+            </button>
+
+        </div>
 
     </div>
 
-  </div>
-
-
-  <!-- =====================================================
-       MAIN CARD
-  ====================================================== -->
-
-  <div class="mainCard">
-
-
-    <!-- ===================================================
-         START SCREEN
-    ==================================================== -->
-
-    <section
-      class="startScreen"
-      id="startScreen"
-    >
-
-      <div class="startContent">
-
-        <div class="bigPanda">
-          🐼🏃‍♂️🎙️
-        </div>
-
-
-        <div class="startTitle">
-        Ai chạy nhanh hơn
-        </div>
-
-
-        <div class="startText">
-
-          Panda sẽ chạy qua
-          <strong>8 checkpoint</strong>.
-
-          <br>
-
-          Sau khi bắt đầu,
-          microphone sẽ
-          <strong>tự nghe liên tục</strong>.
-
-          <br>
-
-          Không cần bấm mic lại ở mỗi cổng.
-
-        </div>
-
-
-        <div class="startFeatures">
-
-          <div class="feature">
-
-            <span class="featureEmoji">
-              🎙️
-            </span>
-
-            Mic luôn nghe
-
-          </div>
-
-
-          <div class="feature">
-
-            <span class="featureEmoji">
-              🚪
-            </span>
-
-            Đọc đúng mở cổng
-
-          </div>
-
-
-          <div class="feature">
-
-            <span class="featureEmoji">
-              🐼
-            </span>
-
-            Panda tự chạy
-
-          </div>
-
-
-          <div class="feature">
-
-            <span class="featureEmoji">
-              👾
-            </span>
-
-            Final Boss
-
-          </div>
-
-        </div>
-
-
-        <button
-          class="btn btnPrimary"
-          onclick="startGame()"
-        >
-          🎙️ CHO PHÉP MIC & BẮT ĐẦU
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         GAME SCREEN
-    ==================================================== -->
-
-    <section
-      class="gameScreen hidden"
-      id="gameScreen"
-    >
-
-
-      <!-- ===============================================
-           LEFT SIDE
-      ================================================ -->
-
-      <div class="runnerArea">
-
-        <div class="road"></div>
-
-
-        <!-- far checkpoints -->
-
-        <div class="futureGate two"></div>
-        <div class="futureGate one"></div>
-
-
-        <!-- current gate -->
-
-        <div class="gateWrap">
-
-          <div
-            class="gate"
-            id="gate"
-          >
-
-            <div class="gatePost left"></div>
-
-            <div class="gatePost right"></div>
-
-
-            <div class="gateSign">
-
-              <div
-                class="gateEmoji"
-                id="gateEmoji"
-              >
-                👋
-              </div>
-
-
-              <div
-                class="gateWord"
-                id="gateWord"
-              >
-                你好
-              </div>
-
-
-              <div
-                class="gatePinyin"
-                id="gatePinyin"
-              >
-                nǐ hǎo
-              </div>
-
-            </div>
-
-
-            <div class="gateDoors">
-
-              <div class="door left"></div>
-
-              <div class="door right"></div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- Panda -->
-
-        <div
-          class="panda"
-          id="panda"
-        >
-          🐼
-        </div>
-
-      </div>
-
-
-      <!-- ===============================================
-           RIGHT SIDE
-      ================================================ -->
-
-      <div class="controlArea">
-
-
-        <!-- Boss info -->
-
-        <div
-          class="bossBox hidden"
-          id="bossBox"
-        >
-
-          👾 FINAL BOSS
-
-          <br>
-
-          王老师：同学们，你们好！
-
-          <br>
-
-          🎙️ Hãy đáp:
-          <strong>
-            老师，您好！
-          </strong>
-
-        </div>
-
-
-        <div
-          class="checkpointTag"
-          id="checkpointTag"
-        >
-          🚪 CHECKPOINT 1
-        </div>
-
-
-        <div class="wordCard">
-
-          <div
-            class="wordPic"
-            id="wordPic"
-          >
-            👋
-          </div>
-
-
-          <div
-            class="wordHanzi"
-            id="wordHanzi"
-          >
-            你好
-          </div>
-
-
-          <div
-            class="wordPinyin"
-            id="wordPinyin"
-          >
-            nǐ hǎo
-          </div>
-
-
-          <div
-            class="wordMeaning"
-            id="wordMeaning"
-          >
-            xin chào
-          </div>
-
-        </div>
-
-
-        <div class="controlButtons">
-
-          <button
-            class="btn"
-            onclick="playSample()"
-          >
-            🔊 Nghe mẫu
-          </button>
-
-
-          <button
-            class="btn btnBlue"
-            onclick="togglePinyin()"
-          >
-            👁️ Pinyin
-          </button>
-
-        </div>
-
-
-        <!-- ALWAYS LISTENING -->
-
-        <div class="micPanel">
-
-          <div class="micStatusRow">
-
-            <div
-              class="micOrb"
-              id="micOrb"
-            >
-              🎙️
-            </div>
-
-
-            <div>
-
-              <div
-                class="micTitle"
-                id="micTitle"
-              >
-                Đang chuẩn bị microphone...
-              </div>
-
-
-              <div
-                class="micSubtitle"
-                id="micSubtitle"
-              >
-                Mic sẽ tự nghe liên tục
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="voiceWave">
-
-            <div class="waveBar"></div>
-            <div class="waveBar"></div>
-            <div class="waveBar"></div>
-            <div class="waveBar"></div>
-            <div class="waveBar"></div>
-
-          </div>
-
-
-          <div
-            class="heardBox"
-            id="heardBox"
-          >
-            Đang kết nối...
-          </div>
-
-        </div>
-
-
-        <div
-          class="progressText"
-          id="progressText"
-        >
-          Checkpoint 1 / 8
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         RESULT
-    ==================================================== -->
-
-    <section
-      class="resultScreen hidden"
-      id="resultScreen"
-    >
-
-      <div class="resultContent">
-
-        <div class="resultEmoji">
-          🐼🏆
-        </div>
-
-
-        <div class="resultTitle">
-          太棒了！
-        </div>
-
-
-        <div class="resultGrid">
-
-          <div class="resultBox">
-
-            ĐIỂM
-
-            <strong id="finalScore">
-              0
-            </strong>
-
-          </div>
-
-
-          <div class="resultBox">
-
-            LẦN NHẬN GIỌNG
-
-            <strong id="finalAttempts">
-              0
-            </strong>
-
-          </div>
-
-
-          <div class="resultBox">
-
-            CHECKPOINT
-
-            <strong>
-              8 / 8
-            </strong>
-
-          </div>
-
-        </div>
-
-
-        <div
-          class="resultMessage"
-          id="resultMessage"
-        >
-        </div>
-
-
-        <button
-          class="btn btnPrimary"
-          onclick="restartGame()"
-        >
-          🔄 CHƠI LẠI
-        </button>
-
-      </div>
-
-    </section>
-
-
-  </div>
-
 </div>
 
 </div>
 
+</section>
 
-<div class="rotateHint">
-  📱 Xoay ngang điện thoại để game lớn hơn
 </div>
 
 
-<div
-  class="flash"
-  id="flash"
-></div>
+<!-- =========================================================
+     AUDIO
+     GIỮ ĐÚNG TÊN FILE NÀY
+========================================================= -->
 
+<audio
+    id="lessonAudio"
+    src="yuyin.mp3"
+    preload="auto">
+</audio>
 
 
 <script>
 
 /* =========================================================
-   DATA
+   DANH SÁCH ÂM
 ========================================================= */
 
-const vocabulary = [
+const initials = [
+    "b",
+    "p",
+    "m",
+    "f",
+    "d",
+    "t",
+    "n",
+    "l",
+    "g",
+    "k",
+    "h"
+];
 
-  {
-    hanzi: "你好",
-    pinyin: "nǐ hǎo",
-    pic: "👋",
-    meaning: "xin chào",
-    accepted: [
-      "你好"
-    ]
-  },
 
-  {
-    hanzi: "您好",
-    pinyin: "nín hǎo",
-    pic: "🙇",
-    meaning: "xin chào lịch sự",
-    accepted: [
-      "您好"
-    ]
-  },
+const finals = [
+    "a",
+    "o",
+    "e",
+    "i",
+    "u",
+    "er",
+    "ai",
+    "ei",
+    "ao",
+    "ou",
+    "an",
+    "en",
+    "ang",
+    "eng",
+    "ong"
+];
 
-  {
-    hanzi: "老师",
-    pinyin: "lǎoshī",
-    pic: "👩‍🏫",
-    meaning: "giáo viên",
-    accepted: [
-      "老师"
-    ]
-  },
 
-  {
-    hanzi: "学生",
-    pinyin: "xuésheng",
-    pic: "🧑‍🎓",
-    meaning: "học sinh",
-    accepted: [
-      "学生"
-    ]
-  },
+/* =========================================================
+   AUDIO TIMESTAMP
+   GIỮ NGUYÊN MỐC NÍ ĐÃ ĐƯA
+========================================================= */
 
-  {
-    hanzi: "同学",
-    pinyin: "tóngxué",
-    pic: "👫",
-    meaning: "bạn học",
-    accepted: [
-      "同学"
-    ]
-  },
+const soundAudio = {
 
-  {
-    hanzi: "大家",
-    pinyin: "dàjiā",
-    pic: "👥",
-    meaning: "mọi người",
-    accepted: [
-      "大家"
-    ]
-  },
+    /* =========================
+       声母 · THANH MẪU
+    ========================= */
 
-  {
-    hanzi: "谢谢",
-    pinyin: "xièxie",
-    pic: "🙏",
-    meaning: "cảm ơn",
-    accepted: [
-      "谢谢"
-    ]
-  },
+    "b":{
+        start:98.40,
+        end:99.15
+    },
 
-  {
-    hanzi: "再见",
-    pinyin: "zàijiàn",
-    pic: "👋",
-    meaning: "tạm biệt",
-    accepted: [
-      "再见"
-    ]
-  },
+    "p":{
+        start:99.98,
+        end:100.90
+    },
 
-  {
-    hanzi: "不客气",
-    pinyin: "bú kèqi",
-    pic: "😊",
-    meaning: "không có gì",
-    accepted: [
-      "不客气"
-    ]
-  },
+    "m":{
+        start:101.72,
+        end:102.72
+    },
 
-  {
-    hanzi: "你们",
-    pinyin: "nǐmen",
-    pic: "👥",
-    meaning: "các bạn",
-    accepted: [
-      "你们"
-    ]
-  }
+    "f":{
+        start:103.44,
+        end:104.44
+    },
+
+    "d":{
+        start:105.00,
+        end:106.10
+    },
+
+    "t":{
+        start:106.50,
+        end:107.95
+    },
+
+    "n":{
+        start:108.70,
+        end:109.68
+    },
+
+    "l":{
+        start:110.37,
+        end:111.31
+    },
+
+    "g":{
+        start:111.59,
+        end:113.06
+    },
+
+    "k":{
+        start:113.73,
+        end:114.70
+    },
+
+    "h":{
+        start:115.42,
+        end:116.47
+    },
+
+
+    /* =========================
+       韵母 · VẬN MẪU
+    ========================= */
+
+    "a":{
+        start:119.28,
+        end:120.30
+    },
+
+    "o":{
+        start:121.01,
+        end:122.02
+    },
+
+    "e":{
+        start:122.80,
+        end:123.88
+    },
+
+    "i":{
+        start:124.61,
+        end:125.65
+    },
+
+    "u":{
+        start:126.60,
+        end:127.68
+    },
+
+    "er":{
+        start:128.29,
+        end:129.34
+    },
+
+    "ai":{
+        start:130.19,
+        end:131.26
+    },
+
+    "ei":{
+        start:131.96,
+        end:133.06
+    },
+
+    "ao":{
+        start:133.73,
+        end:134.78
+    },
+
+    "ou":{
+        start:135.53,
+        end:136.64
+    },
+
+    "an":{
+        start:137.26,
+        end:138.38
+    },
+
+    "en":{
+        start:138.95,
+        end:140.14
+    },
+
+    "ang":{
+        start:140.77,
+        end:141.95
+    },
+
+    "eng":{
+        start:142.63,
+        end:143.91
+    },
+
+    "ong":{
+        start:144.66,
+        end:145.90
+    }
+
+};
+
+
+/* =========================================================
+   AUDIO PLAYER
+
+   GIỮ LOGIC playSound ĐANG CHẠY
+========================================================= */
+
+const audio =
+    document.getElementById(
+        "lessonAudio"
+    );
+
+let stopTimer = null;
+
+
+function playSound(key){
+
+    const cut = soundAudio[key];
+
+    if(!cut){
+        console.warn("Không tìm thấy audio:", key);
+        return;
+    }
+
+    clearTimeout(stopTimer);
+    audio.pause();
+
+    function startPlaying(){
+
+        function reallyPlay(){
+
+            audio.play()
+            .then(() => {
+
+                const listenButton =
+                    document.getElementById("listenButton");
+
+                if(listenButton){
+                    listenButton.classList.add("playing");
+                }
+
+                const duration =
+                    (cut.end - cut.start) * 1000;
+
+                stopTimer = setTimeout(() => {
+
+                    audio.pause();
+
+                    if(listenButton){
+                        listenButton.classList.remove("playing");
+                    }
+
+                }, duration);
+
+            })
+            .catch(error => {
+
+                console.error("Lỗi phát audio:", error);
+
+                alert(
+                    "Không phát được âm thanh. Hãy kiểm tra file yuyin.mp3 có nằm cùng thư mục với index.html hay không."
+                );
+
+            });
+        }
+
+        audio.currentTime = cut.start;
+
+        if(audio.seeking){
+
+            audio.addEventListener(
+                "seeked",
+                reallyPlay,
+                { once:true }
+            );
+
+        }else{
+
+            reallyPlay();
+        }
+    }
+
+    if(audio.readyState >= 1){
+
+        startPlaying();
+
+    }else{
+
+        audio.addEventListener(
+            "loadedmetadata",
+            startPlaying,
+            { once:true }
+        );
+
+        audio.load();
+    }
+}
+
+
+/* =========================================================
+   HÀM CHUNG
+========================================================= */
+
+function shuffle(array){
+
+    const copy =
+        [...array];
+
+    for(
+        let i = copy.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+        [
+            copy[i],
+            copy[j]
+        ] = [
+            copy[j],
+            copy[i]
+        ];
+    }
+
+    return copy;
+}
+
+
+function showGame(
+    gameId,
+    button
+){
+
+    document
+        .querySelectorAll(
+            ".game-panel"
+        )
+        .forEach(panel=>{
+
+            panel.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(
+            ".game-tab"
+        )
+        .forEach(tab=>{
+
+            tab.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .getElementById(
+            gameId
+        )
+        .classList.add(
+            "active"
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+}
+
+
+/* =========================================================
+   MÀU QUẢ
+========================================================= */
+
+const fruitColors = [
+    "#ed6f70",
+    "#efa04b",
+    "#ee8fa0",
+    "#a6ba59",
+    "#9676b8"
+];
+
+
+const fruitClasses = [
+    "apple",
+    "orange",
+    "peach",
+    "pear",
+    "plum"
+];
+
+
+/* =========================================================
+   GAME 1
+========================================================= */
+
+let listenMode =
+    "initial";
+
+let currentQuestion =
+    null;
+
+let remainingQuestions =
+    [];
+
+let harvested =
+    [];
+
+let listenScore =
+    0;
+
+let streak =
+    0;
+
+let wrongThisQuestion =
+    false;
+
+
+/* =========================================================
+   VỊ TRÍ QUẢ TRÊN TÁN CÂY
+========================================================= */
+
+const fruitPositions = [
+
+    {left:120,top:205},
+    {left:190,top:125},
+    {left:285,top:75},
+    {left:385,top:90},
+    {left:485,top:145},
+
+    {left:80,top:275},
+    {left:180,top:235},
+    {left:290,top:190},
+    {left:405,top:210},
+    {left:520,top:245},
+
+    {left:145,top:335},
+    {left:250,top:305},
+    {left:355,top:300},
+    {left:465,top:325},
+    {left:330,top:365}
 
 ];
 
 
 /* =========================================================
-   STATE
+   DANH SÁCH THEO SHEET
 ========================================================= */
 
-let words = [];
-
-let currentIndex = 0;
-
-let score = 0;
-
-let attempts = 0;
-
-let showPinyin = true;
-
-let soundOn = true;
-
-
-/*
-  Speech Recognition
-*/
-
-let recognition = null;
-
-let keepListening = false;
-
-let recognitionRunning = false;
-
-let restartingRecognition = false;
-
-
-/*
-  Khi Panda đang chạy,
-  không chấm thêm transcript.
-*/
-
-let locked = false;
-
-
-/*
-  Boss mode
-*/
-
-let bossMode = false;
-
-
-/*
-  Dùng để tránh transcript cũ
-  bị chấm lại liên tục.
-*/
-
-let lastTranscript = "";
-
-let lastTranscriptTime = 0;
-
-
-/* =========================================================
-   SCALE 16:9
-
-   Game luôn là 1600 x 900.
-   JS tự scale để vừa viewport.
-========================================================= */
-
-function scaleGame(){
-
-  const game =
-    document.getElementById(
-      "game"
-    );
-
-
-  const baseWidth =
-    1600;
-
-
-  const baseHeight =
-    900;
-
-
-  const scaleX =
-    window.innerWidth
-    /
-    baseWidth;
-
-
-  const scaleY =
-    window.innerHeight
-    /
-    baseHeight;
-
-
-  const scale =
-    Math.min(
-      scaleX,
-      scaleY
-    );
-
-
-  game.style.transform =
-    `scale(${scale})`;
-
-}
-
-
-window.addEventListener(
-  "resize",
-  scaleGame
-);
-
-
-window.addEventListener(
-  "orientationchange",
-  () => {
-
-    setTimeout(
-      scaleGame,
-      250
-    );
-
-  }
-);
-
-
-scaleGame();
-
-
-/* =========================================================
-   START GAME
-========================================================= */
-
-async function startGame(){
-
-  /*
-    Bắt buộc xin quyền microphone
-    từ thao tác click của người dùng.
-  */
-
-  const permission =
-    await requestMicrophonePermission();
-
-
-  if(!permission){
-
-    alert(
-      "Trình duyệt chưa cho phép microphone.\n\nHãy bật quyền Microphone rồi tải lại trang."
-    );
-
-    return;
-
-  }
-
-
-  words =
-    shuffleArray(
-      vocabulary
-    )
-    .slice(
-      0,
-      8
-    );
-
-
-  currentIndex =
-    0;
-
-
-  score =
-    0;
-
-
-  attempts =
-    0;
-
-
-  bossMode =
-    false;
-
-
-  locked =
-    false;
-
-
-  lastTranscript =
-    "";
-
-
-  document
-    .getElementById(
-      "startScreen"
-    )
-    .classList
-    .add(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "resultScreen"
-    )
-    .classList
-    .add(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "gameScreen"
-    )
-    .classList
-    .remove(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "stats"
-    )
-    .classList
-    .remove(
-      "hidden"
-    );
-
-
-  setupRecognition();
-
-
-  updateCheckpoint();
-
-
-  updateStats();
-
-
-  /*
-    QUAN TRỌNG:
-    từ đây trở đi mic tự nghe.
-  */
-
-  keepListening =
-    true;
-
-
-  startRecognitionLoop();
-
+function getCurrentList(){
+
+    return listenMode === "initial"
+        ? initials
+        : finals;
 }
 
 
 /* =========================================================
-   MICROPHONE PERMISSION
+   ĐỔI THANH MẪU / VẬN MẪU
 ========================================================= */
 
-async function requestMicrophonePermission(){
+function changeListenMode(mode){
 
-  if(
-    !navigator.mediaDevices
-    ||
-    !navigator.mediaDevices.getUserMedia
-  ){
-
-    return true;
-
-  }
-
-
-  try{
-
-    const stream =
-      await navigator
-        .mediaDevices
-        .getUserMedia({
-          audio: true
-        });
-
-
-    /*
-      Chỉ dùng stream để xin quyền.
-      SpeechRecognition sẽ tự dùng mic.
-    */
-
-    stream
-      .getTracks()
-      .forEach(
-        track => track.stop()
-      );
-
-
-    return true;
-
-  }
-
-  catch(error){
-
-    console.error(
-      "Microphone permission:",
-      error
-    );
-
-
-    return false;
-
-  }
-
-}
-
-
-/* =========================================================
-   SPEECH RECOGNITION SETUP
-========================================================= */
-
-function setupRecognition(){
-
-  const SpeechRecognition =
-    window.SpeechRecognition
-    ||
-    window.webkitSpeechRecognition;
-
-
-  /*
-    Browser không hỗ trợ.
-  */
-
-  if(!SpeechRecognition){
-
-    document
-      .getElementById(
-        "heardBox"
-      )
-      .className =
-        "heardBox bad";
+    listenMode =
+        mode;
 
 
     document
-      .getElementById(
-        "heardBox"
-      )
-      .innerHTML =
-        `
-        ⚠️ Trình duyệt này không hỗ trợ
-        Speech Recognition.
-        <br>
-        Hãy thử Chrome / Edge.
-        `;
-
-
-    document
-      .getElementById(
-        "micTitle"
-      )
-      .textContent =
-        "Không có Speech Recognition";
-
-
-    return false;
-
-  }
-
-
-  /*
-    Tạo mới.
-  */
-
-  recognition =
-    new SpeechRecognition();
-
-
-  recognition.lang =
-    "zh-CN";
-
-
-  /*
-    Interim Results:
-    không cần chờ người dùng nói xong
-    mới kiểm tra.
-  */
-
-  recognition.interimResults =
-    true;
-
-
-  /*
-    Dùng false cho mỗi phiên ngắn,
-    rồi tự restart.
-
-    Cách này ổn định hơn
-    continuous=true trên nhiều máy.
-  */
-
-  recognition.continuous =
-    false;
-
-
-  recognition.maxAlternatives =
-    5;
-
-
-  /* =============================================
-     START
-  ============================================== */
-
-  recognition.onstart =
-    () => {
-
-      recognitionRunning =
-        true;
-
-
-      restartingRecognition =
-        false;
-
-
-      setMicVisual(
-        true,
-        "🎙️ MIC ĐANG NGHE",
-        "Cứ đọc từ phía trên — không cần bấm mic"
-      );
-
-    };
-
-
-  /* =============================================
-     RESULT
-  ============================================== */
-
-  recognition.onresult =
-    event => {
-
-
-      let transcripts =
-        [];
-
-
-      /*
-        Lấy tất cả alternatives
-        browser đoán được.
-      */
-
-      for(
-        let resultIndex =
-          event.resultIndex;
-
-        resultIndex <
-          event.results.length;
-
-        resultIndex++
-      ){
-
-        const result =
-          event.results[
-            resultIndex
-          ];
-
-
-        for(
-          let altIndex = 0;
-
-          altIndex <
-            result.length;
-
-          altIndex++
-        ){
-
-          const text =
-            result[
-              altIndex
-            ]
-            .transcript
-            .trim();
-
-
-          if(text){
-
-            transcripts
-              .push(
-                text
-              );
-
-          }
-
-        }
-
-      }
-
-
-      if(
-        transcripts.length ===
-        0
-      ){
-
-        return;
-
-      }
-
-
-      /*
-        Hiện transcript đầu tiên.
-      */
-
-      const visible =
-        transcripts[0];
-
-
-      document
         .getElementById(
-          "heardBox"
+            "initialTab"
         )
-        .className =
-          "heardBox";
+        .classList.toggle(
+            "active",
+            mode === "initial"
+        );
 
 
-      document
+    document
         .getElementById(
-          "heardBox"
+            "finalTab"
         )
-        .innerHTML =
-          `
-          🎧 Máy nghe:
-          <strong>
-          ${escapeHtml(visible)}
-          </strong>
-          `;
-
-
-      /*
-        Tránh nhận cùng một transcript
-        liên tục vài mili giây.
-      */
-
-      const now =
-        Date.now();
-
-
-      if(
-        visible ===
-          lastTranscript
-        &&
-        now -
-          lastTranscriptTime
-        <
-        800
-      ){
-
-        return;
-
-      }
-
-
-      lastTranscript =
-        visible;
-
-
-      lastTranscriptTime =
-        now;
-
-
-      attempts++;
-
-
-      updateStats();
-
-
-      checkVoice(
-        transcripts
-      );
-
-    };
-
-
-  /* =============================================
-     ERROR
-  ============================================== */
-
-  recognition.onerror =
-    event => {
-
-
-      console.log(
-        "Speech error:",
-        event.error
-      );
-
-
-      /*
-        Các lỗi này không cần
-        tắt game.
-      */
-
-      if(
-        event.error ===
-          "no-speech"
-        ||
-        event.error ===
-          "aborted"
-      ){
-
-        return;
-
-      }
-
-
-      if(
-        event.error ===
-        "not-allowed"
-      ){
-
-        keepListening =
-          false;
-
-
-        setMicVisual(
-          false,
-          "❌ MICROPHONE BỊ CHẶN",
-          "Hãy cấp quyền Microphone cho trang này"
+        .classList.toggle(
+            "active",
+            mode === "final"
         );
 
 
-        document
-          .getElementById(
-            "heardBox"
-          )
-          .className =
-            "heardBox bad";
+    restartListenGame();
+}
 
 
-        document
-          .getElementById(
-            "heardBox"
-          )
-          .textContent =
-            "Trình duyệt không cho phép dùng microphone.";
+/* =========================================================
+   KHỞI ĐỘNG LẠI GAME 1
+========================================================= */
 
-      }
+function restartListenGame(){
 
-    };
+    const list =
+        getCurrentList();
 
 
-  /* =============================================
-     END
+    remainingQuestions =
+        shuffle(list);
 
-     Đây chính là phần giúp mic
-     "luôn mở".
 
-     Browser tự kết thúc session
-     -> game tự start session mới.
-  ============================================== */
+    harvested = [];
 
-  recognition.onend =
-    () => {
+    listenScore = 0;
 
-      recognitionRunning =
+    streak = 0;
+
+    currentQuestion =
+        null;
+
+    wrongThisQuestion =
         false;
 
 
-      if(
-        keepListening
-      ){
-
-        restartRecognition();
-
-      }
-
-      else{
-
-        setMicVisual(
-          false,
-          "MIC TẠM DỪNG",
-          ""
-        );
-
-      }
-
-    };
-
-
-  return true;
-
-}
-
-
-/* =========================================================
-   START RECOGNITION LOOP
-========================================================= */
-
-function startRecognitionLoop(){
-
-  if(!recognition){
-
-    const success =
-      setupRecognition();
-
-
-    if(!success){
-
-      return;
-
-    }
-
-  }
-
-
-  keepListening =
-    true;
-
-
-  if(
-    recognitionRunning
-  ){
-
-    return;
-
-  }
-
-
-  try{
-
-    recognition.start();
-
-  }
-
-  catch(error){
-
-    /*
-      start() đôi khi bị gọi
-      trước khi session cũ đóng hẳn.
-    */
-
-    setTimeout(
-      startRecognitionLoop,
-      350
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   RESTART AUTOMATICALLY
-========================================================= */
-
-function restartRecognition(){
-
-  if(
-    !keepListening
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    restartingRecognition
-  ){
-
-    return;
-
-  }
-
-
-  restartingRecognition =
-    true;
-
-
-  /*
-    delay nhỏ để browser
-    giải phóng recognition session.
-  */
-
-  setTimeout(
-    () => {
-
-      restartingRecognition =
-        false;
-
-
-      if(
-        !keepListening
-        ||
-        recognitionRunning
-      ){
-
-        return;
-
-      }
-
-
-      try{
-
-        recognition.start();
-
-      }
-
-      catch(error){
-
-        setTimeout(
-          restartRecognition,
-          400
-        );
-
-      }
-
-    },
-    250
-  );
-
-}
-
-
-/* =========================================================
-   MIC VISUAL
-========================================================= */
-
-function setMicVisual(
-  active,
-  title,
-  subtitle
-){
-
-  const orb =
-    document.getElementById(
-      "micOrb"
-    );
-
-
-  const titleEl =
-    document.getElementById(
-      "micTitle"
-    );
-
-
-  const subEl =
-    document.getElementById(
-      "micSubtitle"
-    );
-
-
-  if(active){
-
-    orb
-      .classList
-      .add(
-        "active"
-      );
-
-  }
-
-  else{
-
-    orb
-      .classList
-      .remove(
-        "active"
-      );
-
-  }
-
-
-  titleEl.textContent =
-    title;
-
-
-  subEl.textContent =
-    subtitle;
-
-}
-
-
-/* =========================================================
-   CHECK VOICE
-========================================================= */
-
-function checkVoice(
-  transcripts
-){
-
-  /*
-    Panda đang chạy
-    thì bỏ qua transcript.
-  */
-
-  if(locked){
-
-    return;
-
-  }
-
-
-  /*
-    Normalize toàn bộ alternatives.
-  */
-
-  const heardList =
-    transcripts.map(
-      text =>
-        normalizeChinese(
-          text
+    document
+        .getElementById(
+            "groundFruits"
         )
-    );
+        .innerHTML = "";
 
 
-  /* =====================================================
-     BOSS
-  ====================================================== */
-
-  if(bossMode){
-
-    const bossAnswers = [
-
-      "老师您好",
-
-      "老师你好",
-
-      "王老师您好",
-
-      "王老师你好"
-
-    ];
+    document
+        .getElementById(
+            "listenComplete"
+        )
+        .classList.remove(
+            "show"
+        );
 
 
-    const success =
-      heardList.some(
-        heard =>
-          bossAnswers.some(
-            answer =>
-              heard.includes(
-                normalizeChinese(
-                  answer
-                )
-              )
-          )
-      );
+    renderTreeFruits();
+
+    updateListenStats();
+
+    nextQuestion();
+}
 
 
-    if(success){
+/* =========================================================
+   TẠO QUẢ TRÊN CÂY
+========================================================= */
 
-      locked =
-        true;
+function renderTreeFruits(){
 
-
-      score +=
-        500;
-
-
-      updateStats();
-
-
-      bossSuccess();
-
-    }
+    const container =
+        document.getElementById(
+            "fruitContainer"
+        );
 
 
-    return;
-
-  }
-
-
-  /* =====================================================
-     NORMAL CHECKPOINT
-  ====================================================== */
-
-  const word =
-    words[
-      currentIndex
-    ];
+    container.innerHTML =
+        "";
 
 
-  if(!word){
-
-    return;
-
-  }
-
-
-  const success =
-    heardList.some(
-      heard =>
-
-        word.accepted.some(
-          answer => {
-
-            const target =
-              normalizeChinese(
-                answer
-              );
+    const list =
+        shuffle(
+            getCurrentList()
+        );
 
 
-            return (
-              heard ===
-                target
+    list.forEach(
+        (sound,index)=>{
 
-              ||
+            const fruit =
+                document.createElement(
+                    "button"
+                );
 
-              heard.includes(
-                target
-              )
+
+            const colorIndex =
+                index %
+                fruitColors.length;
+
+
+            fruit.className =
+                "fruit " +
+                fruitClasses[
+                    colorIndex
+                ];
+
+
+            fruit.textContent =
+                sound;
+
+
+            fruit.dataset.sound =
+                sound;
+
+
+            fruit.dataset.color =
+                fruitColors[
+                    colorIndex
+                ];
+
+
+            const position =
+                fruitPositions[
+                    index %
+                    fruitPositions.length
+                ];
+
+
+            fruit.style.left =
+                position.left +
+                "px";
+
+
+            fruit.style.top =
+                position.top +
+                "px";
+
+
+            fruit.addEventListener(
+                "click",
+                ()=>{
+
+                    chooseFruit(
+                        sound,
+                        fruit
+                    );
+
+                }
             );
 
-          }
-        )
 
-  );
+            container.appendChild(
+                fruit
+            );
 
-
-  if(success){
-
-    locked =
-      true;
-
-
-    score +=
-      100;
-
-
-    updateStats();
-
-
-    openGate();
-
-  }
-
+        }
+    );
 }
 
 
 /* =========================================================
-   UPDATE CHECKPOINT
+   CÂU TIẾP THEO
 ========================================================= */
 
-function updateCheckpoint(){
+function nextQuestion(){
 
-  /*
-    Sau 8 từ -> Boss
-  */
+    if(
+        remainingQuestions.length === 0
+    ){
 
-  if(
-    currentIndex >=
-    words.length
-  ){
+        finishListenGame();
 
-    startBoss();
-
-    return;
-
-  }
+        return;
+    }
 
 
-  bossMode =
-    false;
+    currentQuestion =
+        remainingQuestions.shift();
 
 
-  locked =
-    false;
-
-
-  const word =
-    words[
-      currentIndex
-    ];
-
-
-  document
-    .getElementById(
-      "bossBox"
-    )
-    .classList
-    .add(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "checkpointTag"
-    )
-    .textContent =
-      `🚪 CHECKPOINT ${currentIndex + 1}`;
-
-
-  document
-    .getElementById(
-      "wordPic"
-    )
-    .textContent =
-      word.pic;
-
-
-  document
-    .getElementById(
-      "wordHanzi"
-    )
-    .textContent =
-      word.hanzi;
-
-
-  document
-    .getElementById(
-      "wordPinyin"
-    )
-    .textContent =
-      showPinyin
-      ?
-      word.pinyin
-      :
-      "••••••";
-
-
-  document
-    .getElementById(
-      "wordMeaning"
-    )
-    .textContent =
-      word.meaning;
-
-
-  document
-    .getElementById(
-      "gateEmoji"
-    )
-    .textContent =
-      word.pic;
-
-
-  document
-    .getElementById(
-      "gateWord"
-    )
-    .textContent =
-      word.hanzi;
-
-
-  document
-    .getElementById(
-      "gatePinyin"
-    )
-    .textContent =
-      showPinyin
-      ?
-      word.pinyin
-      :
-      "";
-
-
-  document
-    .getElementById(
-      "progressText"
-    )
-    .textContent =
-      `Checkpoint ${currentIndex + 1} / ${words.length}`;
-
-
-  const gate =
-    document.getElementById(
-      "gate"
-    );
-
-
-  gate.classList.remove(
-    "open",
-    "fail"
-  );
-
-
-  document
-    .getElementById(
-      "heardBox"
-    )
-    .className =
-      "heardBox";
-
-
-  document
-    .getElementById(
-      "heardBox"
-    )
-    .innerHTML =
-      `
-      🎙️ Mic đang nghe.
-      <br>
-      Hãy đọc:
-      <strong>
-      ${word.hanzi}
-      </strong>
-      `;
-
-
-  updateStats();
-
+    wrongThisQuestion =
+        false;
 }
 
 
 /* =========================================================
-   OPEN GATE
+   NÚT LOA
 ========================================================= */
 
-function openGate(){
+function playQuestion(){
 
-  const gate =
-    document.getElementById(
-      "gate"
+    if(!currentQuestion){
+        return;
+    }
+
+
+    playSound(
+        currentQuestion
     );
-
-
-  gate.classList.add(
-    "open"
-  );
-
-
-  const heard =
-    document.getElementById(
-      "heardBox"
-    );
-
-
-  heard.className =
-    "heardBox good";
-
-
-  heard.innerHTML =
-    `
-    ✅ ĐÚNG!
-    <br>
-    🚪 Cổng đang mở...
-    `;
-
-
-  flashScreen(
-    true
-  );
-
-
-  playCorrectSound();
-
-
-  speakChinese(
-    randomItem([
-      "太棒了！",
-      "非常好！",
-      "答对了！"
-    ])
-  );
-
-
-  runPanda();
-
 }
 
 
 /* =========================================================
-   PANDA RUN
+   CHỌN QUẢ
 ========================================================= */
 
-function runPanda(){
+function chooseFruit(
+    sound,
+    fruitElement
+){
 
-  const panda =
-    document.getElementById(
-      "panda"
+    if(!currentQuestion){
+        return;
+    }
+
+
+    if(
+        sound ===
+        currentQuestion
+    ){
+
+        const savedSound =
+            sound;
+
+
+        const savedColor =
+            fruitElement
+                .dataset
+                .color;
+
+
+        harvested.push(
+            sound
+        );
+
+
+        if(
+            !wrongThisQuestion
+        ){
+
+            listenScore += 10;
+
+            streak++;
+
+        }else{
+
+            listenScore += 5;
+
+            streak = 0;
+        }
+
+
+        showFeedback(
+            streak >= 3
+            ? "Quá giỏi! 🔥"
+            : "Chính xác! 🌟"
+        );
+
+
+        updateListenStats();
+
+
+        /*
+           KHÓA CÂU
+        */
+
+        currentQuestion =
+            null;
+
+
+        /*
+           QUẢ RƠI XUỐNG ĐẤT
+        */
+
+        dropFruitToGround(
+            fruitElement,
+            savedSound,
+            savedColor
+        );
+
+
+    }else{
+
+        wrongThisQuestion =
+            true;
+
+
+        streak = 0;
+
+
+        fruitElement
+            .classList
+            .remove(
+                "wrong"
+            );
+
+
+        void
+            fruitElement
+            .offsetWidth;
+
+
+        fruitElement
+            .classList
+            .add(
+                "wrong"
+            );
+
+
+        showFeedback(
+            "Chưa đúng, nghe lại nha! 👂"
+        );
+
+
+        updateListenStats();
+
+
+        setTimeout(
+            ()=>{
+
+                playQuestion();
+
+            },
+            400
+        );
+    }
+}
+
+
+/* =========================================================
+   RƠI TỪ CÂY XUỐNG ĐẤT
+========================================================= */
+
+function dropFruitToGround(
+    sourceFruit,
+    sound,
+    color
+){
+
+    /*
+       LẤY VỊ TRÍ QUẢ THẬT
+    */
+
+    const sourceRect =
+        sourceFruit
+            .getBoundingClientRect();
+
+
+    const ground =
+        document.getElementById(
+            "groundFruits"
+        );
+
+
+    const groundRect =
+        ground
+            .getBoundingClientRect();
+
+
+    /*
+       TÍNH VỊ TRÍ QUẢ SẼ NẰM
+       TRÊN MẶT ĐẤT
+    */
+
+    const index =
+        harvested.length - 1;
+
+
+    const columns = 8;
+
+
+    const column =
+        index %
+        columns;
+
+
+    const row =
+        Math.floor(
+            index /
+            columns
+        );
+
+
+    let targetX =
+        groundRect.left +
+        15 +
+        column * 62;
+
+
+    let targetY =
+        groundRect.bottom -
+        56 -
+        row * 42;
+
+
+    /*
+       tránh chạy khỏi vùng đất
+    */
+
+    const maxX =
+        groundRect.right -
+        58;
+
+
+    if(
+        targetX >
+        maxX
+    ){
+
+        targetX =
+            maxX;
+    }
+
+
+    /*
+       tạo bản sao để animation
+    */
+
+    const falling =
+        document.createElement(
+            "div"
+        );
+
+
+    falling.className =
+        "falling-copy";
+
+
+    falling.textContent =
+        sound;
+
+
+    falling.style.background =
+        color;
+
+
+    falling.style.left =
+        sourceRect.left +
+        "px";
+
+
+    falling.style.top =
+        sourceRect.top +
+        "px";
+
+
+    document.body.appendChild(
+        falling
     );
 
 
-  panda.classList.add(
-    "running"
-  );
+    /*
+       QUẢ TRÊN CÂY BIẾN KHỎI CÀNH
+       NHƯNG KHÔNG MẤT KHỎI GAME
+    */
+
+    sourceFruit.style.visibility =
+        "hidden";
 
 
-  panda.style.bottom =
-    "380px";
+    /*
+       CHẠY ANIMATION
+    */
+
+    requestAnimationFrame(
+        ()=>{
+
+            requestAnimationFrame(
+                ()=>{
+
+                    falling.style.left =
+                        targetX +
+                        "px";
 
 
-  /*
-    Panda tới cổng
-  */
-
-  setTimeout(
-    () => {
+                    falling.style.top =
+                        targetY +
+                        "px";
 
 
-      panda.classList.remove(
-        "running"
-      );
+                    falling.style.transform =
+                        "rotate(300deg) scale(.86)";
+
+                }
+            );
+
+        }
+    );
 
 
-      panda.classList.add(
-        "success"
-      );
+    /*
+       SAU KHI CHẠM ĐẤT:
+       XÓA BẢN ANIMATION,
+       TẠO QUẢ THẬT NẰM DƯỚI ĐẤT
+    */
+
+    setTimeout(
+        ()=>{
+
+            falling.remove();
+
+            sourceFruit.remove();
 
 
-      currentIndex++;
+            addGroundFruit(
+                sound,
+                color,
+                column,
+                row
+            );
 
 
-      /*
-        reset camera / panda
-      */
-
-      setTimeout(
-        () => {
-
-
-          panda.classList.remove(
-            "success"
-          );
-
-
-          panda.style.transition =
-            "none";
-
-
-          panda.style.bottom =
-            "55px";
-
-
-          void panda.offsetHeight;
-
-
-          panda.style.transition =
-            `
-            bottom .8s
-            cubic-bezier(.3,1.25,.5,1)
-            `;
-
-
-          updateCheckpoint();
-
+            nextQuestion();
 
         },
-        550
-      );
-
-
-    },
-    850
-  );
-
+        740
+    );
 }
 
 
 /* =========================================================
-   WRONG EFFECT
-
-   Không tự gọi liên tục vì interim
-   đôi khi nhận nửa từ.
-
-   Game chỉ hiện transcript,
-   học viên cứ đọc lại.
+   QUẢ THẬT NẰM TRÊN ĐẤT
 ========================================================= */
 
-function wrongEffect(){
+function addGroundFruit(
+    sound,
+    color,
+    column,
+    row
+){
 
-  const gate =
-    document.getElementById(
-      "gate"
+    const ground =
+        document.getElementById(
+            "groundFruits"
+        );
+
+
+    const fruit =
+        document.createElement(
+            "div"
+        );
+
+
+    fruit.className =
+        "ground-fruit";
+
+
+    fruit.textContent =
+        sound;
+
+
+    fruit.style.background =
+        color;
+
+
+    fruit.style.left =
+        (
+            15 +
+            column * 62
+        )
+        + "px";
+
+
+    fruit.style.bottom =
+        (
+            row * 42
+        )
+        + "px";
+
+
+    /*
+       xoay nhẹ để nhìn như
+       quả thật nằm trên cỏ
+    */
+
+    fruit.style.transform =
+        "rotate(" +
+        (
+            -10 +
+            Math.random() * 20
+        )
+        +
+        "deg)";
+
+
+    ground.appendChild(
+        fruit
     );
-
-
-  gate.classList.remove(
-    "fail"
-  );
-
-
-  void gate.offsetWidth;
-
-
-  gate.classList.add(
-    "fail"
-  );
-
-
-  const panda =
-    document.getElementById(
-      "panda"
-    );
-
-
-  panda.classList.remove(
-    "fail"
-  );
-
-
-  void panda.offsetWidth;
-
-
-  panda.classList.add(
-    "fail"
-  );
-
-
-  flashScreen(
-    false
-  );
-
 }
 
 
 /* =========================================================
-   BOSS
+   THỐNG KÊ GAME 1
 ========================================================= */
 
-function startBoss(){
+function updateListenStats(){
 
-  bossMode =
-    true;
+    const total =
+        getCurrentList()
+            .length;
 
-
-  locked =
-    false;
-
-
-  document
-    .getElementById(
-      "bossBox"
-    )
-    .classList
-    .remove(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "checkpointTag"
-    )
-    .textContent =
-      "👾 FINAL BOSS";
-
-
-  document
-    .getElementById(
-      "wordPic"
-    )
-    .textContent =
-      "👩‍🏫";
-
-
-  document
-    .getElementById(
-      "wordHanzi"
-    )
-    .textContent =
-      "老师，您好！";
-
-
-  document
-    .getElementById(
-      "wordPinyin"
-    )
-    .textContent =
-      showPinyin
-      ?
-      "lǎoshī, nín hǎo"
-      :
-      "••••••";
-
-
-  document
-    .getElementById(
-      "wordMeaning"
-    )
-    .textContent =
-      "Thưa cô/thầy, xin chào!";
-
-
-  document
-    .getElementById(
-      "gateEmoji"
-    )
-    .textContent =
-      "👾";
-
-
-  document
-    .getElementById(
-      "gateWord"
-    )
-    .textContent =
-      "BOSS";
-
-
-  document
-    .getElementById(
-      "gatePinyin"
-    )
-    .textContent =
-      "老师，您好！";
-
-
-  document
-    .getElementById(
-      "progressText"
-    )
-    .textContent =
-      "FINAL BOSS";
-
-
-  document
-    .getElementById(
-      "heardBox"
-    )
-    .className =
-      "heardBox";
-
-
-  document
-    .getElementById(
-      "heardBox"
-    )
-    .innerHTML =
-      `
-      🎙️ Mic vẫn đang nghe.
-      <br>
-      Hãy trả lời:
-      <strong>
-      老师，您好！
-      </strong>
-      `;
-
-
-  const gate =
-    document.getElementById(
-      "gate"
-    );
-
-
-  gate.classList.remove(
-    "open"
-  );
-
-
-  speakChinese(
-    "最后一关！"
-  );
-
-}
-
-
-/* =========================================================
-   BOSS SUCCESS
-========================================================= */
-
-function bossSuccess(){
-
-  const gate =
-    document.getElementById(
-      "gate"
-    );
-
-
-  gate.classList.add(
-    "open"
-  );
-
-
-  document
-    .getElementById(
-      "heardBox"
-    )
-    .className =
-      "heardBox good";
-
-
-  document
-    .getElementById(
-      "heardBox"
-    )
-    .innerHTML =
-      `
-      🏆 BOSS GATE OPEN!
-      <br>
-      太棒了！
-      `;
-
-
-  flashScreen(
-    true
-  );
-
-
-  playWinSound();
-
-
-  speakChinese(
-    "恭喜你！闯关成功！"
-  );
-
-
-  const panda =
-    document.getElementById(
-      "panda"
-    );
-
-
-  panda.classList.add(
-    "running"
-  );
-
-
-  panda.style.bottom =
-    "410px";
-
-
-  setTimeout(
-    finishGame,
-    1300
-  );
-
-}
-
-
-/* =========================================================
-   FINISH
-========================================================= */
-
-function finishGame(){
-
-  /*
-    Lúc kết thúc mới ngưng mic.
-  */
-
-  keepListening =
-    false;
-
-
-  stopRecognition();
-
-
-  document
-    .getElementById(
-      "gameScreen"
-    )
-    .classList
-    .add(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "stats"
-    )
-    .classList
-    .add(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "resultScreen"
-    )
-    .classList
-    .remove(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "finalScore"
-    )
-    .textContent =
-      score;
-
-
-  document
-    .getElementById(
-      "finalAttempts"
-    )
-    .textContent =
-      attempts;
-
-
-  let message;
-
-
-  if(
-    attempts <= 12
-  ){
-
-    message =
-      "🏆 Phản xạ rất nhanh! Hầu hết checkpoint được nhận diện ngay.";
-
-  }
-
-  else if(
-    attempts <= 22
-  ){
-
-    message =
-      "🌟 Làm tốt! Chơi lại và thử ẩn pinyin để tăng độ khó.";
-
-  }
-
-  else{
-
-    message =
-      "💪 Hoàn thành rồi! Thử nghe mẫu, chú ý thanh điệu và chơi thêm một vòng.";
-
-  }
-
-
-  document
-    .getElementById(
-      "resultMessage"
-    )
-    .textContent =
-      message;
-
-}
-
-
-/* =========================================================
-   RESTART
-========================================================= */
-
-function restartGame(){
-
-  keepListening =
-    false;
-
-
-  stopRecognition();
-
-
-  showPinyin =
-    true;
-
-
-  document
-    .getElementById(
-      "resultScreen"
-    )
-    .classList
-    .add(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "startScreen"
-    )
-    .classList
-    .remove(
-      "hidden"
-    );
-
-
-  const panda =
-    document.getElementById(
-      "panda"
-    );
-
-
-  panda.style.bottom =
-    "55px";
-
-}
-
-
-/* =========================================================
-   STOP RECOGNITION
-========================================================= */
-
-function stopRecognition(){
-
-  keepListening =
-    false;
-
-
-  if(
-    recognition
-  ){
-
-    try{
-
-      recognition.stop();
-
-    }
-
-    catch(error){}
-
-  }
-
-
-  recognitionRunning =
-    false;
-
-}
-
-
-/* =========================================================
-   LISTEN SAMPLE
-========================================================= */
-
-function playSample(){
-
-  if(bossMode){
-
-    speakChinese(
-      "老师，您好！"
-    );
-
-
-    return;
-
-  }
-
-
-  const word =
-    words[
-      currentIndex
-    ];
-
-
-  if(word){
-
-    speakChinese(
-      word.hanzi
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   PINYIN
-========================================================= */
-
-function togglePinyin(){
-
-  showPinyin =
-    !showPinyin;
-
-
-  if(bossMode){
 
     document
-      .getElementById(
-        "wordPinyin"
-      )
-      .textContent =
-        showPinyin
-        ?
-        "lǎoshī, nín hǎo"
-        :
-        "••••••";
-
-
-    return;
-
-  }
-
-
-  const word =
-    words[
-      currentIndex
-    ];
-
-
-  if(!word){
-
-    return;
-
-  }
-
-
-  document
-    .getElementById(
-      "wordPinyin"
-    )
-    .textContent =
-      showPinyin
-      ?
-      word.pinyin
-      :
-      "••••••";
-
-
-  document
-    .getElementById(
-      "gatePinyin"
-    )
-    .textContent =
-      showPinyin
-      ?
-      word.pinyin
-      :
-      "";
-
-}
-
-
-/* =========================================================
-   NORMALIZE
-========================================================= */
-
-function normalizeChinese(
-  text
-){
-
-  return String(
-    text
-  )
-  .replace(
-    /[\s，。！？、,.!?：:；;]/g,
-    ""
-  )
-  .trim();
-
-}
-
-
-/* =========================================================
-   UPDATE STATS
-========================================================= */
-
-function updateStats(){
-
-  document
-    .getElementById(
-      "gateStat"
-    )
-    .textContent =
-      Math.min(
-        currentIndex + 1,
-        8
-      );
-
-
-  document
-    .getElementById(
-      "scoreStat"
-    )
-    .textContent =
-      score;
-
-
-  document
-    .getElementById(
-      "attemptStat"
-    )
-    .textContent =
-      attempts;
-
-}
-
-
-/* =========================================================
-   FLASH
-========================================================= */
-
-function flashScreen(
-  good
-){
-
-  const flash =
-    document.getElementById(
-      "flash"
-    );
-
-
-  flash.className =
-    good
-    ?
-    "flash good"
-    :
-    "flash bad";
-
-
-  setTimeout(
-    () => {
-
-      flash.className =
-        "flash";
-
-    },
-    300
-  );
-
-}
-
-
-/* =========================================================
-   SHUFFLE
-========================================================= */
-
-function shuffleArray(
-  array
-){
-
-  const copy =
-    [...array];
-
-
-  for(
-    let i =
-      copy.length - 1;
-
-    i > 0;
-
-    i--
-  ){
-
-    const j =
-      Math.floor(
-        Math.random()
-        *
-        (i + 1)
-      );
-
-
-    [
-      copy[i],
-      copy[j]
-    ]
-    =
-    [
-      copy[j],
-      copy[i]
-    ];
-
-  }
-
-
-  return copy;
-
-}
-
-
-/* =========================================================
-   RANDOM ITEM
-========================================================= */
-
-function randomItem(
-  array
-){
-
-  return array[
-    Math.floor(
-      Math.random()
-      *
-      array.length
-    )
-  ];
-
-}
-
-
-/* =========================================================
-   SAFE HTML
-========================================================= */
-
-function escapeHtml(
-  text
-){
-
-  return String(
-    text
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
-  );
-
-}
-
-
-/* =========================================================
-   TEXT TO SPEECH
-========================================================= */
-
-function speakChinese(
-  text
-){
-
-  if(
-    !soundOn
-    ||
-    !(
-      "speechSynthesis"
-      in window
-    )
-  ){
-
-    return;
-
-  }
-
-
-  speechSynthesis
-    .cancel();
-
-
-  const speech =
-    new SpeechSynthesisUtterance(
-      text
-    );
-
-
-  speech.lang =
-    "zh-CN";
-
-
-  speech.rate =
-    .9;
-
-
-  speech.pitch =
-    1;
-
-
-  const voices =
-    speechSynthesis
-      .getVoices();
-
-
-  const chineseVoice =
-    voices.find(
-      voice =>
-        voice.lang
-        .toLowerCase()
-        .startsWith(
-          "zh"
+        .getElementById(
+            "score"
         )
-    );
+        .textContent =
+        listenScore;
 
 
-  if(chineseVoice){
+    document
+        .getElementById(
+            "streak"
+        )
+        .textContent =
+        streak;
 
-    speech.voice =
-      chineseVoice;
 
-  }
-
-
-  speechSynthesis
-    .speak(
-      speech
-    );
-
+    document
+        .getElementById(
+            "progress"
+        )
+        .textContent =
+        harvested.length +
+        "/" +
+        total;
 }
 
 
 /* =========================================================
-   SOUND EFFECT ENGINE
+   FEEDBACK
 ========================================================= */
 
-let audioContext =
-  null;
+function showFeedback(text){
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
 
 
-function getAudio(){
-
-  if(!audioContext){
-
-    audioContext =
-      new (
-        window.AudioContext
-        ||
-        window.webkitAudioContext
-      )();
-
-  }
+    feedback.textContent =
+        text;
 
 
-  if(
-    audioContext.state ===
-    "suspended"
-  ){
-
-    audioContext.resume();
-
-  }
+    feedback
+        .classList
+        .remove(
+            "show"
+        );
 
 
-  return audioContext;
+    void
+        feedback.offsetWidth;
 
+
+    feedback
+        .classList
+        .add(
+            "show"
+        );
 }
 
 
-function tone(
-  frequency,
-  duration,
-  type = "sine",
-  volume = .04,
-  delay = 0
+/* =========================================================
+   HOÀN THÀNH GAME 1
+========================================================= */
+
+function finishListenGame(){
+
+    const total =
+        getCurrentList()
+            .length;
+
+
+    document
+        .getElementById(
+            "listenCompleteText"
+        )
+        .innerHTML =
+
+        "Bạn đã hái đủ <b>" +
+        total +
+        "/" +
+        total +
+        "</b> trái.<br>" +
+
+        "Tổng điểm: <b>" +
+        listenScore +
+        "</b> ⭐";
+
+
+    /*
+       chờ một chút để học viên
+       còn nhìn thấy toàn bộ quả
+       nằm dưới đất
+    */
+
+    setTimeout(
+        ()=>{
+
+            document
+                .getElementById(
+                    "listenComplete"
+                )
+                .classList
+                .add(
+                    "show"
+                );
+
+        },
+        600
+    );
+}
+
+
+/* =========================================================
+   GAME 2 - PHÂN LOẠI
+========================================================= */
+
+let sortQuestions =
+    [];
+
+let sortCurrent =
+    null;
+
+let sortScore =
+    0;
+
+let sortDone =
+    0;
+
+let currentSortColor =
+    "#ed6f70";
+
+
+/* =========================================================
+   KHỞI ĐỘNG GAME 2
+========================================================= */
+
+function restartSortGame(){
+
+    sortQuestions =
+        shuffle([
+            ...initials,
+            ...finals
+        ]);
+
+
+    sortCurrent =
+        null;
+
+
+    sortScore =
+        0;
+
+
+    sortDone =
+        0;
+
+
+    document
+        .getElementById(
+            "initialBasketContent"
+        )
+        .innerHTML =
+        "";
+
+
+    document
+        .getElementById(
+            "finalBasketContent"
+        )
+        .innerHTML =
+        "";
+
+
+    document
+        .getElementById(
+            "sortMessage"
+        )
+        .textContent =
+        "";
+
+
+    document
+        .getElementById(
+            "sortComplete"
+        )
+        .classList
+        .remove(
+            "show"
+        );
+
+
+    updateSortStats();
+
+    nextSortQuestion();
+}
+
+
+/* =========================================================
+   QUẢ TIẾP THEO
+========================================================= */
+
+function nextSortQuestion(){
+
+    if(
+        sortQuestions.length === 0
+    ){
+
+        finishSortGame();
+
+        return;
+    }
+
+
+    sortCurrent =
+        sortQuestions.shift();
+
+
+    const fruit =
+        document.getElementById(
+            "sortFruit"
+        );
+
+
+    currentSortColor =
+        fruitColors[
+            Math.floor(
+                Math.random() *
+                fruitColors.length
+            )
+        ];
+
+
+    fruit.textContent =
+        sortCurrent;
+
+
+    fruit.style.background =
+        currentSortColor;
+
+
+    fruit.style.visibility =
+        "visible";
+
+
+    document
+        .getElementById(
+            "sortMessage"
+        )
+        .textContent =
+        "";
+}
+
+
+/* =========================================================
+   XÁC ĐỊNH THANH / VẬN
+========================================================= */
+
+function getSoundType(sound){
+
+    if(
+        initials.includes(
+            sound
+        )
+    ){
+
+        return "initial";
+    }
+
+
+    return "final";
+}
+
+
+/* =========================================================
+   CHỌN GIỎ
+========================================================= */
+
+function chooseBasket(type){
+
+    if(!sortCurrent){
+        return;
+    }
+
+
+    const correctType =
+        getSoundType(
+            sortCurrent
+        );
+
+
+    const fruit =
+        document.getElementById(
+            "sortFruit"
+        );
+
+
+    const message =
+        document.getElementById(
+            "sortMessage"
+        );
+
+
+    if(
+        type ===
+        correctType
+    ){
+
+        const savedSound =
+            sortCurrent;
+
+
+        const savedColor =
+            currentSortColor;
+
+
+        sortScore += 10;
+
+        sortDone++;
+
+
+        message.textContent =
+            "🌟 Chính xác! Quả đang vào giỏ!";
+
+
+        message.style.color =
+            "#4c8961";
+
+
+        /*
+           khóa câu
+        */
+
+        sortCurrent =
+            null;
+
+
+        /*
+           BAY VÀO GIỎ
+        */
+
+        flyFruitIntoBasket(
+            fruit,
+            type,
+            savedSound,
+            savedColor
+        );
+
+
+    }else{
+
+        message.textContent =
+            "🙈 Chưa đúng, thử giỏ kia nha!";
+
+
+        message.style.color =
+            "#bd665e";
+
+
+        fruit
+            .classList
+            .remove(
+                "wrong"
+            );
+
+
+        void
+            fruit.offsetWidth;
+
+
+        fruit
+            .classList
+            .add(
+                "wrong"
+            );
+    }
+
+
+    updateSortStats();
+}
+
+
+/* =========================================================
+   QUẢ BAY VÀO GIỎ
+========================================================= */
+
+function flyFruitIntoBasket(
+    sourceFruit,
+    type,
+    sound,
+    color
 ){
 
-  if(!soundOn){
-
-    return;
-
-  }
+    const sourceRect =
+        sourceFruit
+            .getBoundingClientRect();
 
 
-  const context =
-    getAudio();
+    const basketContent =
+        document.getElementById(
+
+            type === "initial"
+
+            ? "initialBasketContent"
+
+            : "finalBasketContent"
+
+        );
 
 
-  const oscillator =
-    context
-      .createOscillator();
+    const targetRect =
+        basketContent
+            .getBoundingClientRect();
 
 
-  const gain =
-    context
-      .createGain();
+    /*
+       TẠO QUẢ BAY
+    */
+
+    const flying =
+        document.createElement(
+            "div"
+        );
 
 
-  oscillator.type =
-    type;
+    flying.className =
+        "flying-sort-fruit";
 
 
-  oscillator.frequency.value =
-    frequency;
+    flying.textContent =
+        sound;
 
 
-  oscillator.connect(
-    gain
-  );
+    flying.style.background =
+        color;
 
 
-  gain.connect(
-    context.destination
-  );
+    flying.style.left =
+        sourceRect.left +
+        "px";
 
 
-  const start =
-    context.currentTime
-    +
-    delay;
+    flying.style.top =
+        sourceRect.top +
+        "px";
 
 
-  gain.gain.setValueAtTime(
-    volume,
-    start
-  );
+    document.body.appendChild(
+        flying
+    );
 
 
-  gain.gain.exponentialRampToValueAtTime(
-    .001,
-    start + duration
-  );
+    /*
+       ẨN QUẢ GỐC
+    */
+
+    sourceFruit.style.visibility =
+        "hidden";
 
 
-  oscillator.start(
-    start
-  );
+    /*
+       ĐÍCH LÀ BÊN TRONG RỔ,
+       KHÔNG PHẢI BIẾN MẤT TRÊN MIỆNG RỔ
+    */
+
+    const targetLeft =
+        targetRect.left +
+        targetRect.width / 2 -
+        37;
 
 
-  oscillator.stop(
-    start + duration
-  );
-
-}
-
-
-/* correct */
-
-function playCorrectSound(){
-
-  tone(
-    660,
-    .10,
-    "sine",
-    .05,
-    0
-  );
+    const targetTop =
+        targetRect.top +
+        targetRect.height -
+        62;
 
 
-  tone(
-    880,
-    .12,
-    "sine",
-    .05,
-    .08
-  );
+    requestAnimationFrame(
+        ()=>{
+
+            requestAnimationFrame(
+                ()=>{
+
+                    flying.style.left =
+                        targetLeft +
+                        "px";
 
 
-  tone(
-    1100,
-    .16,
-    "sine",
-    .04,
-    .16
-  );
-
-}
+                    flying.style.top =
+                        targetTop +
+                        "px";
 
 
-/* win */
+                    flying.style.transform =
+                        "scale(.62) rotate(280deg)";
 
-function playWinSound(){
+                }
+            );
 
-  const notes = [
-
-    523,
-
-    659,
-
-    784,
-
-    1046,
-
-    1318
-
-  ];
+        }
+    );
 
 
-  notes.forEach(
-    (
-      note,
-      index
-    ) => {
+    /*
+       QUẢ BAY XONG:
+       TẠO QUẢ THẬT NẰM TRONG RỔ
+    */
 
-      tone(
-        note,
-        .18,
-        "sine",
-        .045,
-        index * .1
-      );
+    setTimeout(
+        ()=>{
 
-    }
-  );
+            flying.remove();
 
+
+            addFruitInsideBasket(
+                type,
+                sound,
+                color
+            );
+
+
+            nextSortQuestion();
+
+        },
+        720
+    );
 }
 
 
 /* =========================================================
-   SOUND TOGGLE
+   QUẢ THẬT NẰM TRONG RỔ
 ========================================================= */
 
-function toggleSound(){
+function addFruitInsideBasket(
+    type,
+    sound,
+    color
+){
 
-  soundOn =
-    !soundOn;
+    const container =
+        document.getElementById(
+
+            type === "initial"
+
+            ? "initialBasketContent"
+
+            : "finalBasketContent"
+
+        );
 
 
-  document
-    .getElementById(
-      "soundButton"
-    )
-    .textContent =
-      soundOn
-      ?
-      "🔊"
-      :
-      "🔇";
+    const fruit =
+        document.createElement(
+            "div"
+        );
 
 
-  if(
-    !soundOn
-    &&
-    "speechSynthesis"
-    in window
-  ){
+    fruit.className =
+        "basket-fruit";
 
-    speechSynthesis.cancel();
 
-  }
+    fruit.textContent =
+        sound;
 
+
+    fruit.style.background =
+        color;
+
+
+    container.appendChild(
+        fruit
+    );
 }
+
+
+/* =========================================================
+   THỐNG KÊ GAME 2
+========================================================= */
+
+function updateSortStats(){
+
+    const total =
+        initials.length +
+        finals.length;
+
+
+    document
+        .getElementById(
+            "sortScore"
+        )
+        .textContent =
+        sortScore;
+
+
+    document
+        .getElementById(
+            "sortProgress"
+        )
+        .textContent =
+        sortDone +
+        "/" +
+        total;
+}
+
+
+/* =========================================================
+   HOÀN THÀNH GAME 2
+========================================================= */
+
+function finishSortGame(){
+
+    document
+        .getElementById(
+            "sortCompleteText"
+        )
+        .innerHTML =
+
+        "Bạn đã phân loại đủ <b>26/26</b> âm.<br>" +
+
+        "Tổng điểm: <b>" +
+        sortScore +
+        "</b> ⭐";
+
+
+    /*
+       để học viên nhìn thấy
+       toàn bộ quả trong hai giỏ trước
+    */
+
+    setTimeout(
+        ()=>{
+
+            document
+                .getElementById(
+                    "sortComplete"
+                )
+                .classList
+                .add(
+                    "show"
+                );
+
+        },
+        650
+    );
+}
+
+
+/* =========================================================
+   KHỞI ĐỘNG
+========================================================= */
+
+restartListenGame();
+
+restartSortGame();
 
 </script>
 
