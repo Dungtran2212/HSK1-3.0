@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>第三课 · Pinyin Park</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+    --green:#68a47c;
+    --green-dark:#3f7257;
+    --cream:#fffaf0;
+    --pink:#f5b7c5;
+    --yellow:#ffd978;
+    --blue:#a9d9e8;
+    --purple:#b9a8dc;
+    --red:#e46e6e;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:"Segoe UI","Microsoft YaHei","PingFang SC",Arial,sans-serif;
+    color:#557064;
+    background:
+        radial-gradient(circle at 8% 10%,rgba(255,255,255,.8) 0 45px,transparent 46px),
+        radial-gradient(circle at 90% 15%,rgba(255,255,255,.7) 0 65px,transparent 66px),
+        linear-gradient(#dff5ff,#eff8e7);
+}
+
+button{font-family:inherit}
+
+.page{
+    width:min(1050px,95%);
+    margin:auto;
+    padding:24px 0 60px;
+}
+
+/* HEADER */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:25px;
+    border-radius:30px;
+    background:white;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(63,95,74,.12);
+}
+
+.hero::before{
+    content:"☁️";
+    position:absolute;
+    left:30px;
+    top:25px;
+    font-size:55px;
+    opacity:.6;
+}
+
+.hero::after{
+    content:"🎈";
+    position:absolute;
+    right:35px;
+    top:20px;
+    font-size:60px;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 15px;
+    border-radius:999px;
+    background:#fff0c9;
+    color:#917043;
+    font-weight:900;
+    font-size:13px;
+}
+
+.hero h1{
+    margin:10px 0 4px;
+    font-size:clamp(30px,5vw,46px);
+    color:var(--green-dark);
+}
+
+.hero h2{
+    margin:0;
+    color:#779388;
+    font-size:19px;
+}
+
+.hero p{
+    max-width:650px;
+    margin:10px auto 0;
+    line-height:1.6;
+    color:#8a9d94;
+}
+
+/* MAIN TABS */
+
+.tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:18px 0;
+}
+
+.tab{
+    border:0;
+    padding:14px 10px;
+    border-radius:18px;
+    background:white;
+    color:#668073;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 7px 17px rgba(61,92,73,.08);
+}
+
+.tab.active{
+    background:var(--green);
+    color:white;
+    transform:translateY(-2px);
+}
+
+/* GAME */
+
+.game{
+    display:none;
+    min-height:560px;
+    padding:25px;
+    border-radius:30px;
+    background:white;
+    box-shadow:0 14px 32px rgba(63,95,74,.1);
+}
+
+.game.active{display:block}
+
+.game-title{text-align:center}
+
+.game-title h2{
+    margin:0;
+    color:var(--green-dark);
+    font-size:27px;
+}
+
+.game-title p{color:#899c92}
+
+/* CATEGORY */
+
+.category-tabs{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:20px auto 12px;
+}
+
+.category-btn{
+    border:3px solid transparent;
+    padding:13px 22px;
+    border-radius:18px;
+    background:#f2f5f2;
+    color:#687c72;
+    font-size:16px;
+    font-weight:1000;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.category-btn:hover{
+    transform:translateY(-2px);
+}
+
+.category-btn.initial-active{
+    background:#ffe0e6;
+    border-color:#efadba;
+    color:#9b5867;
+}
+
+.category-btn.final-active{
+    background:#dff1f8;
+    border-color:#9bcfe1;
+    color:#4f8294;
+}
+
+.category-info{
+    width:min(650px,100%);
+    margin:0 auto 15px;
+    padding:11px 15px;
+    border-radius:15px;
+    text-align:center;
+    background:#f7faf7;
+    color:#7a8e84;
+    font-size:14px;
+    font-weight:800;
+}
+
+/* SCORE */
+
+.score-row{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:15px 0;
+}
+
+.pill{
+    padding:7px 13px;
+    border-radius:999px;
+    background:#f2f7f3;
+    font-size:13px;
+    font-weight:900;
+}
+
+/* SPEAKER */
+
+.speaker{
+    display:block;
+    width:92px;
+    height:92px;
+    margin:18px auto;
+    border:0;
+    border-radius:50%;
+    background:linear-gradient(135deg,#ffd978,#ffbd73);
+    box-shadow:0 9px 0 #e9a65c,0 14px 25px rgba(146,105,52,.18);
+    font-size:39px;
+    cursor:pointer;
+}
+
+.speaker:active{
+    transform:translateY(5px);
+    box-shadow:0 4px 0 #e9a65c;
+}
+
+.listen-text{
+    text-align:center;
+    font-size:13px;
+    color:#9a8b72;
+    font-weight:900;
+}
+
+/* GAME 1 */
+
+.sky{
+    position:relative;
+    min-height:330px;
+    overflow:hidden;
+    margin-top:15px;
+    border-radius:25px;
+    background:linear-gradient(#dff4ff 0 72%,#d9efbd 72% 100%);
+}
+
+.cloud{
+    position:absolute;
+    font-size:55px;
+    opacity:.75;
+}
+
+.c1{left:5%;top:15px}
+.c2{right:10%;top:55px}
+
+.balloon-area{
+    position:relative;
+    z-index:3;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:20px;
+    padding:65px 15px 20px;
+}
+
+.balloon{
+    position:relative;
+    width:88px;
+    height:105px;
+    border:0;
+    border-radius:50% 50% 47% 47%;
+    font-size:27px;
+    font-weight:1000;
+    color:#536d62;
+    cursor:pointer;
+    box-shadow:inset -8px -8px 0 rgba(0,0,0,.06);
+    animation:float 2.6s ease-in-out infinite;
+}
+
+.balloon:nth-child(1){background:#ffd0d9}
+.balloon:nth-child(2){background:#ffe294;animation-delay:.3s}
+.balloon:nth-child(3){background:#bde5ee;animation-delay:.6s}
+.balloon:nth-child(4){background:#d4c5ef;animation-delay:.9s}
+
+.balloon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:102px;
+    width:1px;
+    height:65px;
+    background:#a9a9a9;
+}
+
+.balloon.correct{animation:pop .35s forwards}
+
+.balloon.wrong{
+    animation:shake .3s;
+    background:#ffc1bd !important;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+}
+
+@keyframes pop{
+    to{transform:scale(1.6);opacity:0}
+}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-8px)}
+    75%{transform:translateX(8px)}
+}
+
+/* GAME 2 */
+
+.tone-layout{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:25px;
+    align-items:end;
+    margin-top:20px;
+}
+
+.tower{
+    position:relative;
+    width:190px;
+    margin:auto;
+}
+
+.tower-top{
+    text-align:center;
+    font-size:50px;
+}
+
+.floor{
+    position:relative;
+    height:72px;
+    margin:5px 0;
+    border:4px solid #d3b18b;
+    border-radius:13px;
+    background:#fff1d5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+    font-weight:1000;
+    color:#987555;
+}
+
+.floor-number{
+    position:absolute;
+    left:10px;
+    font-size:25px;
+}
+
+.character{
+    position:absolute;
+    right:-40px;
+    bottom:5px;
+    font-size:43px;
+    transition:bottom .6s cubic-bezier(.2,.8,.3,1.3);
+}
+
+.tone-panel{text-align:center}
+
+.tone-options{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    max-width:480px;
+    margin:20px auto;
+}
+
+.tone-btn{
+    border:3px solid #e7e9e3;
+    padding:17px 10px;
+    border-radius:18px;
+    background:#fff;
+    color:#61786c;
+    font-size:23px;
+    font-weight:1000;
+    cursor:pointer;
+}
+
+.tone-btn:hover{
+    border-color:#a9cdb3;
+    transform:translateY(-2px);
+}
+
+.tone-btn.correct{
+    background:#dff4e5;
+    border-color:#67a97b;
+}
+
+.tone-btn.wrong{
+    background:#ffe1de;
+    border-color:#e27670;
+}
+
+/* GAME 3 */
+
+.detective-scene{
+    margin-top:18px;
+    padding:20px;
+    border-radius:25px;
+    background:#fff8e8;
+}
+
+.detective{
+    text-align:center;
+    font-size:65px;
+}
+
+.clue{
+    text-align:center;
+    font-weight:900;
+    color:#8b7659;
+}
+
+.word-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-top:22px;
+}
+
+.word-card{
+    min-height:145px;
+    border:3px solid #eee3ca;
+    border-radius:20px;
+    background:white;
+    cursor:pointer;
+    padding:15px 8px;
+    transition:.2s;
+}
+
+.word-card:hover{
+    transform:translateY(-4px);
+    border-color:#e2c98e;
+}
+
+.word-card .emoji{
+    display:block;
+    font-size:43px;
+    margin-bottom:8px;
+}
+
+.word-card .hanzi{
+    display:block;
+    font-size:27px;
+    font-weight:1000;
+    color:#576e63;
+}
+
+.word-card .pinyin{
+    display:block;
+    margin-top:5px;
+    font-size:15px;
+    color:#9a8e79;
+    font-weight:800;
+}
+
+.word-card.correct{
+    border-color:#68a47c;
+    background:#e7f5ea;
+}
+
+.word-card.wrong{
+    border-color:#e47670;
+    background:#fff0ee;
+}
+
+/* MESSAGE */
+
+.message{
+    min-height:43px;
+    margin:17px auto 0;
+    padding:10px;
+    border-radius:13px;
+    text-align:center;
+    font-weight:1000;
+}
+
+.message.good{
+    color:#43805a;
+    background:#e4f5e9;
+}
+
+.message.bad{
+    color:#b6514c;
+    background:#fff0ee;
+}
+
+.next-btn{
+    display:none;
+    margin:15px auto 0;
+    border:0;
+    padding:11px 22px;
+    border-radius:14px;
+    background:#7b9e88;
+    color:white;
+    font-weight:1000;
+    cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:720px){
+
+    .tabs{grid-template-columns:1fr}
+
+    .tone-layout{grid-template-columns:1fr}
+
+    .tower{order:2}
+
+    .word-grid{grid-template-columns:repeat(2,1fr)}
+
+    .game{padding:18px 12px}
+
+    .hero::before,
+    .hero::after{opacity:.2}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<header class="hero">
+
+    <div class="badge">第三课 · 语音复习</div>
+
+    <h1>🎡 Pinyin Park</h1>
+
+    <h2>我是中国人 · Công viên ngữ âm</h2>
+
+    <p>
+        Nghe thật kỹ, chơi từng thử thách và chinh phục
+        các âm của Bài 3 nhé!
+    </p>
+
+</header>
+
+
+<div class="tabs">
+
+    <button class="tab active" onclick="openGame(0)">
+        🎯 Bắn bóng âm thanh
+    </button>
+
+    <button class="tab" onclick="openGame(1)">
+        🪜 Leo tháp 4 thanh
+    </button>
+
+    <button class="tab" onclick="openGame(2)">
+        🕵️ Thám tử Pinyin
+    </button>
+
+</div>
+
+
+<!-- ================= GAME 1 ================= -->
+
+<section class="game active">
+
+    <div class="game-title">
+        <h2>🎯 Bắn bóng âm thanh</h2>
+        <p>Chọn phần muốn luyện → nghe âm → bấm đúng bong bóng.</p>
+    </div>
+
+    <!-- TÁCH THANH MẪU / VẬN MẪU -->
+
+    <div class="category-tabs">
+
+        <button
+            id="initialBtn"
+            class="category-btn initial-active"
+            onclick="changeSoundCategory('initial')">
+            🍓 声母 · Thanh mẫu
+        </button>
+
+        <button
+            id="finalBtn"
+            class="category-btn"
+            onclick="changeSoundCategory('final')">
+            🫐 韵母 · Vận mẫu
+        </button>
+
+    </div>
+
+    <div id="categoryInfo" class="category-info">
+        声母 · Thanh mẫu:
+        zh · ch · sh · r · z · c · s
+    </div>
+
+    <div class="score-row">
+
+        <div class="pill">
+            🎈 Câu <span id="balloonRound">1</span>/10
+        </div>
+
+        <div class="pill">
+            ⭐ Điểm <span id="balloonScore">0</span>
+        </div>
+
+    </div>
+
+    <button class="speaker" onclick="playCurrentBalloon()">
+        🔊
+    </button>
+
+    <div class="listen-text">
+        Bấm loa để nghe lại
+    </div>
+
+    <div class="sky">
+
+        <div class="cloud c1">☁️</div>
+        <div class="cloud c2">☁️</div>
+
+        <div id="balloonArea" class="balloon-area"></div>
+
+    </div>
+
+    <div id="balloonMessage" class="message"></div>
+
+    <button
+        id="balloonNext"
+        class="next-btn"
+        onclick="nextBalloonRound()">
+        Câu tiếp theo ➜
+    </button>
+
+</section>
+
+
+<!-- ================= GAME 2 ================= -->
+
+<section class="game">
+
+    <div class="game-title">
+        <h2>🪜 Leo tháp 4 thanh</h2>
+        <p>Nghe âm → chọn đúng thanh ① ② ③ hoặc ④.</p>
+    </div>
+
+    <div class="score-row">
+
+        <div class="pill">
+            🏰 Câu <span id="toneRound">1</span>/10
+        </div>
+
+        <div class="pill">
+            ⭐ Điểm <span id="toneScore">0</span>
+        </div>
+
+    </div>
+
+    <div class="tone-layout">
+
+        <div class="tower">
+
+            <div class="tower-top">🏰</div>
+
+            <div class="floor">
+                <span class="floor-number">④</span>
+                Thanh 4
+            </div>
+
+            <div class="floor">
+                <span class="floor-number">③</span>
+                Thanh 3
+            </div>
+
+            <div class="floor">
+                <span class="floor-number">②</span>
+                Thanh 2
+            </div>
+
+            <div class="floor">
+                <span class="floor-number">①</span>
+                Thanh 1
+            </div>
+
+            <div id="character" class="character">🐰</div>
+
+        </div>
+
+        <div class="tone-panel">
+
+            <button class="speaker" onclick="playCurrentTone()">
+                🔊
+            </button>
+
+            <div class="listen-text">
+                Nghe xem bé thỏ phải lên tầng nào?
+            </div>
+
+            <div id="toneOptions" class="tone-options"></div>
+
+            <div id="toneMessage" class="message"></div>
+
+            <button
+                id="toneNext"
+                class="next-btn"
+                onclick="nextToneRound()">
+                Leo tiếp ➜
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= GAME 3 ================= -->
+
+<section class="game">
+
+    <div class="game-title">
+        <h2>🕵️ Thám tử Pinyin</h2>
+        <p>Nghe manh mối → tìm đúng từ vừa được đọc.</p>
+    </div>
+
+    <div class="score-row">
+
+        <div class="pill">
+            🔎 Vụ án <span id="detectiveRound">1</span>/10
+        </div>
+
+        <div class="pill">
+            ⭐ Điểm <span id="detectiveScore">0</span>
+        </div>
+
+    </div>
+
+    <div class="detective-scene">
+
+        <div class="detective">🕵️‍♀️</div>
+
+        <div class="clue">
+            Manh mối âm thanh đã xuất hiện!
+        </div>
+
+        <button class="speaker" onclick="playCurrentWord()">
+            🔊
+        </button>
+
+        <div id="wordGrid" class="word-grid"></div>
+
+    </div>
+
+    <div id="wordMessage" class="message"></div>
+
+    <button
+        id="wordNext"
+        class="next-btn"
+        onclick="nextWordRound()">
+        Vụ án tiếp theo 🔎
+    </button>
+
+</section>
+
+</div>
+
+
+<audio
+    id="audio"
+    preload="auto"
+    src="yuyin3.mp3">
+</audio>
+
+
+<script>
+
+/* =====================================================
+   AUDIO
+===================================================== */
+
+const audio = document.getElementById("audio");
+
+let stopTimer = null;
+
+
+/* =====================================================
+   AUDIO DATA
+===================================================== */
+
+const soundAudio = {
+
+    /* 声母 */
+
+    "zh": {start:62.74,end:63.89},
+    "ch": {start:65.12,end:66.39},
+    "sh": {start:67.47,end:68.69},
+    "r":  {start:69.70,end:70.87},
+    "z":  {start:72.00,end:72.96},
+    "c":  {start:74.20,end:75.28},
+    "s":  {start:76.43,end:77.59},
+
+
+    /* 韵母 */
+
+    "a":    {start:81.43,end:82.27},
+    "e":    {start:83.66,end:84.65},
+    "i":    {start:85.86,end:89.49},
+    "u":    {start:91.12,end:92.04},
+    "ai":   {start:93.08,end:94.15},
+    "ao":   {start:95.08,end:96.23},
+    "ou":   {start:97.21,end:98.38},
+    "an":   {start:99.38,end:100.48},
+    "en":   {start:101.71,end:102.61},
+    "ang":  {start:103.91,end:104.96},
+    "eng":  {start:105.98,end:107.82},
+    "ong":  {start:108.88,end:110.28},
+    "ua":   {start:110.98,end:113.38},
+    "uo":   {start:113.52,end:114.51},
+    "uai":  {start:115.80,end:117.93},
+    "uei":  {start:118.27,end:119.32},
+    "uan":  {start:121.12,end:122.22},
+    "uen":  {start:123.45,end:124.58},
+    "uang": {start:125.53,end:127.02},
+    "ueng": {start:128.07,end:129.45},
+
+
+    /* 4 THANH */
+
+    "zhā": {start:136.20,end:137.42},
+    "zhá": {start:138.34,end:139.77},
+    "zhǎ": {start:140.60,end:142.28},
+    "zhà": {start:143.00,end:144.14},
+
+    "shē": {start:147.05,end:148.42},
+    "shé": {start:150.00,end:151.41},
+    "shě": {start:152.60,end:154.29},
+    "shè": {start:155.30,end:156.66},
+
+    "chuāng": {start:159.67,end:161.20},
+    "chuáng": {start:162.28,end:164.06},
+    "chuǎng": {start:165.12,end:167.01},
+    "chuàng": {start:168.11,end:169.56},
+
+    "zuō": {start:172.09,end:173.59},
+    "zuó": {start:174.69,end:176.22},
+    "zuǒ": {start:177.33,end:179.15},
+    "zuò": {start:180.07,end:181.52},
+
+
+    /* TỪ */
+
+    "rén":      {start:191.62,end:192.91},
+    "zuò_word": {start:194.50,end:195.84},
+    "cài":      {start:197.36,end:198.63},
+    "shū":      {start:200.20,end:201.57},
+    "shǒujī":   {start:203.00,end:204.76},
+    "yīshēng":  {start:206.29,end:207.92},
+    "zhuōzi":   {start:209.15,end:210.70},
+    "chūzūchē": {start:212.22,end:214.27},
+
+
+    /* WA / WEI */
+
+    "wā":  {start:226.06,end:227.24},
+    "wá":  {start:228.02,end:229.43},
+    "wǎ":  {start:230.30,end:231.89},
+    "wà":  {start:233.11,end:234.31},
+
+    "wēi": {start:236.80,end:238.20},
+    "wéi": {start:239.04,end:240.58},
+    "wěi": {start:241.46,end:243.25},
+    "wèi": {start:244.16,end:245.58},
+
+
+    /* TỪ CUỐI */
+
+    "chūn": {start:255.27,end:256.88},
+    "cūn":  {start:258.50,end:260.26},
+    "shuì": {start:262.00,end:263.47},
+    "zuǐ":  {start:265.10,end:266.87}
+
+};
+
+
+/* =====================================================
+   PLAYER
+===================================================== */
+
+function playSound(key){
+
+    const cut = soundAudio[key];
+
+    if(!cut){
+        console.warn("Không tìm thấy audio:",key);
+        return;
+    }
+
+    clearTimeout(stopTimer);
+    audio.pause();
+
+    function startPlaying(){
+
+        function reallyPlay(){
+
+            audio.play()
+            .then(()=>{
+
+                const duration =
+                    (cut.end-cut.start)*1000;
+
+                stopTimer=setTimeout(()=>{
+                    audio.pause();
+                },duration);
+
+            })
+            .catch(error=>{
+
+                console.error(error);
+
+                alert(
+                    "Không phát được audio. Kiểm tra file yuyin3.mp3 có nằm cùng thư mục với index.html không."
+                );
+
+            });
+
+        }
+
+        audio.currentTime=cut.start;
+
+        if(audio.seeking){
+
+            audio.addEventListener(
+                "seeked",
+                reallyPlay,
+                {once:true}
+            );
+
+        }else{
+
+            reallyPlay();
+
+        }
+
+    }
+
+    if(audio.readyState>=1){
+
+        startPlaying();
+
+    }else{
+
+        audio.addEventListener(
+            "loadedmetadata",
+            startPlaying,
+            {once:true}
+        );
+
+        audio.load();
+
+    }
+
+}
+
+
+/* =====================================================
+   TAB
+===================================================== */
+
+function openGame(index){
+
+    document.querySelectorAll(".game")
+    .forEach((game,i)=>{
+        game.classList.toggle("active",i===index);
+    });
+
+    document.querySelectorAll(".tab")
+    .forEach((tab,i)=>{
+        tab.classList.toggle("active",i===index);
+    });
+
+}
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffle(array){
+
+    const copy=[...array];
+
+    for(let i=copy.length-1;i>0;i--){
+
+        const j=Math.floor(Math.random()*(i+1));
+
+        [copy[i],copy[j]]=[copy[j],copy[i]];
+
+    }
+
+    return copy;
+
+}
+
+
+/* =====================================================
+   GAME 1
+   TÁCH RIÊNG THANH MẪU / VẬN MẪU
+===================================================== */
+
+const initialPool=[
+    "zh","ch","sh","r","z","c","s"
+];
+
+const finalPool=[
+    "a","e","i","u",
+    "ai","ao","ou",
+    "an","en","ang","eng","ong",
+    "ua","uo","uai","uei",
+    "uan","uen","uang","ueng"
+];
+
+let soundCategory="initial";
+
+let balloonTarget="";
+let balloonRound=1;
+let balloonScore=0;
+let balloonLocked=false;
+
+
+/* ĐỔI THANH MẪU / VẬN MẪU */
+
+function changeSoundCategory(category){
+
+    soundCategory=category;
+
+    balloonRound=1;
+    balloonScore=0;
+    balloonLocked=false;
+
+    document.getElementById("balloonScore").textContent="0";
+    document.getElementById("balloonRound").textContent="1";
+
+    const initialBtn=
+        document.getElementById("initialBtn");
+
+    const finalBtn=
+        document.getElementById("finalBtn");
+
+    const info=
+        document.getElementById("categoryInfo");
+
+
+    initialBtn.className="category-btn";
+    finalBtn.className="category-btn";
+
+
+    if(category==="initial"){
+
+        initialBtn.classList.add("initial-active");
+
+        info.innerHTML=
+            "<b>声母 · Thanh mẫu:</b> "+
+            "zh · ch · sh · r · z · c · s";
+
+    }else{
+
+        finalBtn.classList.add("final-active");
+
+        info.innerHTML=
+            "<b>韵母 · Vận mẫu:</b> "+
+            "a · e · i · u · ai · ao · ou · an · en · ang · eng · ong · ua · uo · uai · uei · uan · uen · uang · ueng";
+
+    }
+
+    createBalloonRound();
+
+}
+
+
+/* TẠO CÂU */
+
+function createBalloonRound(){
+
+    balloonLocked=false;
+
+    document.getElementById(
+        "balloonNext"
+    ).style.display="none";
+
+    const message=
+        document.getElementById(
+            "balloonMessage"
+        );
+
+    message.textContent="";
+    message.className="message";
+
+
+    /* QUAN TRỌNG:
+       chỉ lấy trong đúng nhóm đang chọn
+    */
+
+    const currentPool=
+        soundCategory==="initial"
+        ? initialPool
+        : finalPool;
+
+
+    balloonTarget=
+        currentPool[
+            Math.floor(
+                Math.random()*currentPool.length
+            )
+        ];
+
+
+    const wrong=
+        shuffle(
+            currentPool.filter(
+                item=>item!==balloonTarget
+            )
+        )
+        .slice(0,3);
+
+
+    const choices=
+        shuffle([
+            balloonTarget,
+            ...wrong
+        ]);
+
+
+    const area=
+        document.getElementById(
+            "balloonArea"
+        );
+
+    area.innerHTML="";
+
+
+    choices.forEach(item=>{
+
+        const button=
+            document.createElement("button");
+
+        button.className="balloon";
+        button.textContent=item;
+
+
+        button.onclick=()=>{
+
+            if(balloonLocked){
+                return;
+            }
+
+
+            if(item===balloonTarget){
+
+                balloonLocked=true;
+
+                balloonScore++;
+
+                button.classList.add("correct");
+
+                message.textContent=
+                    "🎉 Chính xác! Âm vừa nghe là “"+
+                    balloonTarget+
+                    "”.";
+
+                message.className=
+                    "message good";
+
+                document.getElementById(
+                    "balloonScore"
+                ).textContent=
+                    balloonScore;
+
+                document.getElementById(
+                    "balloonNext"
+                ).style.display=
+                    "block";
+
+            }else{
+
+                button.classList.add("wrong");
+
+                message.textContent=
+                    "🌱 Chưa đúng, nghe lại rồi thử tiếp nhé!";
+
+                message.className=
+                    "message bad";
+
+                setTimeout(()=>{
+
+                    button.classList.remove("wrong");
+
+                },450);
+
+            }
+
+        };
+
+        area.appendChild(button);
+
+    });
+
+
+    document.getElementById(
+        "balloonRound"
+    ).textContent=
+        balloonRound;
+
+
+    setTimeout(
+        ()=>playSound(balloonTarget),
+        350
+    );
+
+}
+
+
+function playCurrentBalloon(){
+
+    playSound(balloonTarget);
+
+}
+
+
+function nextBalloonRound(){
+
+    if(balloonRound>=10){
+
+        const typeName=
+            soundCategory==="initial"
+            ? "Thanh mẫu"
+            : "Vận mẫu";
+
+        alert(
+            "🎈 Hoàn thành phần "+
+            typeName+
+            "! Bạn được "+
+            balloonScore+
+            "/10 điểm."
+        );
+
+        balloonRound=1;
+        balloonScore=0;
+
+        document.getElementById(
+            "balloonScore"
+        ).textContent="0";
+
+    }else{
+
+        balloonRound++;
+
+    }
+
+    createBalloonRound();
+
+}
+
+
+/* =====================================================
+   GAME 2 · THANH ĐIỆU
+===================================================== */
+
+const toneGroups=[
+
+    ["zhā","zhá","zhǎ","zhà"],
+
+    ["shē","shé","shě","shè"],
+
+    ["chuāng","chuáng","chuǎng","chuàng"],
+
+    ["zuō","zuó","zuǒ","zuò"],
+
+    ["wā","wá","wǎ","wà"],
+
+    ["wēi","wéi","wěi","wèi"]
+
+];
+
+let toneRound=1;
+let toneScore=0;
+let currentTone="";
+let currentToneNumber=1;
+let toneLocked=false;
+
+
+function createToneRound(){
+
+    toneLocked=false;
+
+    document.getElementById(
+        "toneNext"
+    ).style.display="none";
+
+    const message=
+        document.getElementById(
+            "toneMessage"
+        );
+
+    message.textContent="";
+    message.className="message";
+
+
+    const group=
+        toneGroups[
+            Math.floor(
+                Math.random()*toneGroups.length
+            )
+        ];
+
+
+    currentToneNumber=
+        Math.floor(Math.random()*4)+1;
+
+
+    currentTone=
+        group[currentToneNumber-1];
+
+
+    const area=
+        document.getElementById(
+            "toneOptions"
+        );
+
+    area.innerHTML="";
+
+
+    [1,2,3,4].forEach(number=>{
+
+        const button=
+            document.createElement("button");
+
+        button.className="tone-btn";
+
+        button.textContent=[
+            "① Thanh 1",
+            "② Thanh 2",
+            "③ Thanh 3",
+            "④ Thanh 4"
+        ][number-1];
+
+
+        button.onclick=()=>{
+
+            if(toneLocked){
+                return;
+            }
+
+
+            if(number===currentToneNumber){
+
+                toneLocked=true;
+
+                toneScore++;
+
+                button.classList.add("correct");
+
+                message.textContent=
+                    "✨ Đúng rồi! "+
+                    currentTone+
+                    " là thanh "+
+                    currentToneNumber+
+                    ".";
+
+                message.className=
+                    "message good";
+
+                moveCharacter(currentToneNumber);
+
+                document.getElementById(
+                    "toneScore"
+                ).textContent=
+                    toneScore;
+
+                document.getElementById(
+                    "toneNext"
+                ).style.display=
+                    "block";
+
+            }else{
+
+                button.classList.add("wrong");
+
+                message.textContent=
+                    "Nghe lại nhé, bé thỏ chưa tìm đúng tầng 🐰";
+
+                message.className=
+                    "message bad";
+
+                setTimeout(()=>{
+
+                    button.classList.remove("wrong");
+
+                },450);
+
+            }
+
+        };
+
+        area.appendChild(button);
+
+    });
+
+
+    document.getElementById(
+        "toneRound"
+    ).textContent=
+        toneRound;
+
+
+    setTimeout(
+        ()=>playSound(currentTone),
+        350
+    );
+
+}
+
+
+function playCurrentTone(){
+
+    playSound(currentTone);
+
+}
+
+
+function moveCharacter(tone){
+
+    const character=
+        document.getElementById("character");
+
+    const levels={
+        1:5,
+        2:82,
+        3:159,
+        4:236
+    };
+
+    character.style.bottom=
+        levels[tone]+"px";
+
+}
+
+
+function nextToneRound(){
+
+    if(toneRound>=10){
+
+        alert(
+            "🏰 Hoàn thành! Bạn được "+
+            toneScore+
+            "/10 điểm."
+        );
+
+        toneRound=1;
+        toneScore=0;
+
+        document.getElementById(
+            "toneScore"
+        ).textContent="0";
+
+    }else{
+
+        toneRound++;
+
+    }
+
+    createToneRound();
+
+}
+
+
+/* =====================================================
+   GAME 3 · THÁM TỬ
+===================================================== */
+
+const wordPool=[
+
+    {
+        key:"rén",
+        hanzi:"人",
+        pinyin:"rén",
+        emoji:"🧑"
+    },
+
+    {
+        key:"zuò_word",
+        hanzi:"坐",
+        pinyin:"zuò",
+        emoji:"🪑"
+    },
+
+    {
+        key:"cài",
+        hanzi:"菜",
+        pinyin:"cài",
+        emoji:"🥬"
+    },
+
+    {
+        key:"shū",
+        hanzi:"书",
+        pinyin:"shū",
+        emoji:"📚"
+    },
+
+    {
+        key:"shǒujī",
+        hanzi:"手机",
+        pinyin:"shǒujī",
+        emoji:"📱"
+    },
+
+    {
+        key:"yīshēng",
+        hanzi:"医生",
+        pinyin:"yīshēng",
+        emoji:"🧑‍⚕️"
+    },
+
+    {
+        key:"zhuōzi",
+        hanzi:"桌子",
+        pinyin:"zhuōzi",
+        emoji:"🪵"
+    },
+
+    {
+        key:"chūzūchē",
+        hanzi:"出租车",
+        pinyin:"chūzūchē",
+        emoji:"🚕"
+    },
+
+    {
+        key:"chūn",
+        hanzi:"春",
+        pinyin:"chūn",
+        emoji:"🌸"
+    },
+
+    {
+        key:"cūn",
+        hanzi:"村",
+        pinyin:"cūn",
+        emoji:"🏡"
+    },
+
+    {
+        key:"shuì",
+        hanzi:"睡",
+        pinyin:"shuì",
+        emoji:"😴"
+    },
+
+    {
+        key:"zuǐ",
+        hanzi:"嘴",
+        pinyin:"zuǐ",
+        emoji:"👄"
+    }
+
+];
+
+let detectiveRound=1;
+let detectiveScore=0;
+let currentWord=null;
+let detectiveLocked=false;
+
+
+function createDetectiveRound(){
+
+    detectiveLocked=false;
+
+    document.getElementById(
+        "wordNext"
+    ).style.display="none";
+
+    const message=
+        document.getElementById(
+            "wordMessage"
+        );
+
+    message.textContent="";
+    message.className="message";
+
+
+    currentWord=
+        wordPool[
+            Math.floor(
+                Math.random()*wordPool.length
+            )
+        ];
+
+
+    const wrong=
+        shuffle(
+            wordPool.filter(
+                word=>word.key!==currentWord.key
+            )
+        )
+        .slice(0,3);
+
+
+    const choices=
+        shuffle([
+            currentWord,
+            ...wrong
+        ]);
+
+
+    const grid=
+        document.getElementById(
+            "wordGrid"
+        );
+
+    grid.innerHTML="";
+
+
+    choices.forEach(word=>{
+
+        const card=
+            document.createElement("button");
+
+        card.className="word-card";
+
+        card.innerHTML=`
+
+            <span class="emoji">
+                ${word.emoji}
+            </span>
+
+            <span class="hanzi">
+                ${word.hanzi}
+            </span>
+
+            <span class="pinyin">
+                ${word.pinyin}
+            </span>
+
+        `;
+
+
+        card.onclick=()=>{
+
+            if(detectiveLocked){
+                return;
+            }
+
+
+            if(word.key===currentWord.key){
+
+                detectiveLocked=true;
+
+                detectiveScore++;
+
+                card.classList.add("correct");
+
+                message.textContent=
+                    "🔎 找到了！ Chính là "+
+                    currentWord.hanzi+
+                    " · "+
+                    currentWord.pinyin;
+
+                message.className=
+                    "message good";
+
+                document.getElementById(
+                    "detectiveScore"
+                ).textContent=
+                    detectiveScore;
+
+                document.getElementById(
+                    "wordNext"
+                ).style.display=
+                    "block";
+
+            }else{
+
+                card.classList.add("wrong");
+
+                message.textContent=
+                    "Không phải nhân vật này rồi. Nghe manh mối lại nhé!";
+
+                message.className=
+                    "message bad";
+
+                setTimeout(()=>{
+
+                    card.classList.remove("wrong");
+
+                },450);
+
+            }
+
+        };
+
+        grid.appendChild(card);
+
+    });
+
+
+    document.getElementById(
+        "detectiveRound"
+    ).textContent=
+        detectiveRound;
+
+
+    setTimeout(
+        ()=>playSound(currentWord.key),
+        350
+    );
+
+}
+
+
+function playCurrentWord(){
+
+    playSound(currentWord.key);
+
+}
+
+
+function nextWordRound(){
+
+    if(detectiveRound>=10){
+
+        alert(
+            "🕵️ Phá án hoàn tất! Bạn được "+
+            detectiveScore+
+            "/10 điểm."
+        );
+
+        detectiveRound=1;
+        detectiveScore=0;
+
+        document.getElementById(
+            "detectiveScore"
+        ).textContent="0";
+
+    }else{
+
+        detectiveRound++;
+
+    }
+
+    createDetectiveRound();
+
+}
+
+
+/* =====================================================
+   KHỞI ĐỘNG
+===================================================== */
+
+createBalloonRound();
+createToneRound();
+createDetectiveRound();
+
+</script>
+
+</body>
+</html>
