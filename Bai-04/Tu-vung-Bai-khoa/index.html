@@ -1982,8 +1982,26 @@ audio{
     }
 }
 
+
+
+/* ===== SHEET 6: LUYỆN VIẾT - HANZI WRITER ===== */
+.writing-panel{padding:26px;border-radius:30px;background:linear-gradient(135deg,#eefaff,#fffdf5,#f2faed);box-shadow:var(--shadow)}
+.writing-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;font-weight:850}
+.writing-select{min-width:190px;padding:10px 14px;border:2px solid #dce9ef;border-radius:14px;background:#fff;color:var(--text);font-size:16px;font-weight:800;outline:none}
+.writing-word-info{color:#75869a;font-size:14px}
+.writing-columns{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.writing-card{padding:20px;border-radius:24px;background:rgba(255,255,255,.94);border:2px solid rgba(255,255,255,.9)}
+.writing-card-title{margin-bottom:12px;font-size:20px;font-weight:900;color:#294363}
+.hw-mizi{min-height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid #dce8ee;border-radius:18px;background:linear-gradient(45deg,transparent 49.8%,#f2dddd 50%,transparent 50.2%),linear-gradient(-45deg,transparent 49.8%,#f2dddd 50%,transparent 50.2%),linear-gradient(#f2dddd 1px,transparent 1px) 0 50%/100% 50%,linear-gradient(90deg,#f2dddd 1px,transparent 1px) 50% 0/50% 100%,#fff}
+.writing-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:13px}
+.writing-small-btn{border:0;padding:10px 16px;border-radius:14px;cursor:pointer;font-weight:850;color:#5f7186;background:#fff;box-shadow:0 5px 15px rgba(60,80,100,.09)}
+.writing-small-btn.primary{color:#fff;background:linear-gradient(135deg,#61bfdc,#72bb76)}
+.writing-tip{margin-top:18px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.72);color:#718094;line-height:1.65;font-size:14px}
+@media(max-width:760px){.writing-columns{grid-template-columns:1fr}.hw-mizi{min-height:280px}}
+
 </style>
 
+<script src="https://unpkg.com/hanzi-writer@3.7.3/dist/hanzi-writer.min.js"></script>
 </head>
 
 
@@ -2075,6 +2093,11 @@ audio{
         data-section="grammarSection"
     >
         📘 5. Ngữ pháp
+    </button>
+
+
+    <button class="nav-button" data-section="writingSection">
+        ✍️ 6. Luyện viết
     </button>
 
 </nav>
@@ -2993,6 +3016,43 @@ audio{
     </div>
 
 </section>
+
+
+<!-- ===== 6. LUYỆN VIẾT ===== -->
+
+<section class="section" id="writingSection">
+    <div class="section-header">
+        <h2>✍️ Luyện viết từ vựng Bài 4</h2>
+        <p>Chọn chữ → xem đúng thứ tự nét → tự viết theo nét.</p>
+    </div>
+    <div class="writing-panel">
+        <div class="writing-toolbar">
+            <label for="writingCharacterSelect">Chữ đang luyện:</label>
+            <select id="writingCharacterSelect" class="writing-select" onchange="changeWritingCharacter()"></select>
+            <span id="writingWordInfo" class="writing-word-info"></span>
+        </div>
+        <div class="writing-columns">
+            <div class="writing-card">
+                <div class="writing-card-title">👀 Xem mẫu</div>
+                <div id="sheet6Target" class="hw-mizi"></div>
+                <div class="writing-actions">
+                    <button class="writing-small-btn primary" onclick="animateSheet6Writer()">▶ Xem viết</button>
+                    <button class="writing-small-btn" onclick="listenWritingCharacter()">🔊 Nghe</button>
+                </div>
+            </div>
+            <div class="writing-card">
+                <div class="writing-card-title">✍️ Bạn viết</div>
+                <div id="sheet6Quiz" class="hw-mizi"></div>
+                <div class="writing-actions">
+                    <button class="writing-small-btn primary" onclick="restartSheet6Quiz()">↻ Viết lại</button>
+                </div>
+            </div>
+        </div>
+        <div class="writing-tip">💡 “Xem viết” chỉ chạy thứ tự nét. “Nghe” mới phát âm. Bên phải là chế độ luyện đúng từng nét.</div>
+    </div>
+</section>
+
+
 
 
 <!-- ======================================================
@@ -5795,6 +5855,77 @@ document.addEventListener(
 
 
 
+
+
+/* ===== SHEET 6: LUYỆN VIẾT - HANZI WRITER ===== */
+let writingCharacters=[],currentWritingCharacter="",sheet6Writer=null,sheet6Quiz=null;
+
+function buildWritingCharacters(){
+    const seen=new Set(),result=[];
+    vocabulary.forEach(word=>{
+        Array.from(word.hanzi).forEach(char=>{
+            if(/[\u3400-\u9FFF]/.test(char)&&!seen.has(char)){
+                seen.add(char);
+                result.push({char,word:word.hanzi,pinyin:word.pinyin,meaning:word.meaning});
+            }
+        });
+    });
+    return result;
+}
+function renderWritingPractice(){
+    writingCharacters=buildWritingCharacters();
+    const select=document.getElementById("writingCharacterSelect");
+    if(!select||!writingCharacters.length)return;
+    select.innerHTML="";
+    writingCharacters.forEach(item=>{
+        const option=document.createElement("option");
+        option.value=item.char; option.textContent=`${item.char}  ·  ${item.word}`;
+        select.appendChild(option);
+    });
+    currentWritingCharacter=writingCharacters[0].char;
+    select.value=currentWritingCharacter;
+    updateWritingInfo();
+    createSheet6Writers(currentWritingCharacter);
+}
+function changeWritingCharacter(){
+    currentWritingCharacter=document.getElementById("writingCharacterSelect").value;
+    updateWritingInfo();
+    createSheet6Writers(currentWritingCharacter);
+}
+function updateWritingInfo(){
+    const item=writingCharacters.find(x=>x.char===currentWritingCharacter);
+    const info=document.getElementById("writingWordInfo");
+    if(info) info.textContent=item?`Từ gốc: ${item.word} · ${item.pinyin} · ${item.meaning}`:"";
+}
+function createSheet6Writers(ch){
+    const target=document.getElementById("sheet6Target"),quiz=document.getElementById("sheet6Quiz");
+    if(!target||!quiz||typeof HanziWriter==="undefined")return;
+    target.innerHTML='<div id="sheet6TargetCharacter"></div>';
+    quiz.innerHTML='<div id="sheet6QuizCharacter"></div>';
+    sheet6Writer=HanziWriter.create("sheet6TargetCharacter",ch,{
+        width:300,height:300,padding:18,showOutline:true,showCharacter:true,
+        strokeAnimationSpeed:.85,delayBetweenStrokes:650,strokeColor:"#29405e",
+        outlineColor:"#d5dee6",highlightColor:"#ef8290"
+    });
+    sheet6Quiz=HanziWriter.create("sheet6QuizCharacter",ch,{
+        width:300,height:300,padding:18,showOutline:true,showCharacter:false,
+        strokeColor:"#29405e",outlineColor:"#d5dee6",drawingColor:"#4f8ed1",
+        drawingWidth:7,highlightColor:"#ef8290"
+    });
+    sheet6Quiz.quiz({showHintAfterMisses:2,highlightOnComplete:true});
+}
+function animateSheet6Writer(){
+    if(sheet6Writer) sheet6Writer.animateCharacter();
+}
+function restartSheet6Quiz(){
+    if(sheet6Quiz) sheet6Quiz.quiz({showHintAfterMisses:2,highlightOnComplete:true});
+}
+function listenWritingCharacter(){
+    const word=vocabulary.find(v=>v.hanzi===currentWritingCharacter);
+    if(word&&word.file){ playVocabularyAudio(word,null,null); }
+    else{ speakChinese(currentWritingCharacter); }
+}
+
 /* =========================================================
    START
 ========================================================= */
@@ -5806,6 +5937,8 @@ renderVocabulary();
 resetFruitRound();
 
 renderReading();
+
+renderWritingPractice();
 
 function normalizeLessonAnswer(text) {
     return text
