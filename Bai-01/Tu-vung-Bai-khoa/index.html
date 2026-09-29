@@ -1835,6 +1835,141 @@ audio {
 
 }
 
+
+/* =========================================================
+   LUYỆN VIẾT - FORM CHUẨN
+========================================================= */
+.writing-panel{
+  padding:26px;
+  border-radius:28px;
+  background:linear-gradient(135deg,#eefaff,#fff9ef,#f2fff5);
+  box-shadow:var(--shadow);
+}
+.writing-toolbar{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:22px;
+}
+.writing-toolbar label{font-weight:900;}
+.writing-select{
+  min-width:180px;
+  padding:10px 14px;
+  border:2px solid #dce9f2;
+  border-radius:14px;
+  background:white;
+  color:var(--text);
+  font-weight:850;
+  font-size:16px;
+}
+.writing-word-info{
+  color:#728196;
+  font-size:14px;
+  font-weight:700;
+}
+.character-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 20px;
+}
+.character-tab{
+  width:46px;
+  height:46px;
+  border:2px solid #dce9f2;
+  border-radius:13px;
+  background:white;
+  cursor:pointer;
+  color:var(--text);
+  font-size:24px;
+  font-weight:900;
+}
+.character-tab.active{
+  color:white;
+  border-color:transparent;
+  background:linear-gradient(135deg,#61c3dc,#6bc482);
+}
+.writing-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.writing-card{
+  padding:22px;
+  border-radius:24px;
+  background:rgba(255,255,255,.92);
+}
+.writing-card-title{
+  margin-bottom:16px;
+  font-size:19px;
+  font-weight:950;
+}
+.hanzi-paper{
+  position:relative;
+  width:min(100%,460px);
+  aspect-ratio:1/1;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border:3px solid #d9e7ef;
+  border-radius:20px;
+  background-color:#fff;
+  background-image:
+    linear-gradient(to right,transparent calc(50% - .5px),#f1cece 50%,transparent calc(50% + .5px)),
+    linear-gradient(to bottom,transparent calc(50% - .5px),#f1cece 50%,transparent calc(50% + .5px)),
+    linear-gradient(45deg,transparent calc(50% - .5px),#f3dada 50%,transparent calc(50% + .5px)),
+    linear-gradient(-45deg,transparent calc(50% - .5px),#f3dada 50%,transparent calc(50% + .5px));
+}
+.writer-target{
+  width:360px;
+  height:360px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.writing-actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+}
+.write-btn{
+  border:0;
+  padding:11px 18px;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:15px;
+  box-shadow:0 7px 18px rgba(70,90,110,.09);
+}
+.write-btn.primary{
+  color:white;
+  background:linear-gradient(135deg,#59bfd8,#69c483);
+}
+.write-btn.secondary{
+  color:#596a80;
+  background:white;
+}
+.writing-status{
+  min-height:24px;
+  margin-top:12px;
+  text-align:center;
+  color:#5c7c70;
+  font-weight:800;
+}
+@media(max-width:800px){
+  .writing-grid{grid-template-columns:1fr;}
+}
+@media(max-width:520px){
+  .writing-panel{padding:16px;}
+  .writing-card{padding:14px;}
+  .writer-target{width:270px;height:270px;}
+}
+
 </style>
 
 </head>
@@ -1919,6 +2054,14 @@ audio {
     data-section="tongueSection"
   >
     🌸 4. Luyện đọc
+  </button>
+
+
+  <button
+    class="nav-button"
+    data-section="writingSection"
+  >
+    ✍️ 5. Luyện viết
   </button>
 
 </nav>
@@ -2192,6 +2335,57 @@ audio {
 </section>
 
 
+
+<!-- ======================================================
+     SECTION 5 - LUYỆN VIẾT
+======================================================= -->
+<section class="section" id="writingSection">
+
+  <div class="section-header">
+    <h2>✍️ Luyện viết từ vựng Bài 1</h2>
+  </div>
+
+  <div class="writing-panel">
+
+    <div class="writing-toolbar">
+      <label for="writingWordSelect">Từ đang luyện:</label>
+      <select id="writingWordSelect" class="writing-select"></select>
+      <span class="writing-word-info" id="writingWordInfo"></span>
+    </div>
+
+    <div class="character-tabs" id="writingCharacterTabs"></div>
+
+    <div class="writing-grid">
+
+      <div class="writing-card">
+        <div class="writing-card-title">👀 Xem mẫu</div>
+        <div class="hanzi-paper">
+          <div id="demoWriter" class="writer-target"></div>
+        </div>
+        <div class="writing-actions">
+          <button class="write-btn primary" id="animateWritingBtn">▶ Xem viết</button>
+          <button class="write-btn secondary" id="listenWritingBtn">🔊 Nghe</button>
+        </div>
+      </div>
+
+      <div class="writing-card">
+        <div class="writing-card-title">✍️ Bạn viết</div>
+        <div class="hanzi-paper">
+          <div id="quizWriter" class="writer-target"></div>
+        </div>
+        <div class="writing-actions">
+          <button class="write-btn primary" id="restartWritingBtn">↻ Viết lại</button>
+        </div>
+        <div class="writing-status" id="writingStatus">
+          Viết theo đúng thứ tự nét nhé ✨
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 </div>
 
 
@@ -2325,6 +2519,8 @@ audio {
 </div>
 
 
+
+<script src="https://unpkg.com/hanzi-writer@3.7.3/dist/hanzi-writer.min.js"></script>
 
 <script>
 
@@ -4038,6 +4234,187 @@ document.addEventListener(
 );
 
 
+
+/* =========================================================
+   LUYỆN VIẾT - FORM CHUẨN BÀI 4
+========================================================= */
+
+let demoWriterInstance = null;
+let quizWriterInstance = null;
+let currentWritingChar = "";
+
+function writingSize(){
+  return window.innerWidth <= 520 ? 270 : 360;
+}
+
+function loadWritingCharacter(char){
+  currentWritingChar = char;
+
+  const demo = document.getElementById("demoWriter");
+  const quiz = document.getElementById("quizWriter");
+  const status = document.getElementById("writingStatus");
+
+  if(!demo || !quiz) return;
+
+  demo.innerHTML = "";
+  quiz.innerHTML = "";
+
+  if(status){
+    status.textContent = "Viết theo đúng thứ tự nét nhé ✨";
+  }
+
+  if(typeof HanziWriter === "undefined"){
+    if(status){
+      status.textContent = "Chưa tải được Hanzi Writer. Kiểm tra Internet rồi tải lại trang nha.";
+    }
+    return;
+  }
+
+  const size = writingSize();
+
+  demoWriterInstance = HanziWriter.create("demoWriter", char, {
+    width:size,
+    height:size,
+    padding:28,
+    showOutline:true,
+    showCharacter:true,
+    strokeAnimationSpeed:1,
+    delayBetweenStrokes:300,
+    strokeColor:"#29405e",
+    outlineColor:"#d5dee6",
+    highlightColor:"#ef8290"
+  });
+
+  quizWriterInstance = HanziWriter.create("quizWriter", char, {
+    width:size,
+    height:size,
+    padding:28,
+    showOutline:true,
+    showCharacter:false,
+    strokeColor:"#29405e",
+    outlineColor:"#d5dee6",
+    drawingColor:"#4f8ed1",
+    drawingWidth:7,
+    highlightColor:"#ef8290"
+  });
+
+  quizWriterInstance.quiz({
+    showHintAfterMisses:2,
+    highlightOnComplete:true,
+    onMistake:()=>{
+      if(status) status.textContent = "Chưa đúng nét này, thử lại nha ✍️";
+    },
+    onCorrectStroke:()=>{
+      if(status) status.textContent = "Đúng rồi, tiếp tục nét kế tiếp 🌱";
+    },
+    onComplete:()=>{
+      if(status) status.textContent = "🎉 Hoàn thành chữ " + currentWritingChar + "!";
+    }
+  });
+}
+
+function loadWritingWord(index){
+  const word = vocabulary[index];
+  if(!word) return;
+
+  const info = document.getElementById("writingWordInfo");
+  if(info){
+    info.textContent = `${word.pinyin} · ${word.meaning}`;
+  }
+
+  const tabs = document.getElementById("writingCharacterTabs");
+  if(!tabs) return;
+
+  tabs.innerHTML = "";
+
+  const chars = Array.from(word.hanzi).filter(
+    ch => /[\u3400-\u9FFF]/.test(ch)
+  );
+
+  chars.forEach((char,i)=>{
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "character-tab" + (i === 0 ? " active" : "");
+    btn.textContent = char;
+
+    btn.onclick = ()=>{
+      tabs.querySelectorAll(".character-tab").forEach(
+        item => item.classList.remove("active")
+      );
+      btn.classList.add("active");
+      loadWritingCharacter(char);
+    };
+
+    tabs.appendChild(btn);
+  });
+
+  if(chars.length){
+    loadWritingCharacter(chars[0]);
+  }
+}
+
+function initWritingSheet(){
+  const select = document.getElementById("writingWordSelect");
+
+  if(!select || !Array.isArray(vocabulary) || !vocabulary.length){
+    return;
+  }
+
+  select.innerHTML = "";
+
+  vocabulary.forEach((word,index)=>{
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = `${word.hanzi} · ${word.pinyin}`;
+    select.appendChild(option);
+  });
+
+  select.onchange = ()=>{
+    loadWritingWord(Number(select.value));
+  };
+
+  const animateBtn = document.getElementById("animateWritingBtn");
+  const listenBtn = document.getElementById("listenWritingBtn");
+  const restartBtn = document.getElementById("restartWritingBtn");
+
+  if(animateBtn){
+    animateBtn.onclick = ()=>{
+      if(!demoWriterInstance) return;
+
+      /* XEM VIẾT CHỈ CHẠY NÉT - KHÔNG PHÁT ÂM */
+      demoWriterInstance.hideCharacter({
+        onComplete:()=>{
+          demoWriterInstance.animateCharacter();
+        }
+      });
+    };
+  }
+
+  if(listenBtn){
+    listenBtn.onclick = ()=>{
+      /* LẤY ĐÚNG AUDIO TỪ VỰNG CỦA SHEET 1 */
+      const select = document.getElementById("writingWordSelect");
+      const word = vocabulary[Number(select.value)];
+
+      if(word){
+        playWordAudio(word.hanzi, null, listenBtn);
+      }
+    };
+  }
+
+  if(restartBtn){
+    restartBtn.onclick = ()=>{
+      if(currentWritingChar){
+        loadWritingCharacter(currentWritingChar);
+      }
+    };
+  }
+
+  select.value = "0";
+  loadWritingWord(0);
+}
+
+
 /* =========================================================
    KHỞI ĐỘNG
 ========================================================= */
@@ -4045,6 +4422,8 @@ document.addEventListener(
 renderGame();
 
 renderReading();
+
+initWritingSheet();
 
 </script>
 
