@@ -3,2385 +3,1890 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>第四课：我有两个孩子 · Luyện tập</title>
+<title>第三课 · 朗读与句子挑战</title>
 
 <style>
 *{
-    box-sizing:border-box;
-}
-
-:root{
-    --green:#6fa487;
-    --green-dark:#47745e;
-    --green-light:#e8f5ec;
-    --cream:#fffaf1;
-    --yellow:#ffe49b;
-    --pink:#f6c6cf;
-    --blue:#cceaf2;
-    --purple:#ddd0ef;
-    --red:#df706c;
-    --red-light:#fff0ee;
-    --text:#526b60;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-    margin:0;
-    font-family:"Segoe UI","Microsoft YaHei","PingFang SC",Arial,sans-serif;
-    color:var(--text);
-    background:
-        radial-gradient(circle at 8% 8%,rgba(255,255,255,.8) 0 55px,transparent 56px),
-        radial-gradient(circle at 92% 15%,rgba(255,255,255,.65) 0 70px,transparent 71px),
-        linear-gradient(180deg,#e4f5ff 0%,#f4f8e8 45%,#fff8ed 100%);
-    min-height:100vh;
+  font-family:"Arial","Microsoft YaHei",sans-serif;
+  min-height:100vh;
+  color:#4d4a65;
+  background:
+    radial-gradient(circle at 10% 15%,rgba(255,255,255,.8) 0 55px,transparent 56px),
+    radial-gradient(circle at 90% 25%,rgba(255,255,255,.65) 0 70px,transparent 71px),
+    linear-gradient(135deg,#fff0f6,#eef6ff 50%,#f1fff5);
+  padding:22px;
 }
 
-button,
-input{
-    font-family:inherit;
+button{
+  font-family:inherit;
 }
 
-.page{
-    width:min(1000px,94%);
-    margin:auto;
-    padding:22px 0 60px;
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed!important;
 }
-
-/* ================================
-   HOME
-================================ */
 
 .home-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-    margin-bottom:14px;
-    padding:10px 16px;
-    border:0;
-    border-radius:999px;
-    background:white;
-    color:var(--green-dark);
-    font-weight:900;
-    font-size:14px;
-    cursor:pointer;
-    box-shadow:0 6px 17px rgba(65,100,79,.12);
-    transition:.2s;
+  position:fixed;
+  top:18px;
+  left:18px;
+  z-index:50;
+  border:none;
+  border-radius:999px;
+  padding:11px 18px;
+  background:#fff;
+  box-shadow:0 5px 18px rgba(78,72,120,.14);
+  color:#655e8d;
+  font-weight:800;
+  cursor:pointer;
 }
 
-.home-btn:hover{
-    transform:translateY(-2px);
+.container{
+  width:min(100%,980px);
+  margin:40px auto;
 }
-
-/* ================================
-   HEADER
-================================ */
 
 .hero{
-    position:relative;
-    overflow:hidden;
-    padding:28px 20px;
-    border-radius:30px;
-    background:white;
-    text-align:center;
-    box-shadow:0 14px 35px rgba(65,100,79,.11);
+  text-align:center;
+  margin-bottom:24px;
 }
 
-.hero::before{
-    content:"🌼";
-    position:absolute;
-    left:28px;
-    bottom:16px;
-    font-size:52px;
-    opacity:.65;
-}
-
-.hero::after{
-    content:"🌷";
-    position:absolute;
-    right:28px;
-    top:20px;
-    font-size:48px;
-    opacity:.7;
-}
-
-.lesson-badge{
-    display:inline-block;
-    padding:7px 15px;
-    border-radius:999px;
-    background:#fff1c8;
-    color:#937447;
-    font-size:13px;
-    font-weight:900;
+.hero .tag{
+  display:inline-block;
+  background:#fff;
+  color:#8b73b7;
+  padding:8px 15px;
+  border-radius:999px;
+  font-weight:800;
+  box-shadow:0 5px 16px rgba(87,78,130,.1);
+  margin-bottom:12px;
 }
 
 .hero h1{
-    margin:12px 0 5px;
-    color:var(--green-dark);
-    font-size:clamp(27px,5vw,42px);
-}
-
-.hero h2{
-    margin:0;
-    color:#789186;
-    font-size:19px;
+  font-size:clamp(27px,5vw,44px);
+  color:#5c567d;
+  margin-bottom:8px;
 }
 
 .hero p{
-    margin:10px auto 0;
-    max-width:620px;
-    color:#94a39b;
-    line-height:1.6;
+  line-height:1.6;
+  color:#77718e;
 }
 
-/* ================================
-   PROGRESS
-================================ */
+.card{
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:28px;
+  padding:28px;
+  box-shadow:0 14px 40px rgba(78,69,120,.12);
+  backdrop-filter:blur(8px);
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN */
+
+.login-card{
+  max-width:620px;
+  margin:auto;
+  text-align:center;
+}
+
+.login-icon{
+  font-size:65px;
+  margin-bottom:10px;
+}
+
+.login-card h2{
+  color:#625b84;
+  margin-bottom:10px;
+}
+
+.login-card p{
+  line-height:1.6;
+  color:#7d7890;
+  margin-bottom:20px;
+}
+
+.name-input{
+  width:100%;
+  padding:16px 18px;
+  border:2px solid #e9e3f6;
+  border-radius:18px;
+  font-size:17px;
+  outline:none;
+  text-align:center;
+  transition:.2s;
+}
+
+.name-input:focus{
+  border-color:#b9a8e8;
+  box-shadow:0 0 0 4px rgba(185,168,232,.13);
+}
+
+.main-btn{
+  border:none;
+  padding:14px 24px;
+  border-radius:18px;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(135deg,#a98be3,#7d9de9);
+  box-shadow:0 7px 18px rgba(112,101,190,.2);
+  transition:.2s;
+}
+
+.main-btn:hover{
+  transform:translateY(-2px);
+}
+
+.start-btn{
+  width:100%;
+  margin-top:15px;
+}
+
+/* TOP USER */
+
+.userbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+  background:rgba(255,255,255,.82);
+  padding:12px 18px;
+  border-radius:20px;
+  box-shadow:0 5px 20px rgba(80,70,120,.08);
+}
+
+.user-name{
+  font-weight:900;
+  color:#655c88;
+}
+
+.user-score{
+  font-weight:800;
+  color:#8b79bd;
+}
+
+/* TABS */
+
+.tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.tab-btn{
+  border:none;
+  border-radius:17px;
+  padding:14px 10px;
+  background:#fff;
+  color:#817a99;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 5px 16px rgba(80,70,120,.08);
+}
+
+.tab-btn.active{
+  color:white;
+  background:linear-gradient(135deg,#b394e6,#85a5ec);
+}
+
+/* SHEET 1 */
+
+.sheet-title{
+  text-align:center;
+  margin-bottom:8px;
+  color:#625c83;
+}
+
+.sheet-desc{
+  text-align:center;
+  color:#8a849b;
+  line-height:1.6;
+  margin-bottom:22px;
+}
 
 .progress-wrap{
-    margin:18px 0 22px;
-    padding:15px 18px;
-    border-radius:20px;
-    background:white;
-    box-shadow:0 8px 20px rgba(65,100,79,.08);
+  height:12px;
+  background:#eeeaf6;
+  border-radius:999px;
+  overflow:hidden;
+  margin-bottom:24px;
 }
 
-.progress-info{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:9px;
-    font-size:13px;
-    font-weight:900;
-    color:#71877c;
+.progress{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#e8a4c7,#9da9ef);
+  transition:.35s;
 }
 
-.progress-bar{
-    height:12px;
-    overflow:hidden;
-    border-radius:999px;
-    background:#edf2ed;
+.read-card{
+  text-align:center;
 }
 
-.progress-fill{
-    width:0%;
-    height:100%;
-    border-radius:999px;
-    background:linear-gradient(90deg,#91c6a4,#f3cf77);
-    transition:.4s;
+.counter{
+  display:inline-block;
+  background:#f2edff;
+  color:#7667a6;
+  padding:7px 14px;
+  border-radius:999px;
+  font-weight:800;
+  margin-bottom:20px;
 }
 
-/* ================================
-   SECTION
-================================ */
-
-.exercise{
-    margin:20px 0;
-    padding:24px;
-    border-radius:27px;
-    background:white;
-    box-shadow:0 12px 28px rgba(65,100,79,.09);
+.chinese-line{
+  font-size:clamp(28px,6vw,43px);
+  line-height:1.8;
+  color:#423d60;
+  font-weight:800;
+  margin:10px 0;
 }
 
-.section-title{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:8px;
+.word{
+  display:inline-block;
+  cursor:pointer;
+  padding:0 3px;
+  border-radius:8px;
+  transition:.15s;
 }
 
-.section-number{
-    width:43px;
-    height:43px;
-    flex:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:14px;
-    background:#dff1e5;
-    color:var(--green-dark);
-    font-size:20px;
-    font-weight:1000;
+.word:hover{
+  background:#fff0b9;
+  transform:translateY(-2px);
 }
 
-.section-title h2{
-    margin:0;
-    color:var(--green-dark);
-    font-size:22px;
+.pinyin{
+  color:#8a75bd;
+  font-size:19px;
+  line-height:1.6;
+  margin:5px 0 10px;
 }
 
-.instruction{
-    margin:0 0 20px 55px;
-    color:#8a9b92;
-    font-size:14px;
+.meaning{
+  color:#777287;
+  font-size:16px;
+  margin-bottom:20px;
 }
 
-/* ================================
-   QUESTIONS
-================================ */
-
-.question{
-    margin:16px 0;
-    padding:17px;
-    border:2px solid #eef1ec;
-    border-radius:18px;
-    background:#fffefa;
-    transition:.25s;
+.action-row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin:18px 0;
 }
 
-.question-number{
-    display:inline-flex;
-    width:29px;
-    height:29px;
-    align-items:center;
-    justify-content:center;
-    margin-right:7px;
-    border-radius:50%;
-    background:#edf5ee;
-    color:#597565;
-    font-weight:900;
+.soft-btn{
+  border:none;
+  border-radius:16px;
+  padding:12px 17px;
+  background:#f3effb;
+  color:#675e8b;
+  font-weight:800;
+  cursor:pointer;
 }
 
-.question-text{
-    font-size:17px;
-    line-height:1.8;
-    font-weight:700;
+.listen-btn{
+  background:#e8f2ff;
+  color:#5275a7;
 }
 
-/* ================================
-   MULTIPLE CHOICE
-================================ */
-
-.choices{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-top:13px;
+.record-btn{
+  background:#ffe9ef;
+  color:#a85e76;
 }
 
-.choice{
-    border:2px solid #e5ebe5;
-    padding:12px 8px;
-    border-radius:14px;
-    background:white;
-    color:#61786c;
-    font-size:17px;
-    font-weight:800;
-    cursor:pointer;
-    transition:.2s;
+.record-btn.recording{
+  animation:pulse 1s infinite;
+  background:#ffceda;
 }
 
-.choice:hover{
-    transform:translateY(-2px);
-    border-color:#9fc9ac;
+@keyframes pulse{
+  50%{transform:scale(1.05)}
 }
 
-.choice.selected{
-    border-color:#77aa87;
-    background:#edf8f0;
+.record-box{
+  margin:20px auto;
+  padding:18px;
+  max-width:600px;
+  border-radius:20px;
+  background:#fff9fc;
+  border:2px dashed #efd7e2;
 }
 
-.choice.correct{
-    border-color:#61a676 !important;
-    background:#dff3e5 !important;
-    color:#39704c !important;
+.record-box h3{
+  margin-bottom:7px;
+  color:#796887;
 }
 
-.choice.wrong{
-    border-color:#df716c !important;
-    background:#ffe5e2 !important;
-    color:#a64e49 !important;
+.record-time{
+  font-weight:900;
+  color:#c46d89;
+  margin:8px 0;
 }
 
-/* ================================
-   WORD BANK
-================================ */
+.nav-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:25px;
+}
+
+.nav-btn{
+  flex:1;
+  border:none;
+  border-radius:17px;
+  padding:13px;
+  background:#f0edf7;
+  color:#68617e;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.nav-btn.next{
+  color:white;
+  background:linear-gradient(135deg,#a990e2,#829fe8);
+}
+
+/* WORD POPUP */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(55,50,76,.25);
+  z-index:100;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.word-popup{
+  width:min(100%,430px);
+  background:white;
+  border-radius:28px;
+  padding:26px;
+  box-shadow:0 20px 60px rgba(50,42,80,.22);
+  position:relative;
+  animation:pop .2s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(.92);opacity:0}
+}
+
+.close-popup{
+  position:absolute;
+  right:15px;
+  top:13px;
+  width:35px;
+  height:35px;
+  border:none;
+  border-radius:50%;
+  background:#f2eef7;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.popup-hanzi{
+  font-size:38px;
+  font-weight:900;
+  color:#5c557d;
+  margin-bottom:5px;
+}
+
+.popup-pinyin{
+  color:#9178c5;
+  font-size:20px;
+  font-weight:800;
+}
+
+.popup-type{
+  display:inline-block;
+  background:#f1edff;
+  color:#7666a3;
+  border-radius:999px;
+  padding:6px 11px;
+  font-size:13px;
+  margin:10px 0;
+}
+
+.popup-meaning{
+  line-height:1.7;
+  margin:8px 0 15px;
+}
+
+/* SHEET 2 */
+
+.round-box{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.round-badge{
+  display:inline-block;
+  padding:7px 14px;
+  border-radius:999px;
+  background:#fff0f5;
+  color:#ad6881;
+  font-weight:900;
+}
+
+.timer{
+  font-size:34px;
+  font-weight:900;
+  color:#75669d;
+  margin:12px 0;
+}
+
+.timer.danger{
+  color:#d75f70;
+  animation:pulse .7s infinite;
+}
+
+.game-question{
+  background:#f9f7ff;
+  padding:20px;
+  border-radius:22px;
+  text-align:center;
+  margin:18px 0;
+}
+
+.game-question small{
+  color:#8a8499;
+}
+
+.game-question h3{
+  margin-top:7px;
+  color:#5d5777;
+}
+
+.answer-zone,
+.word-bank{
+  min-height:75px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  border-radius:20px;
+}
+
+.answer-zone{
+  border:2px dashed #c9bee7;
+  background:#fcfbff;
+  margin-bottom:14px;
+}
 
 .word-bank{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-    margin:15px 0 23px;
-    padding:17px;
-    border-radius:18px;
-    background:#fff7dc;
+  background:#f4f0fb;
 }
 
-.bank-word{
-    padding:10px 18px;
-    border:2px solid #efd791;
-    border-radius:999px;
-    background:white;
-    color:#866d3f;
-    font-size:18px;
-    font-weight:900;
-    cursor:pointer;
-    transition:.2s;
+.tile{
+  border:none;
+  padding:11px 16px;
+  border-radius:14px;
+  background:white;
+  color:#4f496b;
+  font-size:19px;
+  font-weight:800;
+  box-shadow:0 4px 10px rgba(72,61,105,.12);
+  cursor:pointer;
 }
 
-.bank-word:hover{
-    transform:translateY(-2px);
+.tile:hover{
+  transform:translateY(-2px);
 }
 
-.bank-word.active{
-    background:#ffe094;
-    border-color:#dcb84d;
-    transform:translateY(-2px);
+.feedback{
+  min-height:30px;
+  text-align:center;
+  font-weight:900;
+  margin:15px 0;
 }
 
-/* ================================
-   BLANK
-================================ */
+.feedback.good{color:#4eaa76}
+.feedback.bad{color:#d86473}
 
-.blank{
-    display:inline-flex;
-    min-width:105px;
-    min-height:39px;
-    align-items:center;
-    justify-content:center;
-    margin:0 5px;
-    padding:5px 12px;
-    border:2px dashed #b8cbbb;
-    border-radius:10px;
-    background:#f8fbf8;
-    color:#557064;
-    vertical-align:middle;
-    cursor:pointer;
-    font-weight:900;
+.game-controls{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
 }
 
-.blank.filled{
-    border-style:solid;
-    border-color:#8ab99a;
-    background:#edf7ef;
+.check-btn{
+  background:linear-gradient(135deg,#83cba5,#63b795);
 }
 
-.blank.correct{
-    border-color:#61a676;
-    background:#dcf3e3;
+.next-question{
+  background:linear-gradient(135deg,#e0a0bd,#a891df);
 }
 
-.blank.wrong{
-    border-color:#df716c;
-    background:#ffe4e1;
-    color:#a64e49;
+/* ROUND COMPLETE */
+
+.round-complete{
+  text-align:center;
 }
 
-/* ================================
-   ANSWER FEEDBACK
-================================ */
-
-.answer-feedback{
-    display:none;
-    margin-top:10px;
-    padding:8px 11px;
-    border-radius:10px;
-    font-size:14px;
-    font-weight:800;
+.big-emoji{
+  font-size:65px;
 }
 
-.answer-feedback.show{
-    display:block;
+.round-complete h2{
+  color:#61597f;
+  margin:8px 0;
 }
 
-.answer-feedback.correct-text{
-    color:#43805a;
-    background:#e6f5ea;
+.round-complete p{
+  color:#7d768e;
+  line-height:1.7;
 }
 
-.answer-feedback.wrong-text{
-    color:#b15450;
-    background:#fff0ee;
+/* RANK */
+
+.rank-list{
+  max-width:680px;
+  margin:20px auto 0;
 }
 
-/* ================================
-   SENTENCE ORDER
-================================ */
-
-.scramble{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin:13px 0;
+.rank-row{
+  display:grid;
+  grid-template-columns:55px 1fr auto auto;
+  gap:10px;
+  align-items:center;
+  background:#faf8ff;
+  padding:13px 16px;
+  border-radius:17px;
+  margin:9px 0;
 }
 
-.word-card{
-    padding:9px 14px;
-    border:2px solid #c7dbe1;
-    border-radius:12px;
-    background:#eff9fc;
-    color:#547785;
-    font-size:17px;
-    font-weight:900;
-    cursor:pointer;
-    transition:.2s;
+.rank-row.me{
+  background:#fff1f6;
+  border:2px solid #f1bfd0;
 }
 
-.word-card:hover{
-    transform:translateY(-2px);
+.medal{
+  font-size:25px;
+  text-align:center;
 }
 
-.word-card.used{
-    opacity:.3;
-    pointer-events:none;
+.rank-name{
+  font-weight:900;
 }
 
-.sentence-answer{
-    display:flex;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:7px;
-    min-height:58px;
-    padding:10px;
-    border:2px dashed #c7d3c9;
-    border-radius:14px;
-    background:#fafcf9;
-    cursor:pointer;
+.rank-score,
+.rank-time{
+  font-size:14px;
+  color:#7d758e;
 }
 
-.sentence-answer.correct{
-    border-style:solid;
-    border-color:#62a777;
-    background:#e3f4e8;
+/* VOCAB HISTORY */
+
+.lookup-box{
+  margin-top:25px;
+  background:#f9f7ff;
+  border-radius:20px;
+  padding:18px;
 }
 
-.sentence-answer.wrong{
-    border-style:solid;
-    border-color:#df716c;
-    background:#fff0ee;
+.lookup-box h3{
+  margin-bottom:12px;
 }
 
-.answer-chip{
-    padding:7px 11px;
-    border-radius:10px;
-    background:#e8f2e9;
-    font-size:17px;
-    font-weight:900;
+.lookup-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
 
-/* ================================
-   READING
-================================ */
-
-.reading-box{
-    margin:15px 0 23px;
-    padding:20px;
-    border-left:5px solid #e4b86d;
-    border-radius:16px;
-    background:#fff8e9;
-    font-size:19px;
-    line-height:2;
-    color:#685f4e;
+.lookup-tag{
+  border:none;
+  padding:8px 12px;
+  border-radius:999px;
+  background:#fff;
+  color:#71658f;
+  cursor:pointer;
+  box-shadow:0 3px 10px rgba(70,60,100,.08);
 }
-
-.text-answer{
-    width:100%;
-    margin-top:10px;
-    padding:12px 14px;
-    border:2px solid #dfe7df;
-    border-radius:13px;
-    outline:none;
-    color:#526b60;
-    background:white;
-    font-size:17px;
-    transition:.2s;
-}
-
-.text-answer:focus{
-    border-color:#82b392;
-    box-shadow:0 0 0 4px rgba(130,179,146,.12);
-}
-
-.text-answer.correct{
-    border-color:#61a676;
-    background:#e5f5e9;
-}
-
-.text-answer.wrong{
-    border-color:#df716c;
-    background:#fff0ee;
-}
-
-/* ================================
-   SUBMIT
-================================ */
-
-.submit-area{
-    margin-top:27px;
-    text-align:center;
-}
-
-.submit-btn{
-    border:0;
-    padding:16px 38px;
-    border-radius:999px;
-    background:linear-gradient(135deg,#6fa487,#85b99a);
-    color:white;
-    font-size:18px;
-    font-weight:1000;
-    cursor:pointer;
-    box-shadow:0 8px 0 #507c63,0 13px 22px rgba(73,113,89,.18);
-    transition:.15s;
-}
-
-.submit-btn:hover{
-    transform:translateY(-2px);
-}
-
-.submit-btn:active{
-    transform:translateY(5px);
-    box-shadow:0 3px 0 #507c63;
-}
-
-/* ================================
-   RESULT
-================================ */
-
-.result-screen{
-    display:none;
-    margin-top:25px;
-    padding:30px 20px;
-    border-radius:30px;
-    background:white;
-    text-align:center;
-    box-shadow:0 15px 35px rgba(65,100,79,.12);
-}
-
-.result-screen.show{
-    display:block;
-    animation:resultPop .5s ease;
-}
-
-@keyframes resultPop{
-    from{
-        opacity:0;
-        transform:translateY(20px) scale(.97);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.result-emoji{
-    font-size:70px;
-}
-
-.result-screen h2{
-    margin:8px 0;
-    color:var(--green-dark);
-    font-size:30px;
-}
-
-.result-screen p{
-    color:#7e9187;
-    line-height:1.7;
-}
-
-.score-circle{
-    width:125px;
-    height:125px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    margin:20px auto;
-    border:9px solid #dff0e4;
-    border-radius:50%;
-    background:#f8fcf9;
-}
-
-.score-circle strong{
-    color:var(--green-dark);
-    font-size:32px;
-}
-
-.score-circle span{
-    color:#91a097;
-    font-size:12px;
-    font-weight:800;
-}
-
-.result-buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-top:20px;
-}
-
-.retry-btn,
-.result-home{
-    border:0;
-    padding:13px 22px;
-    border-radius:999px;
-    font-weight:900;
-    font-size:15px;
-    cursor:pointer;
-}
-
-.retry-btn{
-    background:#ffe39a;
-    color:#856d39;
-}
-
-.result-home{
-    background:#dfeee4;
-    color:#4e755f;
-}
-
-/* ================================
-   MOBILE
-================================ */
 
 @media(max-width:650px){
-
-    .page{
-        width:95%;
-    }
-
-    .exercise{
-        padding:18px 13px;
-    }
-
-    .choices{
-        grid-template-columns:1fr;
-    }
-
-    .instruction{
-        margin-left:0;
-    }
-
-    .hero::before,
-    .hero::after{
-        opacity:.2;
-    }
-
-    .question-text{
-        font-size:16px;
-    }
+  body{padding:15px}
+  .container{margin-top:55px}
+  .card{padding:20px 15px}
+  .tabs{grid-template-columns:1fr}
+  .userbar{flex-direction:column}
+  .rank-row{
+    grid-template-columns:45px 1fr auto;
+  }
+  .rank-time{
+    grid-column:2/4;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="page">
+<button class="home-btn" onclick="goHome()">🏠 Trang chủ</button>
 
-    <button
-        class="home-btn"
-        onclick="window.location.href='../../index.html'">
-        🏠 Trang chủ
+<div class="container">
+
+  <header class="hero">
+    <div class="tag">第三课 · 我是中国人</div>
+    <h1>🌷 朗读 & 句子挑战</h1>
+    <p>Nghe · đọc · tra từ · ghi âm · xếp câu · leo bảng xếp hạng</p>
+  </header>
+
+  <!-- LOGIN -->
+  <section id="loginScreen" class="card login-card">
+    <div class="login-icon">🌸</div>
+    <h2>Chào mừng đến lớp học!</h2>
+    <p>
+      Điền <b>họ và tên</b> trước khi bắt đầu.<br>
+      Thành tích Sheet 2 của bạn sẽ được đưa lên bảng xếp hạng.
+    </p>
+
+    <input
+      id="studentName"
+      class="name-input"
+      type="text"
+      maxlength="40"
+      placeholder="Ví dụ: Trần Minh Anh"
+    >
+
+    <button class="main-btn start-btn" onclick="startLesson()">
+      Bắt đầu học ✨
     </button>
+  </section>
 
+  <!-- APP -->
+  <main id="app" class="hidden">
 
-    <!-- HEADER -->
-
-    <header class="hero">
-
-        <div class="lesson-badge">
-            HSK 1 · 第四课
-        </div>
-
-        <h1>
-            我有两个孩子
-        </h1>
-
-        <h2>
-            🌷 Phiếu luyện tập tổng hợp
-        </h2>
-
-        <p>
-            Hoàn thành tất cả các phần rồi bấm
-            <b>Nộp bài</b> ở cuối trang để xem kết quả nhé!
-        </p>
-
-    </header>
-
-
-    <!-- PROGRESS -->
-
-    <div class="progress-wrap">
-
-        <div class="progress-info">
-
-            <span>🌱 Tiến độ làm bài</span>
-
-            <span id="progressText">
-                0%
-            </span>
-
-        </div>
-
-        <div class="progress-bar">
-
-            <div
-                id="progressFill"
-                class="progress-fill">
-            </div>
-
-        </div>
-
+    <div class="userbar">
+      <div>👤 Học viên: <span id="displayName" class="user-name"></span></div>
+      <div class="user-score">⭐ Điểm game: <span id="topScore">0</span></div>
     </div>
 
+    <div class="tabs">
+      <button id="tab1" class="tab-btn active" onclick="showSheet(1)">
+        📖 Sheet 1 · Luyện đọc
+      </button>
 
-    <!-- =========================================
-         PHẦN 1
-    ========================================== -->
+      <button id="tab2" class="tab-btn" onclick="showSheet(2)">
+        🧩 Sheet 2 · Xếp câu
+      </button>
 
-    <section class="exercise">
+      <button id="tab3" class="tab-btn" onclick="showSheet(3)">
+        🏆 Bảng xếp hạng
+      </button>
+    </div>
 
-        <div class="section-title">
+    <!-- SHEET 1 -->
+    <section id="sheet1" class="card">
+      <h2 class="sheet-title">📖 一句一句读</h2>
+      <p class="sheet-desc">
+        Nghe câu mẫu → đọc theo → bấm vào từ chưa biết để tra →
+        ghi âm giọng của mình và nghe lại.
+      </p>
 
-            <div class="section-number">
-                1
-            </div>
+      <div class="progress-wrap">
+        <div id="readingProgress" class="progress"></div>
+      </div>
 
-            <h2>
-                Chọn đáp án đúng
-            </h2>
+      <div class="read-card">
+        <div id="sentenceCounter" class="counter"></div>
 
+        <div id="chineseSentence" class="chinese-line"></div>
+
+        <div id="pinyinSentence" class="pinyin"></div>
+
+        <div id="meaningSentence" class="meaning"></div>
+
+        <div class="action-row">
+          <button class="soft-btn listen-btn" onclick="speakCurrentSentence()">
+            🔊 Nghe câu mẫu
+          </button>
+
+          <button id="pinyinToggle" class="soft-btn" onclick="togglePinyin()">
+            👁 Ẩn Pinyin
+          </button>
         </div>
 
-        <p class="instruction">
-            Chọn một đáp án A, B hoặc C cho mỗi câu.
-        </p>
+        <div class="record-box">
+          <h3>🎙️ Đến lượt bạn</h3>
+          <p>Đọc lại câu phía trên và ghi âm giọng của mình.</p>
 
+          <div id="recordTime" class="record-time">00:00</div>
 
-        <div
-            class="question mc-question"
-            data-answer="B">
+          <div class="action-row">
+            <button id="recordButton" class="soft-btn record-btn" onclick="toggleRecording()">
+              🎙️ Bắt đầu ghi âm
+            </button>
 
-            <div class="question-text">
-                <span class="question-number">1</span>
-                我家有四___人。
-            </div>
+            <button id="playRecordingButton" class="soft-btn" onclick="playRecording()" disabled>
+              ▶️ Nghe giọng của tôi
+            </button>
 
-            <div class="choices">
-
-                <button class="choice" data-value="A">
-                    A. 个
-                </button>
-
-                <button class="choice" data-value="B">
-                    B. 口
-                </button>
-
-                <button class="choice" data-value="C">
-                    C. 岁
-                </button>
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
+            <button id="deleteRecordingButton" class="soft-btn" onclick="deleteRecording()" disabled>
+              🔄 Ghi lại
+            </button>
+          </div>
         </div>
 
-
-        <div
-            class="question mc-question"
-            data-answer="B">
-
-            <div class="question-text">
-                <span class="question-number">2</span>
-                我有___个哥哥。
-            </div>
-
-            <div class="choices">
-
-                <button class="choice" data-value="A">
-                    A. 二
-                </button>
-
-                <button class="choice" data-value="B">
-                    B. 两
-                </button>
-
-                <button class="choice" data-value="C">
-                    C. 二个
-                </button>
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
+        <div class="nav-row">
+          <button class="nav-btn" onclick="previousSentence()">← Câu trước</button>
+          <button class="nav-btn next" onclick="nextSentence()">Câu tiếp theo →</button>
         </div>
+      </div>
 
-
-        <div
-            class="question mc-question"
-            data-answer="A">
-
-            <div class="question-text">
-                <span class="question-number">3</span>
-                王老师有二十___学生。
-            </div>
-
-            <div class="choices">
-
-                <button class="choice" data-value="A">
-                    A. 个
-                </button>
-
-                <button class="choice" data-value="B">
-                    B. 口
-                </button>
-
-                <button class="choice" data-value="C">
-                    C. 岁
-                </button>
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
+      <div class="lookup-box">
+        <h3>📒 我的生词 · Những từ bạn đã tra</h3>
+        <div id="lookupTags" class="lookup-tags">
+          <span style="color:#999">Chưa có từ nào.</span>
         </div>
-
-
-        <div
-            class="question mc-question"
-            data-answer="B">
-
-            <div class="question-text">
-                <span class="question-number">4</span>
-                A：我有两个哥哥，你___？
-            </div>
-
-            <div class="choices">
-
-                <button class="choice" data-value="A">
-                    A. 吗
-                </button>
-
-                <button class="choice" data-value="B">
-                    B. 呢
-                </button>
-
-                <button class="choice" data-value="C">
-                    C. 的
-                </button>
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
-
-        <div
-            class="question mc-question"
-            data-answer="A">
-
-            <div class="question-text">
-                <span class="question-number">5</span>
-                A：你有哥哥吗？<br>
-                B：我___哥哥。
-            </div>
-
-            <div class="choices">
-
-                <button class="choice" data-value="A">
-                    A. 没有
-                </button>
-
-                <button class="choice" data-value="B">
-                    B. 不有
-                </button>
-
-                <button class="choice" data-value="C">
-                    C. 没
-                </button>
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
+      </div>
     </section>
 
+    <!-- SHEET 2 -->
+    <section id="sheet2" class="card hidden">
 
-    <!-- =========================================
-         PHẦN 2
-    ========================================== -->
+      <div id="gameArea">
 
-    <section class="exercise">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                2
-            </div>
-
-            <h2>
-                Điền từ vào chỗ trống
-            </h2>
-
-        </div>
-
-        <p class="instruction">
-            Chọn một từ trong khung rồi bấm vào chỗ trống.
-            Bấm lại chỗ trống nếu muốn xóa.
+        <h2 class="sheet-title">🧩 句子拼拼乐</h2>
+        <p class="sheet-desc">
+          Bấm các thẻ theo đúng thứ tự để tạo thành câu hoàn chỉnh.
+          Mỗi câu có <b>60 giây</b>.
         </p>
 
-
-        <div
-            id="wordBank"
-            class="word-bank">
-
-            <button class="bank-word" data-word="呢">呢</button>
-            <button class="bank-word" data-word="二十">二十</button>
-            <button class="bank-word" data-word="没有">没有</button>
-            <button class="bank-word" data-word="口">口</button>
-            <button class="bank-word" data-word="大">大</button>
-            <button class="bank-word" data-word="个">个</button>
-
+        <div class="round-box">
+          <div id="roundBadge" class="round-badge"></div>
+          <div id="timer" class="timer">01:00</div>
         </div>
 
-
-        <div class="question fill-question">
-
-            <div class="question-text">
-
-                <span class="question-number">1</span>
-
-                王老师有
-
-                <span
-                    class="blank"
-                    data-answer="二十">
-                </span>
-
-                个学生。
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
+        <div class="progress-wrap">
+          <div id="gameProgress" class="progress"></div>
         </div>
 
-
-        <div class="question fill-question">
-
-            <div class="question-text">
-
-                <span class="question-number">2</span>
-
-                杨同乐家有四
-
-                <span
-                    class="blank"
-                    data-answer="口">
-                </span>
-
-                人。
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
+        <div class="game-question">
+          <small>Sắp xếp thành câu đúng</small>
+          <h3 id="questionHint"></h3>
         </div>
 
-
-        <div class="question fill-question">
-
-            <div class="question-text">
-
-                <span class="question-number">3</span>
-
-                我有两个哥哥，你
-
-                <span
-                    class="blank"
-                    data-answer="呢">
-                </span>
-
-                ？
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
+        <div id="answerZone" class="answer-zone">
+          <span style="color:#aaa">Câu của bạn sẽ xuất hiện ở đây...</span>
         </div>
 
+        <div id="wordBank" class="word-bank"></div>
 
-        <div class="question fill-question">
+        <div id="feedback" class="feedback"></div>
 
-            <div class="question-text">
+        <div class="game-controls">
+          <button class="soft-btn" onclick="resetCurrentAnswer()">↺ Làm lại câu</button>
 
-                <span class="question-number">4</span>
+          <button id="checkButton" class="main-btn check-btn" onclick="checkAnswer()">
+            ✓ Kiểm tra
+          </button>
 
-                杨同乐
-
-                <span
-                    class="blank"
-                    data-answer="没有">
-                </span>
-
-                哥哥。
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
+          <button id="nextGameButton" class="main-btn next-question hidden" onclick="nextGameQuestion()">
+            Câu tiếp theo →
+          </button>
         </div>
 
+      </div>
 
-        <div class="question fill-question">
+      <div id="roundComplete" class="round-complete hidden">
+        <div class="big-emoji">🎉</div>
+        <h2 id="roundCompleteTitle"></h2>
+        <p id="roundCompleteText"></p>
 
-            <div class="question-text">
+        <br>
 
-                <span class="question-number">5</span>
+        <button id="continueRoundButton" class="main-btn" onclick="continueRound()">
+          Tiếp tục thử thách →
+        </button>
+      </div>
 
-                您女儿今年多
+      <div id="gameFinished" class="round-complete hidden">
+        <div class="big-emoji">🏆</div>
+        <h2>太棒了！Hoàn thành thử thách!</h2>
+        <p id="finalResult"></p>
 
-                <span
-                    class="blank"
-                    data-answer="大">
-                </span>
+        <br>
 
-                ？
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
-
-        <div class="question fill-question">
-
-            <div class="question-text">
-
-                <span class="question-number">6</span>
-
-                她有两
-
-                <span
-                    class="blank"
-                    data-answer="个">
-                </span>
-
-                孩子。
-
-            </div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================
-         PHẦN 3
-    ========================================== -->
-
-    <section class="exercise">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                3
-            </div>
-
-            <h2>
-                Sắp xếp thành câu đúng
-            </h2>
-
-        </div>
-
-        <p class="instruction">
-            Bấm các thẻ theo đúng thứ tự để tạo thành câu.
-            Bấm vào vùng câu trả lời để làm lại câu đó.
-        </p>
-
-
-        <div
-            class="question order-question"
-            data-answer="我有两个哥哥">
-
-            <div class="question-text">
-                <span class="question-number">1</span>
-                Sắp xếp:
-            </div>
-
-            <div class="scramble">
-
-                <button class="word-card">有</button>
-                <button class="word-card">我</button>
-                <button class="word-card">两个</button>
-                <button class="word-card">哥哥</button>
-
-            </div>
-
-            <div class="sentence-answer"></div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
-
-        <div
-            class="question order-question"
-            data-answer="我家有四口人">
-
-            <div class="question-text">
-                <span class="question-number">2</span>
-                Sắp xếp:
-            </div>
-
-            <div class="scramble">
-
-                <button class="word-card">家</button>
-                <button class="word-card">四口人</button>
-                <button class="word-card">有</button>
-                <button class="word-card">我</button>
-
-            </div>
-
-            <div class="sentence-answer"></div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
-
-        <div
-            class="question order-question"
-            data-answer="我没有哥哥">
-
-            <div class="question-text">
-                <span class="question-number">3</span>
-                Sắp xếp:
-            </div>
-
-            <div class="scramble">
-
-                <button class="word-card">哥哥</button>
-                <button class="word-card">我</button>
-                <button class="word-card">没有</button>
-
-            </div>
-
-            <div class="sentence-answer"></div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
-
-        <div
-            class="question order-question"
-            data-answer="她有二十个学生">
-
-            <div class="question-text">
-                <span class="question-number">4</span>
-                Sắp xếp:
-            </div>
-
-            <div class="scramble">
-
-                <button class="word-card">她</button>
-                <button class="word-card">二十个</button>
-                <button class="word-card">有</button>
-                <button class="word-card">学生</button>
-
-            </div>
-
-            <div class="sentence-answer"></div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
-
-        <div
-            class="question order-question"
-            data-answer="您女儿今年多大">
-
-            <div class="question-text">
-                <span class="question-number">5</span>
-                Sắp xếp:
-            </div>
-
-            <div class="scramble">
-
-                <button class="word-card">女儿</button>
-                <button class="word-card">多大</button>
-                <button class="word-card">您</button>
-                <button class="word-card">今年</button>
-
-            </div>
-
-            <div class="sentence-answer"></div>
-
-            <div class="answer-feedback"></div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================
-         PHẦN 4
-    ========================================== -->
-
-    <section class="exercise">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                4
-            </div>
-
-            <h2>
-                Đọc đoạn văn và trả lời câu hỏi
-            </h2>
-
-        </div>
-
-        <p class="instruction">
-            Đọc kỹ đoạn văn rồi nhập câu trả lời bằng tiếng Trung.
-        </p>
-
-
-        <div class="reading-box">
-
-            王一雪有两个孩子，一个儿子，一个女儿。
-            她儿子今年五岁，女儿今年十二岁。
-            杨同乐没有哥哥。
-            他家有四口人：爸爸、妈妈、妹妹和他。
-
-        </div>
-
-
-        <div class="question reading-question">
-
-            <div class="question-text">
-
-                <span class="question-number">1</span>
-
-                王一雪有几个孩子？
-
-            </div>
-
-            <input
-                class="text-answer"
-                type="text"
-                placeholder="Nhập câu trả lời bằng tiếng Trung..."
-                data-answers="王一雪有两个孩子|她有两个孩子|有两个孩子|两个">
-
-            <div
-                class="answer-feedback"
-                data-correct="王一雪有两个孩子。">
-            </div>
-
-        </div>
-
-
-        <div class="question reading-question">
-
-            <div class="question-text">
-
-                <span class="question-number">2</span>
-
-                王一雪有几个女儿？
-
-            </div>
-
-            <input
-                class="text-answer"
-                type="text"
-                placeholder="Nhập câu trả lời bằng tiếng Trung..."
-                data-answers="王一雪有一个女儿|她有一个女儿|有一个女儿|一个">
-
-            <div
-                class="answer-feedback"
-                data-correct="王一雪有一个女儿。">
-            </div>
-
-        </div>
-
-
-        <div class="question reading-question">
-
-            <div class="question-text">
-
-                <span class="question-number">3</span>
-
-                王一雪的儿子今年几岁？
-
-            </div>
-
-            <input
-                class="text-answer"
-                type="text"
-                placeholder="Nhập câu trả lời bằng tiếng Trung..."
-                data-answers="王一雪的儿子今年五岁|她儿子今年五岁|儿子今年五岁|五岁">
-
-            <div
-                class="answer-feedback"
-                data-correct="她儿子今年五岁。">
-            </div>
-
-        </div>
-
-
-        <div class="question reading-question">
-
-            <div class="question-text">
-
-                <span class="question-number">4</span>
-
-                王一雪的女儿今年多大？
-
-            </div>
-
-            <input
-                class="text-answer"
-                type="text"
-                placeholder="Nhập câu trả lời bằng tiếng Trung..."
-                data-answers="王一雪的女儿今年十二岁|她女儿今年十二岁|女儿今年十二岁|十二岁">
-
-            <div
-                class="answer-feedback"
-                data-correct="她女儿今年十二岁。">
-            </div>
-
-        </div>
-
-
-        <div class="question reading-question">
-
-            <div class="question-text">
-
-                <span class="question-number">5</span>
-
-                杨同乐有哥哥吗？
-
-            </div>
-
-            <input
-                class="text-answer"
-                type="text"
-                placeholder="Nhập câu trả lời bằng tiếng Trung..."
-                data-answers="杨同乐没有哥哥|他没有哥哥|没有">
-
-            <div
-                class="answer-feedback"
-                data-correct="杨同乐没有哥哥。">
-            </div>
-
-        </div>
-
-
-        <div class="question reading-question">
-
-            <div class="question-text">
-
-                <span class="question-number">6</span>
-
-                杨同乐家有几口人？
-
-            </div>
-
-            <input
-                class="text-answer"
-                type="text"
-                placeholder="Nhập câu trả lời bằng tiếng Trung..."
-                data-answers="杨同乐家有四口人|他家有四口人|有四口人|四口人">
-
-            <div
-                class="answer-feedback"
-                data-correct="杨同乐家有四口人。">
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- SUBMIT -->
-
-    <div
-        id="submitArea"
-        class="submit-area">
-
-        <button
-            class="submit-btn"
-            onclick="submitQuiz()">
-            📮 Nộp bài
+        <button class="main-btn" onclick="showSheet(3)">
+          🏆 Xem bảng xếp hạng
         </button>
 
-    </div>
-
-
-    <!-- RESULT -->
-
-    <section
-        id="resultScreen"
-        class="result-screen">
-
-        <div
-            id="resultEmoji"
-            class="result-emoji">
-            🎉
-        </div>
-
-        <h2 id="resultTitle">
-            Hoàn thành bài luyện tập!
-        </h2>
-
-        <p id="resultMessage"></p>
-
-        <div class="score-circle">
-
-            <strong id="scoreDisplay">
-                0/22
-            </strong>
-
-            <span>
-                CÂU ĐÚNG
-            </span>
-
-        </div>
-
-        <p>
-            🌟 太棒了！继续加油！
-        </p>
-
-        <div class="result-buttons">
-
-            <button
-                class="retry-btn"
-                onclick="resetQuiz()">
-                🔄 Làm lại
-            </button>
-
-            <button
-                class="result-home"
-                onclick="window.location.href='../../index.html'">
-                🏠 Trang chủ
-            </button>
-
-        </div>
+        <button class="soft-btn" style="margin-left:8px" onclick="restartGame()">
+          🔄 Chơi lại
+        </button>
+      </div>
 
     </section>
 
+    <!-- RANK -->
+    <section id="sheet3" class="card hidden">
+      <h2 class="sheet-title">🏆 Bảng xếp hạng</h2>
+      <p class="sheet-desc">
+        Ưu tiên người trả lời đúng nhiều hơn. Nếu bằng điểm,
+        người hoàn thành nhanh hơn sẽ xếp trên.
+      </p>
+
+      <div id="rankList" class="rank-list"></div>
+    </section>
+
+  </main>
 </div>
 
+<!-- WORD POPUP -->
+<div id="wordOverlay" class="overlay hidden" onclick="overlayClose(event)">
+  <div class="word-popup">
+    <button class="close-popup" onclick="closeWordPopup()">×</button>
+
+    <div id="popupHanzi" class="popup-hanzi"></div>
+    <div id="popupPinyin" class="popup-pinyin"></div>
+    <div id="popupType" class="popup-type"></div>
+    <div id="popupMeaning" class="popup-meaning"></div>
+
+    <button class="soft-btn listen-btn" onclick="speakPopupWord()">
+      🔊 Nghe cách đọc
+    </button>
+  </div>
+</div>
 
 <script>
-
-/* ==================================================
-   BIẾN CHUNG
-================================================== */
-
-let selectedWord = null;
-
-let submitted = false;
-
-
-/* ==================================================
-   TRẮC NGHIỆM
-================================================== */
-
-document
-.querySelectorAll(".mc-question")
-.forEach(question=>{
-
-    const choices =
-        question.querySelectorAll(".choice");
-
-    choices.forEach(choice=>{
-
-        choice.addEventListener(
-            "click",
-            ()=>{
-
-                if(submitted){
-                    return;
-                }
-
-                choices.forEach(item=>{
-                    item.classList.remove("selected");
-                });
-
-                choice.classList.add("selected");
-
-                updateProgress();
-
-            }
-        );
-
-    });
-
-});
-
-
-/* ==================================================
-   NGÂN HÀNG TỪ
-================================================== */
-
-document
-.querySelectorAll(".bank-word")
-.forEach(button=>{
-
-    button.addEventListener(
-        "click",
-        ()=>{
-
-            if(submitted){
-                return;
-            }
-
-            document
-            .querySelectorAll(".bank-word")
-            .forEach(item=>{
-                item.classList.remove("active");
-            });
-
-            selectedWord =
-                button.dataset.word;
-
-            button.classList.add("active");
-
-        }
-    );
-
-});
-
-
-document
-.querySelectorAll(".blank")
-.forEach(blank=>{
-
-    blank.addEventListener(
-        "click",
-        ()=>{
-
-            if(submitted){
-                return;
-            }
-
-
-            /* Nếu đã có từ:
-               bấm vào để xóa */
-
-            if(
-                blank.dataset.value
-                &&
-                !selectedWord
-            ){
-
-                blank.textContent = "";
-
-                blank.dataset.value = "";
-
-                blank.classList.remove("filled");
-
-                updateProgress();
-
-                return;
-            }
-
-
-            /* Điền từ */
-
-            if(selectedWord){
-
-                blank.textContent =
-                    selectedWord;
-
-                blank.dataset.value =
-                    selectedWord;
-
-                blank.classList.add(
-                    "filled"
-                );
-
-
-                selectedWord = null;
-
-
-                document
-                .querySelectorAll(".bank-word")
-                .forEach(item=>{
-                    item.classList.remove("active");
-                });
-
-
-                updateProgress();
-
-            }
-
-        }
-    );
-
-});
-
-
-/* ==================================================
-   SẮP XẾP CÂU
-================================================== */
-
-document
-.querySelectorAll(".order-question")
-.forEach(question=>{
-
-    const cards =
-        question.querySelectorAll(".word-card");
-
-    const answerArea =
-        question.querySelector(".sentence-answer");
-
-
-    cards.forEach(card=>{
-
-        card.addEventListener(
-            "click",
-            ()=>{
-
-                if(
-                    submitted ||
-                    card.classList.contains("used")
-                ){
-                    return;
-                }
-
-
-                card.classList.add("used");
-
-
-                const chip =
-                    document.createElement("span");
-
-                chip.className =
-                    "answer-chip";
-
-                chip.textContent =
-                    card.textContent.trim();
-
-                chip.dataset.source =
-                    card.textContent.trim();
-
-
-                answerArea.appendChild(chip);
-
-                updateProgress();
-
-            }
-        );
-
-    });
-
-
-    /* Bấm vùng đáp án để làm lại */
-
-    answerArea.addEventListener(
-        "click",
-        ()=>{
-
-            if(submitted){
-                return;
-            }
-
-            answerArea.innerHTML = "";
-
-            cards.forEach(card=>{
-                card.classList.remove("used");
-            });
-
-            updateProgress();
-
-        }
-    );
-
-});
-
-
-/* ==================================================
-   TEXT INPUT
-================================================== */
-
-document
-.querySelectorAll(".text-answer")
-.forEach(input=>{
-
-    input.addEventListener(
-        "input",
-        updateProgress
-    );
-
-});
-
-
-/* ==================================================
-   CHUẨN HÓA TEXT
-================================================== */
-
-function normalizeText(text){
-
-    return text
-        .replace(/\s+/g,"")
-        .replace(/[。！？!?，,；;]/g,"")
-        .trim();
-
+/* =========================================================
+   TRANG CHỦ
+   Nếu trang này nằm trong thư mục con của bài học,
+   history.back() sẽ đưa về trang trước.
+========================================================= */
+
+function goHome(){
+  history.back();
 }
 
+/* =========================================================
+   TỪ ĐIỂN BÀI 1 - 2 - 3
+========================================================= */
 
-/* ==================================================
-   PROGRESS
-================================================== */
+const dictionary = {
+  "大家": {pinyin:"dàjiā", meaning:"mọi người", type:"Đại từ · 代词"},
+  "好": {pinyin:"hǎo", meaning:"tốt; khỏe; chào", type:"Tính từ · 形容词"},
+  "你好": {pinyin:"nǐ hǎo", meaning:"xin chào", type:"Cụm chào hỏi"},
+  "我": {pinyin:"wǒ", meaning:"tôi, mình", type:"Đại từ · 代词"},
+  "叫": {pinyin:"jiào", meaning:"gọi; tên là", type:"Động từ · 动词"},
+  "李文": {pinyin:"Lǐ Wén", meaning:"Lý Văn", type:"Tên riêng · 专有名词"},
+  "是": {pinyin:"shì", meaning:"là", type:"Động từ · 动词"},
+  "中国": {pinyin:"Zhōngguó", meaning:"Trung Quốc", type:"Tên riêng · 专有名词"},
+  "人": {pinyin:"rén", meaning:"người", type:"Danh từ · 名词"},
+  "学生": {pinyin:"xuésheng", meaning:"học sinh", type:"Danh từ · 名词"},
+  "王老师": {pinyin:"Wáng lǎoshī", meaning:"cô/thầy Vương", type:"Danh xưng"},
+  "老师": {pinyin:"lǎoshī", meaning:"giáo viên", type:"Danh từ · 名词"},
+  "的": {pinyin:"de", meaning:"của; trợ từ chỉ quan hệ sở hữu", type:"Trợ từ · 助词"},
+  "中文": {pinyin:"Zhōngwén", meaning:"tiếng Trung", type:"Danh từ · 名词"},
+  "她": {pinyin:"tā", meaning:"cô ấy, chị ấy", type:"Đại từ · 代词"},
+  "白家月": {pinyin:"Bái Jiāyuè", meaning:"Bạch Gia Nguyệt", type:"Tên riêng · 专有名词"},
+  "法国": {pinyin:"Fǎguó", meaning:"nước Pháp", type:"Tên riêng · 专有名词"},
+  "陈天中": {pinyin:"Chén Tiānzhōng", meaning:"Trần Thiên Trung", type:"Tên riêng · 专有名词"},
+  "同学": {pinyin:"tóngxué", meaning:"bạn học", type:"Danh từ · 名词"},
+  "这": {pinyin:"zhè", meaning:"đây, này", type:"Đại từ · 代词"},
+  "女朋友": {pinyin:"nǚpéngyou", meaning:"bạn gái", type:"Danh từ · 名词"},
+  "也": {pinyin:"yě", meaning:"cũng", type:"Phó từ · 副词"},
+  "泰国": {pinyin:"Tàiguó", meaning:"Thái Lan", type:"Tên riêng · 专有名词"},
+  "请问": {pinyin:"qǐngwèn", meaning:"xin hỏi, cho hỏi", type:"Động từ/cụm lịch sự"},
+  "你": {pinyin:"nǐ", meaning:"bạn, cậu", type:"Đại từ · 代词"},
+  "哪": {pinyin:"nǎ", meaning:"nào; dùng để hỏi", type:"Đại từ nghi vấn"},
+  "国": {pinyin:"guó", meaning:"quốc gia, đất nước", type:"Danh từ · 名词"},
+  "谁": {pinyin:"shéi / shuí", meaning:"ai", type:"Đại từ nghi vấn"},
+  "你们": {pinyin:"nǐmen", meaning:"các bạn", type:"Đại từ · 代词"},
+  "吗": {pinyin:"ma", meaning:"trợ từ đặt cuối câu hỏi yes/no", type:"Trợ từ · 助词"},
+  "姐姐": {pinyin:"jiějie", meaning:"chị gái", type:"Danh từ · 名词"},
+  "工作": {pinyin:"gōngzuò", meaning:"làm việc; công việc", type:"Động từ / Danh từ"},
+  "忙": {pinyin:"máng", meaning:"bận", type:"Tính từ · 形容词"},
+  "对": {pinyin:"duì", meaning:"đúng, phải", type:"Tính từ / từ đáp"},
+  "还": {pinyin:"hái", meaning:"vẫn, còn", type:"Phó từ · 副词"},
+  "很": {pinyin:"hěn", meaning:"rất", type:"Phó từ · 副词"},
+  "不": {pinyin:"bù", meaning:"không", type:"Phó từ · 副词"},
+  "太": {pinyin:"tài", meaning:"quá, rất", type:"Phó từ · 副词"},
+  "我们": {pinyin:"wǒmen", meaning:"chúng tôi, chúng mình", type:"Đại từ · 代词"},
+  "想": {pinyin:"xiǎng", meaning:"nhớ; muốn", type:"Động từ · 动词"},
+  "高兴": {pinyin:"gāoxìng", meaning:"vui, vui vẻ", type:"Tính từ · 形容词"},
+  "认识": {pinyin:"rènshi", meaning:"quen biết, làm quen", type:"Động từ · 动词"},
+  "谢谢": {pinyin:"xièxie", meaning:"cảm ơn", type:"Động từ / lời cảm ơn"},
+  "再见": {pinyin:"zàijiàn", meaning:"tạm biệt", type:"Cụm chào tạm biệt"}
+};
 
-function updateProgress(){
+/* =========================================================
+   SHEET 1 - 20 CÂU
+========================================================= */
 
-    let completed = 0;
+const readingSentences = [
+  {
+    words:["大家","好"],
+    text:"大家好！",
+    pinyin:"Dàjiā hǎo!",
+    meaning:"Chào mọi người!"
+  },
+  {
+    words:["你好","我","叫","李文"],
+    text:"你好，我叫李文。",
+    pinyin:"Nǐ hǎo, wǒ jiào Lǐ Wén.",
+    meaning:"Xin chào, tôi tên là Lý Văn."
+  },
+  {
+    words:["我","是","中国","人"],
+    text:"我是中国人。",
+    pinyin:"Wǒ shì Zhōngguó rén.",
+    meaning:"Tôi là người Trung Quốc."
+  },
+  {
+    words:["我","是","学生"],
+    text:"我是学生。",
+    pinyin:"Wǒ shì xuésheng.",
+    meaning:"Tôi là học sinh."
+  },
+  {
+    words:["王老师","是","我","的","中文","老师"],
+    text:"王老师是我的中文老师。",
+    pinyin:"Wáng lǎoshī shì wǒ de Zhōngwén lǎoshī.",
+    meaning:"Cô Vương là giáo viên tiếng Trung của tôi."
+  },
+  {
+    words:["她","是","中国","人"],
+    text:"她是中国人。",
+    pinyin:"Tā shì Zhōngguó rén.",
+    meaning:"Cô ấy là người Trung Quốc."
+  },
+  {
+    words:["白家月","是","法国","人"],
+    text:"白家月是法国人。",
+    pinyin:"Bái Jiāyuè shì Fǎguó rén.",
+    meaning:"Bạch Gia Nguyệt là người Pháp."
+  },
+  {
+    words:["陈天中","是","她","的","同学"],
+    text:"陈天中是她的同学。",
+    pinyin:"Chén Tiānzhōng shì tā de tóngxué.",
+    meaning:"Trần Thiên Trung là bạn học của cô ấy."
+  },
+  {
+    words:["这","是","陈天中","的","女朋友"],
+    text:"这是陈天中的女朋友。",
+    pinyin:"Zhè shì Chén Tiānzhōng de nǚpéngyou.",
+    meaning:"Đây là bạn gái của Trần Thiên Trung."
+  },
+  {
+    words:["她","也","是","泰国","人"],
+    text:"她也是泰国人。",
+    pinyin:"Tā yě shì Tàiguó rén.",
+    meaning:"Cô ấy cũng là người Thái Lan."
+  },
+  {
+    words:["请问","你","是","哪","国","人"],
+    text:"请问，你是哪国人？",
+    pinyin:"Qǐngwèn, nǐ shì nǎ guó rén?",
+    meaning:"Xin hỏi, bạn là người nước nào?"
+  },
+  {
+    words:["请问","她","是","谁"],
+    text:"请问，她是谁？",
+    pinyin:"Qǐngwèn, tā shì shéi?",
+    meaning:"Xin hỏi, cô ấy là ai?"
+  },
+  {
+    words:["你们","是","学生","吗"],
+    text:"你们是学生吗？",
+    pinyin:"Nǐmen shì xuésheng ma?",
+    meaning:"Các bạn là học sinh phải không?"
+  },
+  {
+    words:["你","姐姐","工作","忙","吗"],
+    text:"你姐姐工作忙吗？",
+    pinyin:"Nǐ jiějie gōngzuò máng ma?",
+    meaning:"Chị gái bạn làm việc có bận không?"
+  },
+  {
+    words:["对","她","工作","还","很","忙"],
+    text:"对，她工作还很忙。",
+    pinyin:"Duì, tā gōngzuò hái hěn máng.",
+    meaning:"Đúng, cô ấy vẫn rất bận."
+  },
+  {
+    words:["我","不","太","忙"],
+    text:"我不太忙。",
+    pinyin:"Wǒ bú tài máng.",
+    meaning:"Tôi không quá bận."
+  },
+  {
+    words:["我们","很","想","你"],
+    text:"我们很想你。",
+    pinyin:"Wǒmen hěn xiǎng nǐ.",
+    meaning:"Chúng tôi rất nhớ bạn."
+  },
+  {
+    words:["我","也","很","想","你们"],
+    text:"我也很想你们。",
+    pinyin:"Wǒ yě hěn xiǎng nǐmen.",
+    meaning:"Tôi cũng rất nhớ các bạn."
+  },
+  {
+    words:["很","高兴","认识","你"],
+    text:"很高兴认识你。",
+    pinyin:"Hěn gāoxìng rènshi nǐ.",
+    meaning:"Rất vui được làm quen với bạn."
+  },
+  {
+    words:["谢谢","老师","老师","再见"],
+    text:"谢谢老师，老师再见！",
+    pinyin:"Xièxie lǎoshī, lǎoshī zàijiàn!",
+    meaning:"Cảm ơn thầy/cô, tạm biệt thầy/cô!"
+  }
+];
 
-    const total = 22;
+let readingIndex = 0;
+let pinyinVisible = true;
+let lookupHistory = new Set();
+let currentPopupWord = "";
 
+/* =========================================================
+   LOGIN
+========================================================= */
 
-    /* PHẦN 1 */
+let playerName = "";
 
-    document
-    .querySelectorAll(".mc-question")
-    .forEach(question=>{
+function startLesson(){
+  const input = document.getElementById("studentName");
+  const name = input.value.trim();
 
-        if(
-            question.querySelector(".choice.selected")
-        ){
-            completed++;
-        }
+  if(!name){
+    input.focus();
+    input.style.borderColor = "#e58da5";
+    return;
+  }
 
-    });
+  playerName = name;
 
+  document.getElementById("displayName").textContent = playerName;
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
 
-    /* PHẦN 2 */
-
-    document
-    .querySelectorAll(".blank")
-    .forEach(blank=>{
-
-        if(blank.dataset.value){
-            completed++;
-        }
-
-    });
-
-
-    /* PHẦN 3 */
-
-    document
-    .querySelectorAll(".order-question")
-    .forEach(question=>{
-
-        const cards =
-            question.querySelectorAll(".word-card");
-
-        const used =
-            question.querySelectorAll(".word-card.used");
-
-        if(
-            cards.length === used.length
-            &&
-            cards.length > 0
-        ){
-            completed++;
-        }
-
-    });
-
-
-    /* PHẦN 4 */
-
-    document
-    .querySelectorAll(".text-answer")
-    .forEach(input=>{
-
-        if(input.value.trim()){
-            completed++;
-        }
-
-    });
-
-
-    const percent =
-        Math.round(
-            completed / total * 100
-        );
-
-
-    document
-    .getElementById("progressFill")
-    .style.width =
-        percent + "%";
-
-
-    document
-    .getElementById("progressText")
-    .textContent =
-        percent + "%";
-
+  renderReading();
+  renderRanking();
 }
 
+/* =========================================================
+   TAB
+========================================================= */
 
-/* ==================================================
-   NỘP BÀI
-================================================== */
+function showSheet(number){
 
-function submitQuiz(){
+  [1,2,3].forEach(n=>{
+    document.getElementById("sheet"+n).classList.add("hidden");
+    document.getElementById("tab"+n).classList.remove("active");
+  });
 
-    if(submitted){
-        return;
-    }
+  document.getElementById("sheet"+number).classList.remove("hidden");
+  document.getElementById("tab"+number).classList.add("active");
 
+  if(number === 2 && !gameStarted){
+    startGame();
+  }
 
-    const total = 22;
+  if(number === 3){
+    renderRanking();
+  }
 
-    let completed = 0;
-
-
-    /* ĐẾM SỐ CÂU ĐÃ LÀM */
-
-    document
-    .querySelectorAll(".mc-question")
-    .forEach(question=>{
-
-        if(
-            question.querySelector(".choice.selected")
-        ){
-            completed++;
-        }
-
-    });
-
-
-    document
-    .querySelectorAll(".blank")
-    .forEach(blank=>{
-
-        if(blank.dataset.value){
-            completed++;
-        }
-
-    });
-
-
-    document
-    .querySelectorAll(".order-question")
-    .forEach(question=>{
-
-        const cards =
-            question.querySelectorAll(".word-card");
-
-        const used =
-            question.querySelectorAll(".word-card.used");
-
-        if(
-            cards.length === used.length
-            &&
-            cards.length > 0
-        ){
-            completed++;
-        }
-
-    });
-
-
-    document
-    .querySelectorAll(".text-answer")
-    .forEach(input=>{
-
-        if(input.value.trim()){
-            completed++;
-        }
-
-    });
-
-
-    /* CHƯA LÀM HẾT */
-
-    if(completed < total){
-
-        const missing =
-            total - completed;
-
-        const submitArea =
-            document.getElementById("submitArea");
-
-
-        let warning =
-            document.getElementById("submitWarning");
-
-
-        if(!warning){
-
-            warning =
-                document.createElement("div");
-
-            warning.id =
-                "submitWarning";
-
-            warning.style.marginTop =
-                "18px";
-
-            warning.style.padding =
-                "12px";
-
-            warning.style.borderRadius =
-                "14px";
-
-            warning.style.background =
-                "#fff0dd";
-
-            warning.style.color =
-                "#9b6c3f";
-
-            warning.style.fontWeight =
-                "900";
-
-
-            submitArea.appendChild(
-                warning
-            );
-
-        }
-
-
-        warning.textContent =
-            "🌱 Bạn còn " +
-            missing +
-            " câu chưa làm. Hoàn thành hết rồi hãy nộp bài nhé!";
-
-
-        return;
-
-    }
-
-
-    submitted = true;
-
-    let score = 0;
-
-
-    /* =========================
-       CHẤM PHẦN 1
-    ========================= */
-
-    document
-    .querySelectorAll(".mc-question")
-    .forEach(question=>{
-
-        const answer =
-            question.dataset.answer;
-
-        const selected =
-            question.querySelector(".choice.selected");
-
-        const feedback =
-            question.querySelector(".answer-feedback");
-
-
-        question
-        .querySelectorAll(".choice")
-        .forEach(choice=>{
-
-            if(
-                choice.dataset.value === answer
-            ){
-                choice.classList.add("correct");
-            }
-
-        });
-
-
-        if(
-            selected &&
-            selected.dataset.value === answer
-        ){
-
-            score++;
-
-            feedback.textContent =
-                "✓ Chính xác!";
-
-            feedback.className =
-                "answer-feedback show correct-text";
-
-        }else{
-
-            if(selected){
-                selected.classList.add("wrong");
-            }
-
-
-            const correctChoice =
-                question.querySelector(
-                    `.choice[data-value="${answer}"]`
-                );
-
-
-            feedback.textContent =
-                "✗ Đáp án đúng: " +
-                correctChoice.textContent.trim();
-
-
-            feedback.className =
-                "answer-feedback show wrong-text";
-
-        }
-
-    });
-
-
-    /* =========================
-       CHẤM PHẦN 2
-    ========================= */
-
-    document
-    .querySelectorAll(".fill-question")
-    .forEach(question=>{
-
-        const blank =
-            question.querySelector(".blank");
-
-        const feedback =
-            question.querySelector(".answer-feedback");
-
-        const answer =
-            blank.dataset.answer;
-
-        const value =
-            blank.dataset.value || "";
-
-
-        if(value === answer){
-
-            score++;
-
-            blank.classList.add("correct");
-
-            feedback.textContent =
-                "✓ Chính xác!";
-
-            feedback.className =
-                "answer-feedback show correct-text";
-
-        }else{
-
-            blank.classList.add("wrong");
-
-            feedback.textContent =
-                "✗ Đáp án đúng: " +
-                answer;
-
-            feedback.className =
-                "answer-feedback show wrong-text";
-
-        }
-
-    });
-
-
-    /* =========================
-       CHẤM PHẦN 3
-    ========================= */
-
-    document
-    .querySelectorAll(".order-question")
-    .forEach(question=>{
-
-        const answerArea =
-            question.querySelector(".sentence-answer");
-
-        const feedback =
-            question.querySelector(".answer-feedback");
-
-        const correctAnswer =
-            normalizeText(
-                question.dataset.answer
-            );
-
-
-        let userAnswer = "";
-
-
-        answerArea
-        .querySelectorAll(".answer-chip")
-        .forEach(chip=>{
-
-            userAnswer +=
-                chip.textContent.trim();
-
-        });
-
-
-        userAnswer =
-            normalizeText(userAnswer);
-
-
-        if(
-            userAnswer === correctAnswer
-        ){
-
-            score++;
-
-            answerArea.classList.add("correct");
-
-            feedback.textContent =
-                "✓ Chính xác!";
-
-            feedback.className =
-                "answer-feedback show correct-text";
-
-        }else{
-
-            answerArea.classList.add("wrong");
-
-            feedback.textContent =
-                "✗ Đáp án đúng: " +
-                question.dataset.answer +
-                "。";
-
-            feedback.className =
-                "answer-feedback show wrong-text";
-
-        }
-
-    });
-
-
-    /* =========================
-       CHẤM PHẦN 4
-    ========================= */
-
-    document
-    .querySelectorAll(".reading-question")
-    .forEach(question=>{
-
-        const input =
-            question.querySelector(".text-answer");
-
-        const feedback =
-            question.querySelector(".answer-feedback");
-
-
-        const userAnswer =
-            normalizeText(
-                input.value
-            );
-
-
-        const acceptedAnswers =
-            input.dataset.answers
-            .split("|")
-            .map(
-                answer =>
-                    normalizeText(answer)
-            );
-
-
-        if(
-            acceptedAnswers.includes(
-                userAnswer
-            )
-        ){
-
-            score++;
-
-            input.classList.add("correct");
-
-            feedback.textContent =
-                "✓ Chính xác!";
-
-            feedback.className =
-                "answer-feedback show correct-text";
-
-        }else{
-
-            input.classList.add("wrong");
-
-            feedback.textContent =
-                "✗ Đáp án gợi ý: " +
-                feedback.dataset.correct;
-
-            feedback.className =
-                "answer-feedback show wrong-text";
-
-        }
-
-    });
-
-
-    /* =========================
-       HIỆN KẾT QUẢ
-    ========================= */
-
-    showResult(
-        score,
-        total
-    );
-
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
+/* =========================================================
+   RENDER READING
+========================================================= */
 
-/* ==================================================
-   KẾT QUẢ
-================================================== */
+function renderReading(){
 
-function showResult(
-    score,
-    total
-){
+  const item = readingSentences[readingIndex];
 
-    const result =
-        document.getElementById(
-            "resultScreen"
-        );
+  document.getElementById("sentenceCounter").textContent =
+    `Câu ${readingIndex + 1} / ${readingSentences.length}`;
 
-    const title =
-        document.getElementById(
-            "resultTitle"
-        );
+  const chinese = document.getElementById("chineseSentence");
+  chinese.innerHTML = "";
 
-    const message =
-        document.getElementById(
-            "resultMessage"
-        );
+  item.words.forEach(word=>{
+    const span = document.createElement("span");
+    span.className = "word";
+    span.textContent = word;
+    span.onclick = ()=>openWordPopup(word);
+    chinese.appendChild(span);
+  });
 
-    const emoji =
-        document.getElementById(
-            "resultEmoji"
-        );
+  document.getElementById("pinyinSentence").textContent = item.pinyin;
+  document.getElementById("meaningSentence").textContent = item.meaning;
 
+  document.getElementById("pinyinSentence").style.display =
+    pinyinVisible ? "block" : "none";
 
-    document
-    .getElementById(
-        "scoreDisplay"
-    )
-    .textContent =
-        score + "/" + total;
+  const percent = ((readingIndex + 1) / readingSentences.length) * 100;
+  document.getElementById("readingProgress").style.width = percent + "%";
 
-
-    const percent =
-        score / total * 100;
-
-
-    if(percent >= 90){
-
-        emoji.textContent =
-            "🏆🌟";
-
-        title.textContent =
-            "Xuất sắc!";
-
-        message.innerHTML =
-            "Bạn đã hoàn thành xuất sắc nhiệm vụ của " +
-            "<b>第四课：我有两个孩子</b>.<br>" +
-            "Khả năng ghi nhớ của bạn rất tốt!";
-
-    }
-
-    else if(percent >= 70){
-
-        emoji.textContent =
-            "🎉🌷";
-
-        title.textContent =
-            "Làm tốt lắm!";
-
-        message.innerHTML =
-            "Bạn đã hoàn thành bài luyện tập rất tốt.<br>" +
-            "Xem lại những câu màu đỏ rồi thử thêm một lần nữa nhé!";
-
-    }
-
-    else if(percent >= 50){
-
-        emoji.textContent =
-            "🌱💪";
-
-        title.textContent =
-            "Hoàn thành rồi!";
-
-        message.innerHTML =
-            "Bạn đã đi hết bài luyện tập.<br>" +
-            "Mình xem lại những câu chưa đúng để nhớ bài chắc hơn nhé!";
-
-    }
-
-    else{
-
-        emoji.textContent =
-            "🌼📚";
-
-        title.textContent =
-            "Cố gắng thêm một chút nhé!";
-
-        message.innerHTML =
-            "Bạn đã hoàn thành nhiệm vụ rồi.<br>" +
-            "Hãy xem lại đáp án và thử lại để chinh phục Bài 4 nhé!";
-
-    }
-
-
-    result.classList.add("show");
-
-
-    document
-    .getElementById(
-        "submitArea"
-    )
-    .style.display =
-        "none";
-
-
-    document
-    .getElementById(
-        "progressFill"
-    )
-    .style.width =
-        "100%";
-
-
-    document
-    .getElementById(
-        "progressText"
-    )
-    .textContent =
-        "100%";
-
-
-    setTimeout(()=>{
-
-        result.scrollIntoView({
-            behavior:"smooth",
-            block:"center"
-        });
-
-    },250);
-
+  deleteRecording();
 }
 
-
-/* ==================================================
-   LÀM LẠI
-================================================== */
-
-function resetQuiz(){
-
-    window.location.reload();
-
+function nextSentence(){
+  if(readingIndex < readingSentences.length - 1){
+    readingIndex++;
+    renderReading();
+  }else{
+    showReadingComplete();
+  }
 }
 
+function previousSentence(){
+  if(readingIndex > 0){
+    readingIndex--;
+    renderReading();
+  }
+}
 
-/* ==================================================
-   KHỞI ĐỘNG
-================================================== */
+function togglePinyin(){
+  pinyinVisible = !pinyinVisible;
 
-updateProgress();
+  document.getElementById("pinyinSentence").style.display =
+    pinyinVisible ? "block" : "none";
 
+  document.getElementById("pinyinToggle").textContent =
+    pinyinVisible ? "👁 Ẩn Pinyin" : "👁 Hiện Pinyin";
+}
+
+function showReadingComplete(){
+  const chinese = document.getElementById("chineseSentence");
+
+  chinese.innerHTML = "🎉 朗读完成！";
+
+  document.getElementById("pinyinSentence").textContent =
+    "Bạn đã hoàn thành 20 câu luyện đọc.";
+
+  document.getElementById("meaningSentence").textContent =
+    `Bạn đã tra ${lookupHistory.size} từ trong quá trình học.`;
+
+  document.getElementById("readingProgress").style.width = "100%";
+}
+
+/* =========================================================
+   SPEECH SYNTHESIS
+========================================================= */
+
+function speakChinese(text){
+
+  if(!("speechSynthesis" in window)){
+    alert("Trình duyệt này chưa hỗ trợ đọc văn bản.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "zh-CN";
+  utterance.rate = 0.82;
+  utterance.pitch = 1;
+
+  const voices = speechSynthesis.getVoices();
+
+  const chineseVoice = voices.find(v =>
+    v.lang && v.lang.toLowerCase().startsWith("zh")
+  );
+
+  if(chineseVoice){
+    utterance.voice = chineseVoice;
+  }
+
+  speechSynthesis.speak(utterance);
+}
+
+function speakCurrentSentence(){
+  speakChinese(readingSentences[readingIndex].text);
+}
+
+function speakPopupWord(){
+  if(currentPopupWord){
+    speakChinese(currentPopupWord);
+  }
+}
+
+/* =========================================================
+   WORD POPUP
+========================================================= */
+
+function openWordPopup(word){
+
+  const info = dictionary[word];
+
+  if(!info){
+    return;
+  }
+
+  currentPopupWord = word;
+  lookupHistory.add(word);
+
+  document.getElementById("popupHanzi").textContent = word;
+  document.getElementById("popupPinyin").textContent = info.pinyin;
+  document.getElementById("popupType").textContent = info.type;
+  document.getElementById("popupMeaning").textContent = info.meaning;
+
+  document.getElementById("wordOverlay").classList.remove("hidden");
+
+  renderLookupHistory();
+}
+
+function closeWordPopup(){
+  document.getElementById("wordOverlay").classList.add("hidden");
+}
+
+function overlayClose(event){
+  if(event.target.id === "wordOverlay"){
+    closeWordPopup();
+  }
+}
+
+function renderLookupHistory(){
+
+  const box = document.getElementById("lookupTags");
+
+  if(lookupHistory.size === 0){
+    box.innerHTML = '<span style="color:#999">Chưa có từ nào.</span>';
+    return;
+  }
+
+  box.innerHTML = "";
+
+  lookupHistory.forEach(word=>{
+    const btn = document.createElement("button");
+    btn.className = "lookup-tag";
+    btn.textContent = word;
+    btn.onclick = ()=>openWordPopup(word);
+    box.appendChild(btn);
+  });
+}
+
+/* =========================================================
+   RECORDING
+========================================================= */
+
+let mediaRecorder = null;
+let audioChunks = [];
+let recordingURL = null;
+let recordingTimer = null;
+let recordingSeconds = 0;
+let isRecording = false;
+
+async function toggleRecording(){
+
+  if(isRecording){
+    stopRecording();
+    return;
+  }
+
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    alert("Trình duyệt này chưa hỗ trợ ghi âm.");
+    return;
+  }
+
+  try{
+
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+
+    audioChunks = [];
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.ondataavailable = event=>{
+      if(event.data.size > 0){
+        audioChunks.push(event.data);
+      }
+    };
+
+    mediaRecorder.onstop = ()=>{
+
+      const blob = new Blob(audioChunks,{type:"audio/webm"});
+
+      if(recordingURL){
+        URL.revokeObjectURL(recordingURL);
+      }
+
+      recordingURL = URL.createObjectURL(blob);
+
+      document.getElementById("playRecordingButton").disabled = false;
+      document.getElementById("deleteRecordingButton").disabled = false;
+
+      stream.getTracks().forEach(track=>track.stop());
+    };
+
+    mediaRecorder.start();
+
+    isRecording = true;
+    recordingSeconds = 0;
+
+    document.getElementById("recordButton").textContent = "⏹ Dừng ghi âm";
+    document.getElementById("recordButton").classList.add("recording");
+
+    updateRecordTime();
+
+    recordingTimer = setInterval(()=>{
+      recordingSeconds++;
+      updateRecordTime();
+    },1000);
+
+  }catch(error){
+    alert("Không mở được micro. Hãy cho phép trình duyệt sử dụng microphone.");
+  }
+}
+
+function stopRecording(){
+
+  if(mediaRecorder && mediaRecorder.state !== "inactive"){
+    mediaRecorder.stop();
+  }
+
+  isRecording = false;
+
+  clearInterval(recordingTimer);
+
+  document.getElementById("recordButton").textContent = "🎙️ Bắt đầu ghi âm";
+  document.getElementById("recordButton").classList.remove("recording");
+}
+
+function updateRecordTime(){
+
+  const min = String(Math.floor(recordingSeconds / 60)).padStart(2,"0");
+  const sec = String(recordingSeconds % 60).padStart(2,"0");
+
+  document.getElementById("recordTime").textContent = `${min}:${sec}`;
+}
+
+function playRecording(){
+
+  if(!recordingURL) return;
+
+  const player = new Audio(recordingURL);
+  player.play();
+}
+
+function deleteRecording(){
+
+  if(isRecording){
+    stopRecording();
+  }
+
+  if(recordingURL){
+    URL.revokeObjectURL(recordingURL);
+  }
+
+  recordingURL = null;
+  audioChunks = [];
+  recordingSeconds = 0;
+
+  const time = document.getElementById("recordTime");
+  if(time) time.textContent = "00:00";
+
+  const playBtn = document.getElementById("playRecordingButton");
+  const deleteBtn = document.getElementById("deleteRecordingButton");
+
+  if(playBtn) playBtn.disabled = true;
+  if(deleteBtn) deleteBtn.disabled = true;
+}
+
+/* =========================================================
+   SHEET 2 - GAME
+   16 câu / 4 lượt / mỗi lượt 4 câu
+========================================================= */
+
+const gameQuestions = [
+  {words:["我","是","中国人"], answer:"我是中国人", hint:"Tôi là người Trung Quốc."},
+  {words:["我","叫","李文"], answer:"我叫李文", hint:"Tôi tên là Lý Văn."},
+  {words:["我","是","学生"], answer:"我是学生", hint:"Tôi là học sinh."},
+  {words:["大家","好"], answer:"大家好", hint:"Chào mọi người!"},
+
+  {words:["她","是","法国人"], answer:"她是法国人", hint:"Cô ấy là người Pháp."},
+  {words:["她","是","谁"], answer:"她是谁", hint:"Cô ấy là ai?"},
+  {words:["你","是","哪国人"], answer:"你是哪国人", hint:"Bạn là người nước nào?"},
+  {words:["她","是","我的","同学"], answer:"她是我的同学", hint:"Cô ấy là bạn học của tôi."},
+
+  {words:["这","是","我的","女朋友"], answer:"这是我的女朋友", hint:"Đây là bạn gái của tôi."},
+  {words:["她","也","是","泰国人"], answer:"她也是泰国人", hint:"Cô ấy cũng là người Thái Lan."},
+  {words:["你们","是","学生","吗"], answer:"你们是学生吗", hint:"Các bạn là học sinh phải không?"},
+  {words:["你","姐姐","工作","忙","吗"], answer:"你姐姐工作忙吗", hint:"Chị gái bạn làm việc có bận không?"},
+
+  {words:["她","工作","还","很忙"], answer:"她工作还很忙", hint:"Cô ấy vẫn rất bận."},
+  {words:["我","不","太忙"], answer:"我不太忙", hint:"Tôi không quá bận."},
+  {words:["我们","很","想","你"], answer:"我们很想你", hint:"Chúng tôi rất nhớ bạn."},
+  {words:["我","也","很","想","你们"], answer:"我也很想你们", hint:"Tôi cũng rất nhớ các bạn."}
+];
+
+const QUESTIONS_PER_ROUND = 4;
+const TOTAL_ROUNDS = 4;
+
+let gameStarted = false;
+let gameIndex = 0;
+let selectedWords = [];
+let timerInterval = null;
+let secondsLeft = 60;
+
+let correctAnswers = 0;
+let totalGameSeconds = 0;
+let questionStartTime = 0;
+let questionFinished = false;
+let currentRoundWaiting = false;
+
+function startGame(){
+
+  gameStarted = true;
+  gameIndex = 0;
+  correctAnswers = 0;
+  totalGameSeconds = 0;
+  currentRoundWaiting = false;
+
+  document.getElementById("gameArea").classList.remove("hidden");
+  document.getElementById("roundComplete").classList.add("hidden");
+  document.getElementById("gameFinished").classList.add("hidden");
+
+  renderGameQuestion();
+}
+
+function shuffle(array){
+  const copy = [...array];
+
+  for(let i = copy.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+
+  return copy;
+}
+
+function renderGameQuestion(){
+
+  clearInterval(timerInterval);
+
+  selectedWords = [];
+  questionFinished = false;
+
+  const item = gameQuestions[gameIndex];
+
+  const round = Math.floor(gameIndex / QUESTIONS_PER_ROUND) + 1;
+  const inRound = (gameIndex % QUESTIONS_PER_ROUND) + 1;
+
+  document.getElementById("roundBadge").textContent =
+    `🌷 Lượt ${round} / ${TOTAL_ROUNDS} · Câu ${inRound} / ${QUESTIONS_PER_ROUND}`;
+
+  document.getElementById("questionHint").textContent = item.hint;
+
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("feedback").className = "feedback";
+
+  document.getElementById("checkButton").classList.remove("hidden");
+  document.getElementById("nextGameButton").classList.add("hidden");
+
+  renderAnswerZone();
+
+  const bank = document.getElementById("wordBank");
+  bank.innerHTML = "";
+
+  shuffle(item.words).forEach((word,index)=>{
+
+    const btn = document.createElement("button");
+    btn.className = "tile";
+    btn.textContent = word;
+    btn.dataset.word = word;
+    btn.dataset.id = index + "-" + Math.random();
+
+    btn.onclick = ()=>{
+      if(questionFinished) return;
+
+      selectedWords.push({
+        word:word,
+        id:btn.dataset.id
+      });
+
+      btn.disabled = true;
+      renderAnswerZone();
+    };
+
+    bank.appendChild(btn);
+  });
+
+  const percent = ((gameIndex + 1) / gameQuestions.length) * 100;
+  document.getElementById("gameProgress").style.width = percent + "%";
+
+  startQuestionTimer();
+}
+
+function renderAnswerZone(){
+
+  const zone = document.getElementById("answerZone");
+
+  if(selectedWords.length === 0){
+    zone.innerHTML = '<span style="color:#aaa">Bấm các thẻ bên dưới để xếp câu...</span>';
+    return;
+  }
+
+  zone.innerHTML = "";
+
+  selectedWords.forEach((item,index)=>{
+
+    const btn = document.createElement("button");
+    btn.className = "tile";
+    btn.textContent = item.word;
+
+    btn.onclick = ()=>{
+      if(questionFinished) return;
+
+      const removed = selectedWords.splice(index,1)[0];
+
+      const bankButtons = document.querySelectorAll("#wordBank .tile");
+
+      bankButtons.forEach(b=>{
+        if(b.dataset.id === removed.id){
+          b.disabled = false;
+        }
+      });
+
+      renderAnswerZone();
+    };
+
+    zone.appendChild(btn);
+  });
+}
+
+function resetCurrentAnswer(){
+
+  if(questionFinished) return;
+
+  selectedWords = [];
+
+  document.querySelectorAll("#wordBank .tile").forEach(btn=>{
+    btn.disabled = false;
+  });
+
+  renderAnswerZone();
+
+  document.getElementById("feedback").textContent = "";
+}
+
+function startQuestionTimer(){
+
+  secondsLeft = 60;
+  questionStartTime = Date.now();
+
+  updateTimerDisplay();
+
+  timerInterval = setInterval(()=>{
+
+    secondsLeft--;
+
+    updateTimerDisplay();
+
+    if(secondsLeft <= 0){
+
+      clearInterval(timerInterval);
+
+      if(!questionFinished){
+        questionFinished = true;
+
+        totalGameSeconds += 60;
+
+        const feedback = document.getElementById("feedback");
+        feedback.textContent = "⏰ Hết giờ! Câu này chưa được tính điểm.";
+        feedback.className = "feedback bad";
+
+        document.getElementById("checkButton").classList.add("hidden");
+        document.getElementById("nextGameButton").classList.remove("hidden");
+      }
+    }
+
+  },1000);
+}
+
+function updateTimerDisplay(){
+
+  const timer = document.getElementById("timer");
+
+  const sec = Math.max(0,secondsLeft);
+
+  timer.textContent = `00:${String(sec).padStart(2,"0")}`;
+
+  if(sec <= 10){
+    timer.classList.add("danger");
+  }else{
+    timer.classList.remove("danger");
+  }
+}
+
+function checkAnswer(){
+
+  if(questionFinished) return;
+
+  const item = gameQuestions[gameIndex];
+
+  const answer = selectedWords.map(x=>x.word).join("");
+
+  const feedback = document.getElementById("feedback");
+
+  if(answer === item.answer){
+
+    questionFinished = true;
+
+    clearInterval(timerInterval);
+
+    const usedSeconds =
+      Math.min(60,Math.max(1,Math.round((Date.now() - questionStartTime) / 1000)));
+
+    totalGameSeconds += usedSeconds;
+    correctAnswers++;
+
+    feedback.textContent =
+      `🌟 Chính xác! Bạn hoàn thành câu này trong ${usedSeconds} giây.`;
+
+    feedback.className = "feedback good";
+
+    document.getElementById("checkButton").classList.add("hidden");
+    document.getElementById("nextGameButton").classList.remove("hidden");
+
+    speakChinese(item.answer);
+
+  }else{
+
+    feedback.textContent = "✗ Chưa đúng rồi. Thử đổi thứ tự các từ nhé!";
+    feedback.className = "feedback bad";
+
+    playWrongSound();
+  }
+}
+
+/* âm báo sai bằng Web Audio - không cần file mp3 */
+
+function playWrongSound(){
+
+  try{
+
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(170,ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(105,ctx.currentTime + .28);
+
+    gain.gain.setValueAtTime(.08,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime + .3);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + .3);
+
+  }catch(e){}
+}
+
+function nextGameQuestion(){
+
+  if(!questionFinished) return;
+
+  const justFinishedIndex = gameIndex;
+
+  gameIndex++;
+
+  const completedRound =
+    (justFinishedIndex + 1) % QUESTIONS_PER_ROUND === 0;
+
+  if(gameIndex >= gameQuestions.length){
+    finishGame();
+    return;
+  }
+
+  if(completedRound){
+    showRoundComplete();
+    return;
+  }
+
+  renderGameQuestion();
+}
+
+function showRoundComplete(){
+
+  clearInterval(timerInterval);
+
+  const completedRound = Math.floor(gameIndex / QUESTIONS_PER_ROUND);
+
+  document.getElementById("gameArea").classList.add("hidden");
+  document.getElementById("roundComplete").classList.remove("hidden");
+
+  document.getElementById("roundCompleteTitle").textContent =
+    `Hoàn thành lượt ${completedRound}!`;
+
+  document.getElementById("roundCompleteText").innerHTML =
+    `Bạn đã đi qua <b>${gameIndex}/${gameQuestions.length}</b> câu.<br>
+     Nghỉ một chút rồi tiếp tục lượt tiếp theo nha 🌷`;
+
+  currentRoundWaiting = true;
+}
+
+function continueRound(){
+
+  currentRoundWaiting = false;
+
+  document.getElementById("roundComplete").classList.add("hidden");
+  document.getElementById("gameArea").classList.remove("hidden");
+
+  renderGameQuestion();
+}
+
+function finishGame(){
+
+  clearInterval(timerInterval);
+
+  document.getElementById("gameArea").classList.add("hidden");
+  document.getElementById("roundComplete").classList.add("hidden");
+  document.getElementById("gameFinished").classList.remove("hidden");
+
+  const score = correctAnswers * 100;
+
+  document.getElementById("topScore").textContent = score;
+
+  document.getElementById("finalResult").innerHTML =
+    `👤 <b>${escapeHTML(playerName)}</b><br><br>
+     ⭐ Đúng: <b>${correctAnswers}/${gameQuestions.length}</b><br>
+     🎯 Điểm: <b>${score}</b><br>
+     ⏱️ Thời gian: <b>${formatSeconds(totalGameSeconds)}</b>`;
+
+  saveRanking({
+    name:playerName,
+    correct:correctAnswers,
+    score:score,
+    time:totalGameSeconds,
+    date:Date.now()
+  });
+}
+
+function restartGame(){
+  startGame();
+}
+
+/* =========================================================
+   RANKING
+========================================================= */
+
+const RANK_KEY = "lesson3_reading_sentence_rank_v1";
+
+function getRanking(){
+
+  try{
+    const data = JSON.parse(localStorage.getItem(RANK_KEY));
+    return Array.isArray(data) ? data : [];
+  }catch(e){
+    return [];
+  }
+}
+
+function saveRanking(result){
+
+  let ranking = getRanking();
+
+  ranking.push(result);
+
+  ranking.sort((a,b)=>{
+    if(b.correct !== a.correct){
+      return b.correct - a.correct;
+    }
+    return a.time - b.time;
+  });
+
+  ranking = ranking.slice(0,30);
+
+  localStorage.setItem(RANK_KEY,JSON.stringify(ranking));
+
+  renderRanking();
+}
+
+function renderRanking(){
+
+  const ranking = getRanking();
+
+  const box = document.getElementById("rankList");
+
+  if(!box) return;
+
+  if(ranking.length === 0){
+
+    box.innerHTML = `
+      <div style="text-align:center;padding:35px;color:#8c8799">
+        🌱 Chưa có thành tích nào.<br><br>
+        Hãy hoàn thành Sheet 2 để trở thành người đầu tiên!
+      </div>
+    `;
+
+    return;
+  }
+
+  box.innerHTML = "";
+
+  ranking.forEach((item,index)=>{
+
+    const row = document.createElement("div");
+
+    row.className =
+      "rank-row" + (item.name === playerName ? " me" : "");
+
+    let medal = `${index + 1}`;
+
+    if(index === 0) medal = "🥇";
+    if(index === 1) medal = "🥈";
+    if(index === 2) medal = "🥉";
+
+    row.innerHTML = `
+      <div class="medal">${medal}</div>
+      <div class="rank-name">${escapeHTML(item.name)}</div>
+      <div class="rank-score">⭐ ${item.correct}/${gameQuestions.length}</div>
+      <div class="rank-time">⏱ ${formatSeconds(item.time)}</div>
+    `;
+
+    box.appendChild(row);
+  });
+}
+
+function formatSeconds(total){
+
+  const minutes = Math.floor(total / 60);
+  const seconds = total % 60;
+
+  return `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+}
+
+function escapeHTML(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
 </script>
 
 </body>
