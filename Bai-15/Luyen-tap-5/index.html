@@ -18,8 +18,24 @@ const spots=[["Váy đẹp", 9, 34, [0, 7]], ["Trang phục của mẹ", 14, 19,
 const $=id=>document.getElementById(id);let score=0,seen=new Set(),currentSpot=null,modalIdx=0,mode='explore',idx=0,selection=[],chosen=-1,answered=false;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function openItem(i,group){modalIdx=i;currentSpot=group||null;const v=items[i];$('modalType').textContent=v[3];$('modalHan').textContent=v[0];$('modalPy').textContent=v[1];$('modalVi').textContent=v[2];$('modalDesc').textContent=v[3]==='Câu chủ–vị'?'Đây là câu miêu tả hoàn chỉnh, không phải cụm danh từ.':'Đây là cụm danh từ: thành phần bổ nghĩa đứng trước danh từ trung tâm.';$('modal').classList.remove('hidden');$('modalNext').classList.toggle('hidden',!group||group.length<2)}
-function say(t){if(!('speechSynthesis'in window)){alert('Trình duyệt chưa hỗ trợ đọc tiếng Trung.');return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t.replace('。',''));u.lang='zh-CN';u.rate=.8;speechSynthesis.speak(u)}
-$('speak').onclick=()=>say(items[modalIdx][0]);$('close').onclick=()=>$('modal').classList.add('hidden');$('modal').onclick=e=>{if(e.target===$('modal'))$('close').click()};$('modalNext').onclick=()=>{if(currentSpot){let n=currentSpot.indexOf(modalIdx);openItem(currentSpot[(n+1)%currentSpot.length],currentSpot)}};
+let speakingUtterance=null;
+function say(t){
+ if(!('speechSynthesis' in window)){alert('Thiết bị chưa hỗ trợ giọng đọc.');return}
+ const synth=window.speechSynthesis;
+ synth.cancel();
+ const u=new SpeechSynthesisUtterance(t.replace(/[。！？]/g,''));
+ u.lang='zh-CN';u.rate=.82;u.volume=1;
+ const voices=synth.getVoices();
+ const chinese=voices.find(v=>/^zh[-_](CN|Hans)/i.test(v.lang))||voices.find(v=>/^zh/i.test(v.lang));
+ if(chinese)u.voice=chinese;
+ speakingUtterance=u;
+ u.onend=()=>{if(speakingUtterance===u)speakingUtterance=null};
+ u.onerror=()=>{if(speakingUtterance===u)speakingUtterance=null};
+ synth.speak(u);
+ if(synth.paused)synth.resume();
+}
+
+$('speak').onclick=()=>{unlockAudio();say(items[modalIdx][0])};$('close').onclick=()=>$('modal').classList.add('hidden');$('modal').onclick=e=>{if(e.target===$('modal'))$('close').click()};$('modalNext').onclick=()=>{if(currentSpot){let n=currentSpot.indexOf(modalIdx);openItem(currentSpot[(n+1)%currentSpot.length],currentSpot)}};
 spots.forEach((s,i)=>{let b=document.createElement('button');b.className='hot';b.style.left=s[1]+'%';b.style.top=s[2]+'%';b.title=s[0];b.setAttribute('aria-label','Khám phá: '+s[0]);b.onclick=()=>{seen.add(i);b.classList.add('seen');$('discovered').textContent=`Đã khám phá ${seen.size} / ${spots.length} vị trí`;openItem(s[3][0],s[3])};$('spots').appendChild(b)});
 let sections=['Định ngữ + trung tâm ngữ','Câu chủ–vị','Nhiều định ngữ'];
 sections.forEach((g,k)=>{
@@ -81,6 +97,21 @@ function tone(freq,duration,vol=.028,type='sine'){
  try{if(!audioCtx)return;let osc=audioCtx.createOscillator(),gain=audioCtx.createGain(),t=audioCtx.currentTime;osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(vol,t+.035);gain.gain.exponentialRampToValueAtTime(.0001,t+duration);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(t);osc.stop(t+duration+.03)}catch(e){}
 }
 function playEffect(ok){if(!audioCtx)return;const notes=ok?[523.25,659.25,783.99]:[329.63,293.66];notes.forEach((n,i)=>setTimeout(()=>tone(n,.19,.05,'sine'),i*115))}
-function startMusic(){if(!audioCtx){let C=window.AudioContext||window.webkitAudioContext;if(!C)return;audioCtx=new C()}audioCtx.resume();if(musicTimer)return;musicTimer=setInterval(()=>{if(!musicOn)return;tone(melody[musicStep%melody.length],.38,.018);if(musicStep%4===0)tone(melody[musicStep%melody.length]/2,.65,.012);musicStep++},430)}
-$('musicToggle').onclick=()=>{musicOn=!musicOn;if(musicOn)startMusic();$('musicToggle').textContent=musicOn?'♫ Tắt nhạc':'♫ Bật nhạc';$('musicToggle').setAttribute('aria-pressed',String(musicOn))};
+function unlockAudio(){
+ try{
+  if(!audioCtx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return false;audioCtx=new C()}
+  // Unlock iOS audio synchronously within the user tap.
+  const buffer=audioCtx.createBuffer(1,1,audioCtx.sampleRate);
+  const source=audioCtx.createBufferSource();source.buffer=buffer;source.connect(audioCtx.destination);source.start(0);
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  return true;
+ }catch(e){return false}
+}
+function startMusic(){
+ if(!unlockAudio()){alert('Safari chưa hỗ trợ phát nhạc ở trang này.');return}
+ if(musicTimer)return;
+ tone(melody[0],.28,.045); // Immediate note on the first tap, not only in a timer.
+ musicTimer=setInterval(()=>{if(!musicOn)return;if(audioCtx.state==='suspended')audioCtx.resume();tone(melody[musicStep%melody.length],.38,.035);if(musicStep%4===0)tone(melody[musicStep%melody.length]/2,.65,.022);musicStep++},430)
+}
+$('musicToggle').onclick=()=>{unlockAudio();musicOn=!musicOn;if(musicOn)startMusic();$('musicToggle').textContent=musicOn?'♫ Tắt nhạc':'♫ Bật nhạc';$('musicToggle').setAttribute('aria-pressed',String(musicOn))};
 </script></body></html>
