@@ -46,6 +46,63 @@
 #vocabModal .vocab-charbtn.active{background:#78cce6;color:white}
 #vocabModal .vocab-strokes{display:flex;justify-content:center;min-height:220px;align-items:center;background:white;border-radius:15px;margin:12px auto;max-width:290px}
 @media(max-width:550px){#vocabModal .vocab-dialog{padding:15px}#vocabModal .vocab-title .han{font-size:46px}}
+
+/* Bài 9: Nền cổ trang và kiểu chữ dễ đọc; không đổi bố cục hay logic */
+:root{--ink:#46362e;--muted:#6e6258;--sky:#a54a37;--leaf:#b88b51;--sh:0 12px 32px #573b2520}
+html{background:#f7eddb}
+body{font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC","Segoe UI",Arial,sans-serif;font-size:17px;font-weight:500;line-height:1.65;color:var(--ink);background:linear-gradient(#fff9ed55,#fff8ec77),url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221440%22%20height%3D%22850%22%20viewBox%3D%220%200%201440%20850%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22sky%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f4e8d2%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23fff9ec%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%221440%22%20height%3D%22850%22%20fill%3D%22url%28%23sky%29%22%2F%3E%3Ccircle%20cx%3D%221190%22%20cy%3D%22160%22%20r%3D%22105%22%20fill%3D%22%23d8b77b%22%20opacity%3D%22.20%22%2F%3E%3Cpath%20d%3D%22M0%20490%20Q150%20300%20270%20440%20T570%20425%20T870%20410%20T1150%20420%20T1440%20350%20V850%20H0Z%22%20fill%3D%22%238c9e91%22%20opacity%3D%22.14%22%2F%3E%3Cpath%20d%3D%22M0%20620%20Q200%20420%20350%20570%20T730%20530%20T1050%20550%20T1440%20470%20V850%20H0Z%22%20fill%3D%22%23697d75%22%20opacity%3D%22.11%22%2F%3E%3Cpath%20d%3D%22M0%20760%20Q260%20600%20490%20710%20T950%20690%20T1440%20650%20V850%20H0Z%22%20fill%3D%22%239f775a%22%20opacity%3D%22.09%22%2F%3E%3Cg%20stroke%3D%22%23a34b3b%22%20stroke-width%3D%227%22%20fill%3D%22none%22%20opacity%3D%22.18%22%3E%3Cpath%20d%3D%22M80%200%20Q110%20140%20230%20205%20M80%200%20Q160%2065%20290%2090%20M110%2070%20Q35%20130%200%20220%22%2F%3E%3Cpath%20d%3D%22M1330%200%20Q1290%20115%201180%20180%20M1330%200%20Q1380%2095%201440%20130%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23b45b55%22%20opacity%3D%22.22%22%3E%3Ccircle%20cx%3D%22210%22%20cy%3D%22186%22%20r%3D%2213%22%2F%3E%3Ccircle%20cx%3D%22252%22%20cy%3D%22128%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%22112%22%20r%3D%2212%22%2F%3E%3Ccircle%20cx%3D%221190%22%20cy%3D%22177%22%20r%3D%2212%22%2F%3E%3Ccircle%20cx%3D%221230%22%20cy%3D%22115%22%20r%3D%2211%22%2F%3E%3Ccircle%20cx%3D%221390%22%20cy%3D%2298%22%20r%3D%2210%22%2F%3E%3C%2Fg%3E%3Cg%20opacity%3D%22.14%22%20fill%3D%22%238d3e32%22%3E%3Cpath%20d%3D%22M1120%20640h225v14h-225z%20M1140%20650h185v95h-185z%20M1100%20635l130-70%20135%2070z%22%2F%3E%3Cpath%20d%3D%22M1158%20683h26v62h-26z%20M1212%20683h26v62h-26z%20M1266%20683h26v62h-26z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") center top / cover fixed no-repeat;background-color:#f6ead5}
+.hero{background:linear-gradient(120deg,#fff6e9ed,#f1dfc7ed 56%,#f8ead5ed);border:1px solid #d8b78e;box-shadow:0 12px 36px #65442d20}
+.hero h1{font-weight:900;color:#873d31}
+.hero p,.head p{font-size:18px;color:#66584d}
+.tag{background:#f8e6c9;color:#8e4937}
+.panel,.read,.gc,.eq,.ei,.wside{background:#fffaf2f2;border:1px solid #e8d5b8}
+.vc{border:1px solid #e7d0ad}
+.nav button,.btn{font-size:17px;font-weight:800;color:#593f33}
+.nav button.active,.btn.primary{background:linear-gradient(135deg,#934034,#bd8a4b);color:#fff}
+.head h2{font-size:clamp(25px,3vw,33px);font-weight:900;color:#773e33}
+.han{font-size:42px;font-weight:900;color:#a12f2f}
+.py{font-size:18px;font-weight:750;color:#735041}
+.mean{font-size:16px;line-height:1.6;color:#5c5048;font-weight:650}
+.cn{font-size:21px;font-weight:800}
+.sm{font-size:15px;color:#67594f}
+#vocab .vc{min-height:205px}
+#vocab .vocab-hint{font-size:14px;color:#765e4e}
+#vocabModal .vocab-dialog{background:linear-gradient(145deg,#fffaf0,#f5e9d7);border:2px solid #d9b98e}
+#vocabModal .vocab-title .han{font-size:62px}
+#vocabModal .vocab-cn{font-size:24px;font-weight:800;line-height:1.85;color:#46362e}
+#vocabModal .vocab-vi{font-size:17px;line-height:1.7;color:#5d544e}
+#vocabModal .vocab-ex{background:#fffdfa;border:1px solid #e6d1b4}
+#vocabModal .vocab-target{color:#bd2525;font-weight:950;text-decoration:none}
+#vocabModal .vocab-type{background:#f3dfbf;color:#764a32}
+@media(max-width:760px){body{font-size:16px}.nav button{font-size:15px}#vocabModal .vocab-cn{font-size:21px}}
+
+/* Bài 9: làm nổi bật từ mới bằng màu đỏ ở mặt trước và khung chi tiết */
+#vocab .vc .han, #vocabModal .vocab-title .han {color:#b92328 !important;font-weight:900;text-shadow:0 1px 0 #fff8ef}
+#vocabModal .vocab-cn .vocab-target {color:#b92328 !important;font-weight:950}
+
+/* Bài 9: menu điều hướng dọc bên trái; chỉ thay đổi CSS */
+@media (min-width: 1050px){
+  .wrap{width:min(1510px,96%);padding-left:230px;padding-right:12px}
+  .nav{position:fixed;z-index:100;left:max(16px,calc((100vw - 1510px)/2 + 15px));top:50%;transform:translateY(-50%);width:205px;max-height:calc(100vh - 36px);overflow-y:auto;display:flex;flex-direction:column;flex-wrap:nowrap;justify-content:flex-start;gap:11px;margin:0;padding:15px 11px;background:#fff8e9eb;border:1px solid #d8bd96;border-radius:23px;box-shadow:0 12px 34px #533c2930;backdrop-filter:blur(8px)}
+  .nav button{display:block;width:100%;text-align:left;padding:13px 12px;border-radius:15px;white-space:normal;line-height:1.4}
+}
+@media (max-width:1049px){
+  .nav{display:flex;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;gap:9px;padding:7px 2px 12px;scrollbar-width:thin}
+  .nav button{flex:0 0 auto;white-space:nowrap}
+}
+
+/* Điều chỉnh Bài 9: chữ từ mới trên thẻ và tiêu đề popup màu xanh dương đậm;
+   chỉ tô đỏ từ mới khi xuất hiện trong các câu ví dụ. */
+#vocab .vc .han,
+#vocabModal .vocab-title .han {
+  color: #214d79 !important;
+  font-weight: 900;
+  text-shadow: none;
+}
+#vocabModal .vocab-ex .vocab-cn .vocab-target {
+  color: #bf242b !important;
+  font-weight: 950;
+}
 </style></head><body><div class="wrap">
 <header class="hero"><a class="home" href="../../index.html">🏠 Trang chủ</a><span class="tag">HSK 1 · 第九课</span><h1>我明天上午在学校学习</h1><p>Wǒ míngtiān shàngwǔ zài xuéxiào xuéxí · Sáng mai tôi học ở trường</p></header>
 <nav class="nav"><button class="active" data-s="warm">🌞 Khởi động</button><button data-s="vocab">🌱 Từ vựng</button><button data-s="game">🎮 Trò chơi</button><button data-s="read">🎧 Bài khóa</button><button data-s="grammar">📘 Ngữ pháp</button><button data-s="practice">📝 Luyện tập</button><button data-s="write">✍️ Luyện viết</button></nav>
@@ -70,11 +127,30 @@ let ap=new Audio(),timer=null;function play(k,s=0,e=null){clearTimeout(timer);ap
 WOPT.forEach(o=>chips.innerHTML+=`<span class="chip">${o[0]}. ${o[1]}</span>`);WARM.forEach((src,i)=>{let ops='<option value="">-- Chọn --</option>'+WOPT.map(o=>`<option value="${o[0]}">${o[0]}. ${o[1]}</option>`).join('');warmGrid.innerHTML+=`<div class="pic" id="wp${i}"><img src="${src}"><select id="ws${i}">${ops}</select></div>`});function checkWarm(){let n=0;WANS.forEach((a,i)=>{let p=document.getElementById('wp'+i),v=document.getElementById('ws'+i).value;p.classList.remove('good','bad');if(v===a){p.classList.add('good');n++}else p.classList.add('bad')});warmFb.textContent=n===6?'🎉 Đúng 6/6!':`Đúng ${n}/6. Ô viền đỏ cần xem lại.`}
 const VOCAB_DETAIL=[{"type":"danh từ","examples":[["我们学校前边有一家书店，我想去买书。","Phía trước trường chúng tôi có một hiệu sách, tôi muốn đến mua sách."],["我爸爸在前边的医院工作，他今天很忙。","Bố tôi làm việc ở bệnh viện phía trước, hôm nay bố rất bận."]]},{"type":"hậu tố phương vị / danh từ","examples":[["我家在学校那边，我妹妹也在这个学校学习。","Nhà tôi ở phía bên kia trường, em gái tôi cũng học ở trường này."],["那边有一家超市，我想和妈妈去买东西。","Bên kia có một siêu thị, tôi muốn cùng mẹ đến mua đồ."]]},{"type":"lượng từ","examples":[["学校前边有一家书店，我想去买中文书。","Phía trước trường có một hiệu sách, tôi muốn đến mua sách tiếng Trung."],["那家饭店的菜非常好吃，我和朋友想去吃晚饭。","Món ăn của nhà hàng kia rất ngon, tôi và bạn muốn đến ăn tối."]]},{"type":"đại từ chỉ định","examples":[["那个学生是我哥哥的朋友，他也喜欢学习中文。","Học sinh kia là bạn của anh trai tôi, cậu ấy cũng thích học tiếng Trung."],["那个电脑是我姐姐的，她今天想在家看电影。","Chiếc máy tính kia là của chị gái tôi, hôm nay chị ấy muốn xem phim ở nhà."]]},{"type":"danh từ chỉ vị trí","examples":[["我家外边有一只小猫，它很漂亮。","Bên ngoài nhà tôi có một con mèo nhỏ, nó rất đẹp."],["现在我不想在家，我想和朋友去外边玩。","Bây giờ tôi không muốn ở nhà, tôi muốn ra ngoài chơi cùng bạn."]]},{"type":"danh từ","examples":[["我的房间里有一个桌子和三个椅子。","Trong phòng tôi có một cái bàn và ba cái ghế."],["那个椅子在桌子前边，是我哥哥的。","Cái ghế kia ở phía trước bàn, là của anh trai tôi."]]},{"type":"từ chỉ phương vị","examples":[["桌子上有一本中文书，那是王老师的书。","Trên bàn có một quyển sách tiếng Trung, đó là sách của cô Vương."],["我的手机在桌子上，你看见我的手机了吗？","Điện thoại của tôi ở trên bàn, bạn có nhìn thấy điện thoại của tôi không?"]]},{"type":"lượng từ","examples":[["我有三本中文书，我妹妹也有两本中文书。","Tôi có ba quyển sách tiếng Trung, em gái tôi cũng có hai quyển sách tiếng Trung."],["我想去书店买一本中文书，你想去吗？","Tôi muốn đến hiệu sách mua một quyển sách tiếng Trung, bạn có muốn đi không?"]]},{"type":"danh từ","examples":[["我很喜欢看书，今天下午想去书店买书。","Tôi rất thích đọc sách, chiều nay muốn đến hiệu sách mua sách."],["这本书是我朋友的，他现在在学校上课。","Quyển sách này là của bạn tôi, hiện tại cậu ấy đang học ở trường."]]},{"type":"đại từ chỉ định","examples":[["那是我哥哥的电脑，他很喜欢这个电脑。","Kia là máy tính của anh trai tôi, anh ấy rất thích chiếc máy tính này."],["那是我妈妈工作的医院，我爸爸也在这个医院工作。","Kia là bệnh viện mẹ tôi làm việc, bố tôi cũng làm việc ở bệnh viện này."]]},{"type":"tiền tố số thứ tự","examples":[["今天是我学习中文的第一天，我很高兴。","Hôm nay là ngày đầu tiên tôi học tiếng Trung, tôi rất vui."],["我上午有中文课，第一课是“你好”。","Buổi sáng tôi có tiết tiếng Trung, bài đầu tiên là “Xin chào”."]]},{"type":"động từ","examples":[["我明天上午在学校学习中文，下午和朋友去看电影。","Sáng mai tôi học tiếng Trung ở trường, buổi chiều đi xem phim cùng bạn."],["我妹妹也喜欢学习中文，她现在在房间里学习。","Em gái tôi cũng thích học tiếng Trung, hiện tại em ấy đang học trong phòng."]]},{"type":"động từ","examples":[["今天晚上我想在家做饭，妈妈下班后也在家吃饭。","Tối nay tôi muốn nấu cơm ở nhà, mẹ tan làm xong cũng ăn cơm ở nhà."],["我哥哥上午在学校学习，下午在家做一些事。","Anh trai tôi học ở trường vào buổi sáng, buổi chiều làm một số việc ở nhà."]]},{"type":"danh từ chỉ thời gian","examples":[["我爸爸白天在医院工作，晚上在家休息。","Ban ngày bố tôi làm việc ở bệnh viện, buổi tối nghỉ ngơi ở nhà."],["我白天在学校学习中文，晚上在家看电视。","Ban ngày tôi học tiếng Trung ở trường, buổi tối xem tivi ở nhà."]]},{"type":"động từ","examples":[["我妹妹很喜欢读书，晚上在房间里读中文书。","Em gái tôi rất thích đọc sách, buổi tối đọc sách tiếng Trung trong phòng."],["我哥哥白天在学校读书，晚上在家看电影。","Ban ngày anh trai tôi học ở trường, buổi tối xem phim ở nhà."]]},{"type":"liên từ / giới từ","examples":[["明天下午我想和朋友去电影院看电影。","Chiều mai tôi muốn cùng bạn đến rạp chiếu phim xem phim."],["我爸爸和妈妈在医院工作，他们今天很忙。","Bố và mẹ tôi làm việc ở bệnh viện, hôm nay họ rất bận."]]},{"type":"danh từ","examples":[["我的朋友是中国人，他喜欢学习中文，也喜欢吃饺子。","Bạn tôi là người Trung Quốc, cậu ấy thích học tiếng Trung và cũng thích ăn sủi cảo."],["今天晚上我想和朋友去看电影，你想去吗？","Tối nay tôi muốn cùng bạn đi xem phim, bạn có muốn đi không?"]]},{"type":"động từ","examples":[["我妹妹很喜欢唱歌，她唱的歌很好听。","Em gái tôi rất thích hát, những bài hát em ấy hát rất hay."],["今天晚上我们在家唱歌吧，你想唱什么歌？","Tối nay chúng ta hát ở nhà nhé, bạn muốn hát bài gì?"]]},{"type":"danh từ","examples":[["我很喜欢这个中文歌，你也喜欢吗？","Tôi rất thích bài hát tiếng Trung này, bạn cũng thích không?"],["这个歌很好听，我妹妹也很喜欢。","Bài hát này rất hay, em gái tôi cũng rất thích."]]},{"type":"tính từ","examples":[["我妹妹唱的中文歌真好听，我很喜欢。","Bài hát tiếng Trung em gái tôi hát hay thật, tôi rất thích."],["这个歌很好听，你想和我唱吗？","Bài hát này rất hay, bạn có muốn hát cùng tôi không?"]]},{"type":"danh từ","examples":[["我爸爸晚上七点下班，八点在家看电视。","Bố tôi tan làm lúc 7 giờ tối, 8 giờ xem tivi ở nhà."],["我妹妹很喜欢看电视，今天晚上她想在家看电影。","Em gái tôi rất thích xem tivi, tối nay em ấy muốn xem phim ở nhà."]]},{"type":"danh từ","examples":[["我家有一只小狗，它很漂亮，我妹妹很喜欢它。","Nhà tôi có một con chó nhỏ, nó rất đẹp, em gái tôi rất thích nó."],["那个狗在桌子下，它是我朋友的狗。","Con chó kia ở dưới bàn, nó là chó của bạn tôi."]]},{"type":"động từ","examples":[["今天是星期天，我想和朋友去外边玩。","Hôm nay là Chủ nhật, tôi muốn cùng bạn ra ngoài chơi."],["我妹妹下午下课后想和朋友玩，晚上在家学习中文。","Em gái tôi muốn chơi cùng bạn sau khi tan học buổi chiều, buổi tối học tiếng Trung ở nhà."]]}];
 const escapeVocab=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function highlightVocabTarget(sentence,word){
+ const text=String(sentence),target=String(word);
+ if(!target)return escapeVocab(text);
+ const skip={"边":[],"家":["大家","国家","回家","家里","家人","家长","家庭"],"上":["上午","上课","上班","上学","晚上","早上","上面","上去"],"书":["读书","书店","书包","图书"],"那":["那个","那里","那边","那些"],"第":[],"和":[],"歌":["唱歌","歌曲","歌手"],"狗":["小狗"]};
+ const spans=[];
+ let at=0;
+ while((at=text.indexOf(target,at))!==-1){
+  let blocked=false;
+  if(target.length===1){for(const phrase of (skip[target]||[])){
+   const pos=phrase.indexOf(target);if(pos>=0&&text.slice(at-pos,at-pos+phrase.length)===phrase){blocked=true;break}
+  }}
+  if(!blocked)spans.push([at,at+target.length]);
+  at+=target.length;
+ }
+ if(!spans.length)return escapeVocab(text);
+ let html='',prev=0;
+ for(const [a,b] of spans){html+=escapeVocab(text.slice(prev,a))+'<span class="vocab-target">'+escapeVocab(text.slice(a,b))+'</span>';prev=b}
+ return html+escapeVocab(text.slice(prev));
+}
 let vocabStrokeWriter=null;
 function openVocabCard(i){
  const v=VOCAB[i],d=VOCAB_DETAIL[i];vocabStrokeWriter=null;
  let h=`<div class="vocab-title"><div class="han">${escapeVocab(v[0])}</div><div class="vocab-type">${escapeVocab(d.type)}</div><div class="py">${escapeVocab(v[1])}</div><div class="mean" style="font-size:16px">${escapeVocab(v[2])}</div><button class="btn primary" onclick="pv(${i})">🔊 Nghe từ · Audio gốc</button></div>`;
- d.examples.forEach(([cn,vi],j)=>{h+=`<div class="vocab-ex"><b>Ví dụ ${j+1}</b><div class="vocab-cn">${escapeVocab(cn)}</div><div class="vocab-vi">${escapeVocab(vi)}</div><button class="btn" onclick="speakZh(${JSON.stringify(cn).replace(/"/g,'&quot;')})">🔊 Nghe câu</button></div>`});
+ d.examples.forEach(([cn,vi],j)=>{h+=`<div class="vocab-ex"><b>Ví dụ ${j+1}</b><div class="vocab-cn">${highlightVocabTarget(cn,v[0])}</div><div class="vocab-vi">${escapeVocab(vi)}</div><button class="btn" onclick="speakZh(${JSON.stringify(cn).replace(/"/g,'&quot;')})">🔊 Nghe câu</button></div>`});
  h+=`<div class="vocab-write"><b>✍️ Cách viết chữ Hán</b><div id="vocabChars">${[...v[0]].map((c,j)=>`<button class="vocab-charbtn ${j===0?'active':''}" onclick="showVocabStroke(${i},${j})">${escapeVocab(c)}</button>`).join('')}</div><div id="vocabStrokeTarget" class="vocab-strokes"></div><div style="text-align:center"><button class="btn primary" onclick="vocabStrokeWriter&&vocabStrokeWriter.animateCharacter()">▶ Xem viết</button></div></div>`;
  document.getElementById('vocabDetail').innerHTML=h;document.getElementById('vocabModal').classList.add('open');document.body.style.overflow='hidden';showVocabStroke(i,0);
 }
