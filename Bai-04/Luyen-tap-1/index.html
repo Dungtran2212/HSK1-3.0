@@ -1166,7 +1166,7 @@ h2{
     </div>
 
     <div class="subtitle">
-        Ghi âm khoảng 3–6 giây.
+        Ghi âm không giới hạn thời gian. Bấm Dừng ghi âm khi đọc xong.
     </div>
 
 
@@ -1276,7 +1276,7 @@ h2{
     </div>
 
     <div class="subtitle">
-        Ghi âm khoảng 3–6 giây.
+        Ghi âm không giới hạn thời gian. Bấm Dừng ghi âm khi đọc xong.
     </div>
 
 
@@ -1386,7 +1386,7 @@ h2{
     </div>
 
     <div class="subtitle">
-        Ghi âm khoảng 3–6 giây.
+        Ghi âm không giới hạn thời gian. Bấm Dừng ghi âm khi đọc xong.
     </div>
 
 
@@ -2026,8 +2026,7 @@ let recordStart =
 0;
 
 
-let autoStopTimer =
-null;
+
 
 
 /*
@@ -2123,9 +2122,7 @@ async function startRecording(
         ()=>{
 
 
-            clearTimeout(
-                autoStopTimer
-            );
+            
 
 
             const duration =
@@ -2245,19 +2242,7 @@ async function startRecording(
             );
 
 
-            if(
-                duration < 2.8
-            ){
-
-                status.textContent =
-                '⚠️ Bản ghi hơi ngắn: '
-                +
-                duration.toFixed(1)
-                +
-                ' giây. Nên thu lại khoảng 3–6 giây.';
-
-            }
-            else{
+            
 
                 status.textContent =
                 '✅ Đã ghi âm '
@@ -2265,8 +2250,6 @@ async function startRecording(
                 duration.toFixed(1)
                 +
                 ' giây';
-
-            }
 
 
             button
@@ -2325,36 +2308,10 @@ async function startRecording(
             section
         )
         .textContent =
-        '🔴 Đang ghi âm... tối đa 6 giây';
+        '🔴 Đang ghi âm... Bấm Dừng ghi âm khi đọc xong.';
 
 
-        /*
-        Tự dừng ở 6 giây.
-        */
-
-        autoStopTimer =
-        setTimeout(
-
-            ()=>{
-
-                if(
-
-                    recorder
-                    &&
-                    recorder.state ===
-                    'recording'
-
-                ){
-
-                    recorder.stop();
-
-                }
-
-            },
-
-            6000
-
-        );
+        
 
 
     }
@@ -2757,7 +2714,7 @@ function gradeExercise1(){
         detailHTML,
         mailText:
         mailLines.join(
-            ' || '
+            '\n'
         )
 
     };
@@ -2889,26 +2846,7 @@ document
             }
 
 
-            if(
-                recordings[
-                    section
-                ].duration
-                <
-                2.8
-            ){
-
-                toast(
-                    'Bản ghi Bài '
-                    +
-                    section
-                    +
-                    ' chưa đủ khoảng 3 giây. Hãy thu lại.'
-                );
-
-
-                return;
-
-            }
+            
 
         }
 
@@ -3169,10 +3107,19 @@ document
 
 
         formData.append(
-            'Chi tiết Bài 1',
+            'Tổng hợp đáp án Bài 1',
             result.mailText
         );
 
+
+        EX1.forEach((item,index)=>{
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const answer = selected ? Number(selected.value) : 0;
+            const correct = EX1_ANSWER[index];
+            const word = n => n === 1 ? item.a : n === 2 ? item.b : '(chưa chọn)';
+            formData.append(`Bài 1 - Câu ${index+1}`,
+                `Học viên: ${word(answer)} | Đáp án đúng: ${word(correct)} | ${answer === correct ? 'ĐÚNG' : 'SAI'}`);
+        });
 
         formData.append(
             'Bài 2 - luyện đọc',
@@ -3198,21 +3145,21 @@ document
         */
 
         formData.append(
-            'attachment',
+            'attachment2',
             recordings[2].file,
             `${name}_Bai2.webm`
         );
 
 
         formData.append(
-            'attachment',
+            'attachment3',
             recordings[3].file,
             `${name}_Bai3.webm`
         );
 
 
         formData.append(
-            'attachment',
+            'attachment4',
             recordings[4].file,
             `${name}_Bai4.webm`
         );
@@ -3245,12 +3192,11 @@ document
             );
 
 
-            if(
-                !response.ok
-            ){
+            const receipt = await response.json();
+            if(!response.ok || !(receipt.success === true || receipt.success === 'true')){
 
                 throw new Error(
-                    'FormSubmit error'
+                    receipt.message || 'FormSubmit error'
                 );
 
             }
