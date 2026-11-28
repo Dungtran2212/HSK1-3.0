@@ -235,7 +235,7 @@ td small{color:var(--mut)}
           <button class="btn go big" id="bStart">▶ Bắt đầu</button>
           <span class="camline" id="bankInfo"></span>
         </div>
-        <div class="note"><b>Chuột/cảm ứng</b> chạy hoàn toàn ngoại tuyến (giữ chuột hoặc vuốt ngón tay qua quả). <b>Nhận diện tay qua camera</b> cần Internet để tải thư viện MediaPipe và cần bạn cho phép dùng camera. Hình camera chỉ xử lý ngay trong trình duyệt, không ghi lại, không gửi đi. Phím tắt: 1/2/3 = xanh/đỏ/vàng, P = tạm dừng.</div>
+        <div class="note"><b>Chuột/cảm ứng</b> chơi được ngoại tuyến; phần phát âm cần giọng Mandarin tương thích trên thiết bị (giữ chuột hoặc vuốt ngón tay qua quả). <b>Nhận diện tay qua camera</b> cần Internet để tải thư viện MediaPipe và cần bạn cho phép dùng camera. Hình camera chỉ xử lý ngay trong trình duyệt, không ghi lại, không gửi đi. Phím tắt: 1/2/3 = xanh/đỏ/vàng, P = tạm dừng.</div>
       </div>
     </div>
 
@@ -578,6 +578,7 @@ function startRound(){
   loadQuestion();
 }
 function loadQuestion(){
+  wordPlayer.pause();
   const item = QB[G.order[G.idx]];
   const opts = shuffle([{ t: item.a, ok: true }, { t: item.d[0] }, { t: item.d[1] }]);
   G.q = { item, opts, correctSlot: opts.findIndex(o => o.ok) };
@@ -620,6 +621,7 @@ function advance(){
   if (G.idx + 1 >= G.order.length) endGame(); else { G.idx++; loadQuestion(); }
 }
 function endGame(){
+  wordPlayer.pause();
   G.state = 'end'; G.locked = true; fruits.length = 0; clearStrokes();
   setStageClass('s-end'); syncButtons();
   $('eScore').textContent = G.score; $('eMax').textContent = G.order.length * CFG.points;
@@ -636,6 +638,7 @@ function endGame(){
   Snd.fanfare();
 }
 function toMenu(){
+  wordPlayer.pause();
   G.state = 'menu'; G.paused = false; G.locked = true; fruits.length = 0; halves.length = 0; parts.length = 0; pops.length = 0; flashes.length = 0;
   clearStrokes(); hideBanner();
   $('pauseOv').classList.remove('show'); $('scEnd').classList.remove('show'); $('scStart').classList.add('show');
@@ -1011,18 +1014,24 @@ function frame(now){
 }
 
 /* ---------- 15. SỰ KIỆN ---------- */
+const synth = window.speechSynthesis;
+const wordPlayer = {pause(){if(synth) synth.cancel();}};
 function speakChinese(t){
-  if(!Snd.on || !('speechSynthesis' in window)) return;
-  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t);u.lang='zh-CN';u.rate=.82;u.pitch=1;u.volume=1;
-    const voices=speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang.toLowerCase().startsWith('zh') && /natural|xiaoxiao|tingting|premium/i.test(v.name)) || voices.find(v=>v.lang.toLowerCase().startsWith('zh')) || null;
-    speechSynthesis.speak(u);
-  }catch(e){}
+ if(!Snd.on || !t) return;
+ if(!synth){toast('Trình duyệt không hỗ trợ giọng đọc. Hãy thử Microsoft Edge.');return;}
+ const voices=synth.getVoices().filter(v=>/^(zh[-_]CN|cmn[-_]CN)$/i.test(v.lang));
+ const voice=voices.find(v=>/Xiaoxiao/i.test(v.name)) || voices.find(v=>/Xiaoyi|Huihui|Yaoyao|Tingting|female|晓晓|晓伊|慧慧|婷婷/i.test(v.name)) || voices.find(v=>/Google/i.test(v.name));
+ if(!voice){toast('Chưa có giọng nữ Mandarin. Hãy mở bằng Edge và cài giọng tiếng Trung (Trung Quốc).');return;}
+ synth.cancel(); const u=new SpeechSynthesisUtterance(t); u.voice=voice; u.lang='zh-CN'; u.rate=0.85; u.pitch=1; u.volume=1;
+ u.onerror=e=>{if(!['interrupted','canceled'].includes(e.error))toast('Không phát được giọng đọc. Hãy bấm Nghe từ để thử lại.');};
+ synth.speak(u);
 }
+if(synth){synth.getVoices();synth.addEventListener('voiceschanged',()=>synth.getVoices());}
 $('bListen').addEventListener('click',()=>{Snd.resume();if(G.q) speakChinese(G.q.item.han);});
 $('bHome').addEventListener('click',()=>{location.href='../../index.html';});
 bCam.addEventListener('click', toggleCamera);
 $('bCam2').addEventListener('click', toggleCamera);
-bSnd.addEventListener('click', () => { Snd.on = !Snd.on; if (Snd.on) Snd.resume(); else if('speechSynthesis' in window) speechSynthesis.cancel(); syncButtons(); });
+bSnd.addEventListener('click', () => { Snd.on = !Snd.on; if (Snd.on) Snd.resume(); else wordPlayer.pause(); syncButtons(); });
 bPause.addEventListener('click', () => { Snd.resume(); togglePause(); });
 $('bResume').addEventListener('click', () => togglePause(false));
 bRestart.addEventListener('click', restartGame);
